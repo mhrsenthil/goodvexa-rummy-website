@@ -226,7 +226,91 @@
     };
   }
 
-  // மற்ற JavaScript கோப்புகளிலிருந்து பயன்படுத்த
-  window.checkRummyHand = checkRummyHand;
+  
+// ஒரு Group-ன் வகையை கண்டறிதல்
+function checkRummyGroup(cards) {
+  const sequence = checkSequence(cards);
+
+  if (sequence) {
+    return {
+      valid: true,
+      type: sequence.type,
+      pure: sequence.pure,
+      message: sequence.type + " சரியானது"
+    };
+  }
+
+  const set = checkSet(cards);
+
+  if (set) {
+    return {
+      valid: true,
+      type: "Set",
+      pure: false,
+      message: "சரியான Set"
+    };
+  }
+
+  return {
+    valid: false,
+    type: "Invalid",
+    pure: false,
+    message: "இந்த அட்டைகள் சரியான Sequence அல்லது Set அல்ல."
+  };
+}
+
+// பயனர் உருவாக்கிய அனைத்து Groups-ஐச் சரிபார்த்தல்
+function checkDeclaredGroups(groups, hand) {
+  if (!Array.isArray(groups) || !Array.isArray(hand)) {
+    return { valid: false, message: "தவறான அட்டைகள்." };
+  }
+
+  const allCards = groups.flat();
+
+  if (allCards.length !== 13 ||
+      allCards.length !== hand.length ||
+      new Set(allCards).size !== 13 ||
+      !hand.every(card => allCards.includes(card))) {
+    return {
+      valid: false,
+      message: "13 அட்டைகளையும் தனித்தனி Groups-ல் அமைக்க வேண்டும்."
+    };
+  }
+
+  const results = groups.map(group => checkRummyGroup(group));
+
+  if (results.some(result => !result.valid)) {
+    return {
+      valid: false,
+      message: "ஒரு Group-ல் தவறான அட்டைகள் உள்ளன."
+    };
+  }
+
+  const sequences = results.filter(result =>
+    result.type === "Pure Sequence" ||
+    result.type === "Impure Sequence"
+  );
+
+  const pureSequences = results.filter(result => result.pure);
+
+  if (sequences.length < 2 || pureSequences.length < 1) {
+    return {
+      valid: false,
+      message: "குறைந்தது 2 Sequence மற்றும் 1 Pure Sequence தேவை."
+    };
+  }
+
+  return {
+    valid: true,
+    message: "வாழ்த்துகள்! GOODVEXA RUMMY வெற்றி!",
+    groups: results
+  };
+}
+
+// மற்ற JavaScript கோப்புகளிலிருந்து பயன்படுத்த
+window.checkRummyHand = checkRummyHand;
+window.checkRummyGroup = checkRummyGroup;
+window.checkDeclaredGroups = checkDeclaredGroups;
+
 
 })();
