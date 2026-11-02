@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GOODVEXA RUMMY</title>
+<meta name="description" content="GOODVEXA RUMMY - Play free 13 card rummy practice games.">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="header">
+  <a class="logo" href="#">GOODVEXA <span>RUMMY</span></a>
+  <nav>
+    <a href="#home">முகப்பு</a>
+    <a href="#games">விளையாட்டு</a>
+    <a href="#leaderboard">தரவரிசை</a>
+  </nav>
+  <button class="login" onclick="showMessage('உள்நுழைவு வசதி விரைவில் அறிமுகமாகும்!')">Login</button>
+</header>
+
+<main>
+<section class="hero" id="home">
+  <div class="hero-content">
+    <p class="tag">WELCOME TO GOODVEXA RUMMY</p>
+    <h1>ரம்மி விளையாடத்<br><span>தயாரா?</span></h1>
+    <p>13 கார்டு ரம்மி விளையாட்டை இலவசமாகப் பயிற்சி செய்யுங்கள். உங்கள் திறமையை வளர்த்துக் கொள்ளுங்கள்.</p>
+    <a class="primary" href="#games">விளையாடத் தொடங்குங்கள்</a>
+    <p class="note">இது இலவசப் பயிற்சி விளையாட்டு. பணம் வைத்து விளையாடும் வசதி இல்லை.</p>
+  </div>
+  <div class="cards">
+    <div class="playing-card red">♥<strong>A</strong></div>
+    <div class="playing-card black">♠<strong>K</strong></div>
+    <div class="playing-card red">♦<strong>Q</strong></div>
+    <div class="playing-card black">♣<strong>J</strong></div>
+  </div>
+</section>
+
+<section class="section" id="games">
+  <h2>விளையாட்டு முறைகள்</h2>
+  <p>உங்கள் ரம்மி திறமையைப் பயிற்சி செய்யுங்கள்.</p>
+  <div class="game-grid">
+    <article class="game-card">
+      <div class="game-icon">🃏</div>
+      <h3>Practice Rummy</h3>
+      <p>13 கார்டு ரம்மி விளையாட்டைப் பயிற்சி செய்யுங்கள்.</p>
+      <button onclick="showMessage('Practice Game விரைவில் உருவாக்கப்படும்!')">Play Now</button>
+    </article>
+    <article class="game-card">
+      <div class="game-icon">👥</div>
+      <h3>Online Multiplayer</h3>
+      <p>நண்பர்களுடன் ஆன்லைனில் விளையாடும் வசதி.</p>
+      <button onclick="showMessage('Online Multiplayer விரைவில் அறிமுகமாகும்!')">Coming Soon</button>
+    </article>
+    <article class="game-card">
+      <div class="game-icon">🏆</div>
+      <h3>Leaderboard</h3>
+      <p>விளையாட்டு மதிப்பெண்கள் மற்றும் தரவரிசை.</p>
+      <button onclick="document.querySelector('#leaderboard').scrollIntoView({behavior:'smooth'})">View</button>
+    </article>
+  </div>
+</section>
+
+<section class="section leaderboard" id="leaderboard">
+  <h2>தரவரிசை</h2>
+  <p>வீரர்களின் தரவரிசை விரைவில் இங்கே காட்டப்படும்.</p>
+  <div class="empty">🏆<br>Leaderboard Coming Soon</div>
+</section>
+</main>
+
+<footer>
+  <strong>GOODVEXA RUMMY</strong>
+  <p>இலவச பொழுதுபோக்கு மற்றும் பயிற்சி விளையாட்டு.</p>
+  <p>© 2026 GOODVEXA. All Rights Reserved.</p>
+</footer>
+
+<div id="message" class="message"></div>
+<script src="assets/app.js"></script>
+</body>
+</html>
