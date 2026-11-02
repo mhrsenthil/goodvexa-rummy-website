@@ -73,6 +73,10 @@ button:disabled{opacity:.4;cursor:not-allowed}
 <div id="hand" class="cards"></div>
 <p id="count" class="status">அட்டைகள்: 0</p>
 <button onclick="sortHand()">அட்டைகளை வரிசைப்படுத்து</button>
+
+<button onclick="declareRummy()">🏆 Declare Rummy</button>
+<div id="result" style="margin-top:15px;color:#ffe38b;"></div> 
+ 
 <button onclick="discardSelected()" id="discardBtn" disabled>தேர்ந்த அட்டையை வெளியேற்று</button>
 </div>
 
@@ -89,6 +93,8 @@ button:disabled{opacity:.4;cursor:not-allowed}
 </div>
 </main>
 
+<script src="assets/rummy-rules.js"></script>
+ 
 <script>
 let deck=[];
 let hand=[];
@@ -231,6 +237,51 @@ function sortHand(){
  showMessage("அட்டைகள் வரிசைப்படுத்தப்பட்டன.");
 }
 
+
+function declareRummy(){
+
+  if(!gameStarted){
+    showMessage("முதலில் புதிய விளையாட்டைத் தொடங்குங்கள்.");
+    return;
+  }
+
+  if(hand.length !== 13){
+    showMessage("Declare செய்ய 13 அட்டைகள் இருக்க வேண்டும்.");
+    return;
+  }
+
+  const result = window.checkRummyHand(hand);
+
+  const resultBox = document.getElementById("result");
+
+  if(result.valid){
+
+    let output = "<h3>🏆 RUMMY SUCCESS!</h3>";
+
+    output += "<p>" + result.message + "</p>";
+
+    result.groups.forEach((group,index)=>{
+
+      output += "<p><b>Group "+(index+1)+
+      ": "+group.type+"</b></p>";
+
+      output += group.cards.map(card =>
+        card.joker ? "★" : rankText(card)+card.suit
+      ).join("  ");
+
+    });
+
+    resultBox.innerHTML = output;
+
+  }else{
+
+    resultBox.innerHTML =
+      "<h3>❌ Rummy இல்லை</h3><p>"+
+      result.message+"</p>";
+
+  }
+}
+ 
 function showMessage(text){
  document.getElementById("message").textContent=text;
 }
