@@ -1,0 +1,239 @@
+
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GOODVEXA RUMMY - Practice</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;background:#073b2b;color:white;
+ font-family:Arial,sans-serif;text-align:center;
+}
+header{
+ padding:16px;background:#052c21;
+ border-bottom:2px solid #d6ad45;
+}
+header h2{margin:0;color:#f4d477}
+main{max-width:900px;margin:auto;padding:15px}
+.panel{
+ background:#0b513b;border:1px solid #b9953d;
+ border-radius:12px;padding:15px;margin:15px 0;
+}
+button{
+ background:#e1bd57;color:#172d20;
+ border:0;border-radius:7px;padding:11px 16px;
+ font-weight:bold;margin:5px;cursor:pointer;
+}
+button:disabled{opacity:.4;cursor:not-allowed}
+.cards{
+ display:flex;flex-wrap:wrap;justify-content:center;
+ gap:7px;min-height:90px;
+}
+.card{
+ width:55px;height:78px;background:white;color:#111;
+ border-radius:7px;border:2px solid #ddd;
+ display:flex;flex-direction:column;justify-content:space-between;
+ padding:5px;font-size:17px;font-weight:bold;
+ cursor:pointer;box-shadow:0 2px 5px #002;
+}
+.card.red{color:#d21f30}
+.card.selected{
+ border:3px solid #ffcf36;
+ transform:translateY(-9px);
+}
+.card small{font-size:11px}
+.zone-title{color:#f4d477;font-weight:bold;margin-bottom:12px}
+#message{min-height:25px;color:#ffe38b;margin:10px}
+.status{font-size:14px;color:#d8eadf}
+@media(max-width:500px){
+ .card{width:43px;height:65px;font-size:15px;padding:4px}
+ main{padding:8px}
+}
+</style>
+</head>
+<body>
+
+<header>
+<h2>♠ GOODVEXA RUMMY ♥</h2>
+<div>13 Cards Practice Game</div>
+</header>
+
+<main>
+<div class="panel">
+<h3>இலவச Rummy பயிற்சி</h3>
+<p class="status">13 அட்டைகளுடன் விளையாடிப் பழகுங்கள்.</p>
+<button onclick="startGame()">புதிய விளையாட்டைத் தொடங்கு</button>
+<div id="message">விளையாட்டைத் தொடங்கவும்.</div>
+</div>
+
+<div class="panel">
+<div class="zone-title">உங்கள் அட்டைகள்</div>
+<div id="hand" class="cards"></div>
+<p id="count" class="status">அட்டைகள்: 0</p>
+<button onclick="sortHand()">அட்டைகளை வரிசைப்படுத்து</button>
+<button onclick="discardSelected()" id="discardBtn" disabled>தேர்ந்த அட்டையை வெளியேற்று</button>
+</div>
+
+<div class="panel">
+<div class="zone-title">அட்டைகளை எடுக்கவும்</div>
+<p>மூடிய அட்டைகள்: <b id="deckCount">0</b></p>
+<button onclick="drawFromDeck()" id="drawBtn" disabled>மூடிய அட்டையிலிருந்து எடு</button>
+<button onclick="drawFromDiscard()" id="pileBtn" disabled>வெளியேற்றிய அட்டையிலிருந்து எடு</button>
+</div>
+
+<div class="panel">
+<div class="zone-title">வெளியேற்றப்பட்ட அட்டை</div>
+<div id="discardTop" class="cards">இன்னும் அட்டை இல்லை</div>
+</div>
+</main>
+
+<script>
+let deck=[];
+let hand=[];
+let discardPile=[];
+let selected=-1;
+let mustDiscard=false;
+let gameStarted=false;
+
+const suits=[
+ {symbol:"♠",name:"Spades",red:false},
+ {symbol:"♥",name:"Hearts",red:true},
+ {symbol:"♦",name:"Diamonds",red:true},
+ {symbol:"♣",name:"Clubs",red:false}
+];
+
+function createDeck(){
+ let cards=[];
+ for(const suit of suits){
+  for(let rank=1;rank<=13;rank++){
+   cards.push({suit:suit.symbol,rank:rank,red:suit.red});
+  }
+ }
+ cards.push({suit:"★",rank:0,red:false,joker:true});
+ cards.push({suit:"★",rank:0,red:true,joker:true});
+
+ for(let i=cards.length-1;i>0;i--){
+  const j=Math.floor(Math.random()*(i+1));
+  [cards[i],cards[j]]=[cards[j],cards[i]];
+ }
+ return cards;
+}
+
+function rankText(card){
+ if(card.joker)return "JOKER";
+ if(card.rank===1)return "A";
+ if(card.rank===11)return "J";
+ if(card.rank===12)return "Q";
+ if(card.rank===13)return "K";
+ return String(card.rank);
+}
+
+function cardHTML(card,index,selectable){
+ const color=card.red?"red":"";
+ const chosen=index===selected?"selected":"";
+ const label=card.joker?"★":rankText(card)+card.suit;
+ return `<div class="card ${color} ${chosen}"
+ onclick="${selectable?`selectCard(${index})`:''}">
+ <small>${card.joker?"JOKER":rankText(card)}</small>
+ <span>${card.suit}</span>
+ <small>${card.joker?"★":card.suit}</small>
+ </div>`;
+}
+
+function startGame(){
+ deck=createDeck();
+ hand=[];
+ discardPile=[];
+ selected=-1;
+ mustDiscard=false;
+ gameStarted=true;
+
+ for(let i=0;i<13;i++)hand.push(deck.pop());
+
+ discardPile.push(deck.pop());
+
+ showMessage("விளையாட்டு தொடங்கியது! அட்டைகளைப் பயிற்சி செய்யுங்கள்.");
+ render();
+}
+
+function render(){
+ document.getElementById("hand").innerHTML=
+ hand.map((c,i)=>cardHTML(c,i,true)).join("");
+
+ document.getElementById("count").textContent=
+ "உங்களிடம் உள்ள அட்டைகள்: "+hand.length;
+
+ document.getElementById("deckCount").textContent=deck.length;
+
+ const top=discardPile[discardPile.length-1];
+ document.getElementById("discardTop").innerHTML=
+ top?cardHTML(top,-1,false):"இன்னும் அட்டை இல்லை";
+
+ document.getElementById("drawBtn").disabled=
+ !gameStarted||mustDiscard||deck.length===0;
+
+ document.getElementById("pileBtn").disabled=
+ !gameStarted||mustDiscard||discardPile.length===0;
+
+ document.getElementById("discardBtn").disabled=
+ !gameStarted||!mustDiscard||selected===-1;
+}
+
+function selectCard(index){
+ selected=selected===index?-1:index;
+ render();
+}
+
+function drawFromDeck(){
+ if(!gameStarted||mustDiscard||deck.length===0)return;
+ hand.push(deck.pop());
+ mustDiscard=true;
+ selected=-1;
+ showMessage("ஒரு அட்டையை எடுத்துவிட்டீர்கள். இப்போது ஒரு அட்டையைத் தேர்ந்தெடுத்து வெளியேற்றுங்கள்.");
+ render();
+}
+
+function drawFromDiscard(){
+ if(!gameStarted||mustDiscard||discardPile.length===0)return;
+ hand.push(discardPile.pop());
+ mustDiscard=true;
+ selected=-1;
+ showMessage("வெளியேற்றிய அட்டையை எடுத்துவிட்டீர்கள். இப்போது ஒரு அட்டையை வெளியேற்றுங்கள்.");
+ render();
+}
+
+function discardSelected(){
+ if(!mustDiscard||selected===-1)return;
+
+ const card=hand.splice(selected,1)[0];
+ discardPile.push(card);
+ selected=-1;
+ mustDiscard=false;
+
+ showMessage("அட்டை வெளியேற்றப்பட்டது. அடுத்த முறை அட்டை எடுக்கலாம்.");
+ render();
+}
+
+function sortHand(){
+ if(!gameStarted)return;
+
+ const suitOrder={"♠":1,"♥":2,"♦":3,"♣":4};
+ hand.sort((a,b)=>{
+  if(a.joker)return 1;
+  if(b.joker)return -1;
+  return suitOrder[a.suit]-suitOrder[b.suit]||a.rank-b.rank;
+ });
+
+ selected=-1;
+ render();
+ showMessage("அட்டைகள் வரிசைப்படுத்தப்பட்டன.");
+}
+
+function showMessage(text){
+ document.getElementById("message").textContent=text;
+}
+</script>
+</body>
+</html>
