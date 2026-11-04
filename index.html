@@ -1,80 +1,304 @@
-
 <!DOCTYPE html>
 <html lang="ta">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GOODVEXA RUMMY</title>
-<meta name="description" content="GOODVEXA RUMMY - Play free 13 card rummy practice games.">
-<link rel="stylesheet" href="assets/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Goodvexa Rummy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #0d2818;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ஹெடர் (Header) அமைப்பு */
+        header {
+            background-color: #05140b;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #16db65;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #16db65;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .lang-btn {
+            background-color: #2d6a4f;
+            color: #fff;
+            border: 1px solid #16db65;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .login-btn {
+            background-color: #ffb703;
+            color: #000;
+            padding: 8px 20px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* பிரதான பகுதி (Hero Section) */
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .hero-text {
+            max-width: 600px;
+        }
+
+        .hero-text h1 {
+            font-size: 42px;
+            margin-bottom: 20px;
+            color: #ffffff;
+            line-height: 1.2;
+        }
+
+        .hero-text p {
+            font-size: 18px;
+            color: #b7e4c7;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        .play-now-btn {
+            background-color: #ffb703;
+            color: #000;
+            font-size: 20px;
+            font-weight: bold;
+            padding: 15px 35px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 183, 3, 0.4);
+        }
+
+        .disclaimer {
+            margin-top: 15px;
+            font-size: 13px;
+            color: #74c69d;
+        }
+
+        /* மொழி தேர்வு பாப்-அப் (Language Modal) */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-card {
+            background-color: #1b4332;
+            border: 2px solid #16db65;
+            padding: 35px;
+            border-radius: 12px;
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-card h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #16db65;
+        }
+
+        .modal-card p {
+            color: #d8f3dc;
+            margin-bottom: 25px;
+            font-size: 15px;
+        }
+
+        .lang-options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .lang-option-btn {
+            background-color: #2d6a4f;
+            color: #ffffff;
+            border: 1px solid #52b788;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .lang-option-btn:hover {
+            background-color: #16db65;
+            color: #000;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
 </head>
 <body>
-<header class="header">
-  <a class="logo" href="#">GOODVEXA <span>RUMMY</span></a>
-  <nav>
-    <a href="#home">முகப்பு</a>
-    <a href="#games">விளையாட்டு</a>
-    <a href="#leaderboard">தரவரிசை</a>
-  </nav>
-  <button class="login" onclick="showMessage('உள்நுழைவு வசதி விரைவில் அறிமுகமாகும்!')">Login</button>
-</header>
 
-<main>
-<section class="hero" id="home">
-  <div class="hero-content">
-    <p class="tag">WELCOME TO GOODVEXA RUMMY</p>
-    <h1>ரம்மி விளையாடத்<br><span>தயாரா?</span></h1>
-    <p>13 கார்டு ரம்மி விளையாட்டை இலவசமாகப் பயிற்சி செய்யுங்கள். உங்கள் திறமையை வளர்த்துக் கொள்ளுங்கள்.</p>
-    <a class="primary" href="#games">விளையாடத் தொடங்குங்கள்</a>
-    <p class="note">இது இலவசப் பயிற்சி விளையாட்டு. பணம் வைத்து விளையாடும் வசதி இல்லை.</p>
-  </div>
-  <div class="cards">
-    <div class="playing-card red">♥<strong>A</strong></div>
-    <div class="playing-card black">♠<strong>K</strong></div>
-    <div class="playing-card red">♦<strong>Q</strong></div>
-    <div class="playing-card black">♣<strong>J</strong></div>
-  </div>
-</section>
+    <!-- ஹெடர் பகுதி -->
+    <header>
+        <div class="logo">GOODVEXA RUMMY</div>
+        <div class="nav-links">
+            <a href="#" id="nav-home">முகப்பு</a>
+            <a href="#" id="nav-game">விளையாட்டு</a>
+            <a href="#" id="nav-leaderboard">தரவரிசை</a>
+            <button class="lang-btn" onclick="openLanguageModal()">🌐 <span id="current-lang-text">தமிழ்</span></button>
+            <button class="login-btn" id="nav-login">Login</button>
+        </div>
+    </header>
 
-<section class="section" id="games">
-  <h2>விளையாட்டு முறைகள்</h2>
-  <p>உங்கள் ரம்மி திறமையைப் பயிற்சி செய்யுங்கள்.</p>
-  <div class="game-grid">
-    <article class="game-card">
-      <div class="game-icon">🃏</div>
-      <h3>Practice Rummy</h3>
-      <p>13 கார்டு ரம்மி விளையாட்டைப் பயிற்சி செய்யுங்கள்.</p>
-      <button onclick="showMessage('Practice Game விரைவில் உருவாக்கப்படும்!')">Play Now</button>
-    </article>
-    <article class="game-card">
-      <div class="game-icon">👥</div>
-      <h3>Online Multiplayer</h3>
-      <p>நண்பர்களுடன் ஆன்லைனில் விளையாடும் வசதி.</p>
-      <button onclick="showMessage('Online Multiplayer விரைவில் அறிமுகமாகும்!')">Coming Soon</button>
-    </article>
-    <article class="game-card">
-      <div class="game-icon">🏆</div>
-      <h3>Leaderboard</h3>
-      <p>விளையாட்டு மதிப்பெண்கள் மற்றும் தரவரிசை.</p>
-      <button onclick="document.querySelector('#leaderboard').scrollIntoView({behavior:'smooth'})">View</button>
-    </article>
-  </div>
-</section>
+    <!-- பிரதான பக்கம் -->
+    <main>
+        <div class="hero-text">
+            <h1 id="hero-title">ரம்மி விளையாடத் தயாரா?</h1>
+            <p id="hero-subtitle">13 கார்டு ரம்மி விளையாட்டை இலவசமாகப் பயிற்சி செய்யுங்கள். உங்கள் திறமையை வளர்த்துக் கொள்ளுங்கள்.</p>
+            <button class="play-now-btn" id="hero-btn">விளையாடத் தொடங்குங்கள்</button>
+            <div class="disclaimer" id="hero-disclaimer">இது இலவசப் பயிற்சி விளையாட்டு. பணம் வைத்து விளையாடும் வசதி இல்லை.</div>
+        </div>
+    </main>
 
-<section class="section leaderboard" id="leaderboard">
-  <h2>தரவரிசை</h2>
-  <p>வீரர்களின் தரவரிசை விரைவில் இங்கே காட்டப்படும்.</p>
-  <div class="empty">🏆<br>Leaderboard Coming Soon</div>
-</section>
-</main>
+    <!-- மொழி தேர்வு பாப்-அப் திரை -->
+    <div class="modal-overlay" id="langModal">
+        <div class="modal-card">
+            <h2>Select Language / மொழியைத் தேர்ந்தெடுக்கவும்</h2>
+            <p>Please select your preferred language to continue / தொடர உங்கள் மொழியைத் தேர்ந்தெடுக்கவும்</p>
+            <div class="lang-options">
+                <button class="lang-option-btn" onclick="selectLanguage('ta')">தமிழ் (Tamil)</button>
+                <button class="lang-option-btn" onclick="selectLanguage('en')">English</button>
+                <button class="lang-option-btn" onclick="selectLanguage('hi')">हिंदी (Hindi)</button>
+            </div>
+        </div>
+    </div>
 
-<footer>
-  <strong>GOODVEXA RUMMY</strong>
-  <p>இலவச பொழுதுபோக்கு மற்றும் பயிற்சி விளையாட்டு.</p>
-  <p>© 2026 GOODVEXA. All Rights Reserved.</p>
-</footer>
+    <!-- மொழி மாற்றத்திற்கான ஜாவாஸ்கிரிப்ட் -->
+    <script>
+        // மொழிக்கான அகராதி (Translations)
+        const translations = {
+            ta: {
+                currentLangLabel: "தமிழ்",
+                navHome: "முகப்பு",
+                navGame: "விளையாட்டு",
+                navLeaderboard: "தரவரிசை",
+                navLogin: "Login",
+                heroTitle: "ரம்மி விளையாடத் தயாரா?",
+                heroSubtitle: "13 கார்டு ரம்மி விளையாட்டை இலவசமாகப் பயிற்சி செய்யுங்கள். உங்கள் திறமையை வளர்த்துக் கொள்ளுங்கள்.",
+                heroBtn: "விளையாடத் தொடங்குங்கள்",
+                heroDisclaimer: "இது இலவசப் பயிற்சி விளையாட்டு. பணம் வைத்து விளையாடும் வசதி இல்லை (₹1,00,000 விர்ச்சுவல் காயின்கள் வழங்கப்படும்)."
+            },
+            en: {
+                currentLangLabel: "English",
+                navHome: "Home",
+                navGame: "Game",
+                navLeaderboard: "Leaderboard",
+                navLogin: "Login",
+                heroTitle: "Ready to Play Rummy?",
+                heroSubtitle: "Practice 13-card rummy for free. Sharpen your skills with virtual coins.",
+                heroBtn: "Start Playing",
+                heroDisclaimer: "This is a free practice game. No real money involved (₹1,00,000 virtual coins included)."
+            },
+            hi: {
+                currentLangLabel: "हिंदी",
+                navHome: "होम",
+                navGame: "गेम",
+                navLeaderboard: "लीडरबोर्ड",
+                navLogin: "लॉगिन",
+                heroTitle: "रम्मी खेलने के लिए तैयार हैं?",
+                heroSubtitle: "13 कार्ड रम्मी का मुफ़्त में अभ्यास करें। अपने कौशल को सुधारें।",
+                heroBtn: "खेलना शुरू करें",
+                heroDisclaimer: "यह एक मुफ़्त अभ्यास गेम है। कोई असली पैसा शामिल नहीं है (₹1,00,000 वर्चुअल सिक्के शामिल हैं)।"
+            }
+        };
 
-<div id="message" class="message"></div>
-<script src="assets/app.js"></script>
+        // பக்கம் லோடு ஆகும்போது இயக்கப்படும் ஃபங்க்ஷன்
+        window.onload = function() {
+            const savedLang = localStorage.getItem('goodvexa_lang');
+            if (savedLang && translations[savedLang]) {
+                // ஏற்கனவே மொழி தேர்ந்தெடுக்கப்பட்டிருந்தால் பாப்-அப்பை மறைத்துவிட்டு அந்த மொழியை அமைக்கவும்
+                applyLanguage(savedLang);
+                document.getElementById('langModal').classList.add('hidden');
+            } else {
+                // முதன்முறை வருகையாளர் என்றால் பாப்-அப்பைக் காட்டவும்
+                document.getElementById('langModal').classList.remove('hidden');
+            }
+        };
+
+        // மொழியைத் தேர்ந்தெடுக்கும்போது
+        function selectLanguage(langCode) {
+            localStorage.setItem('goodvexa_lang', langCode);
+            applyLanguage(langCode);
+            document.getElementById('langModal').classList.add('hidden');
+        }
+
+        // பாப்-அப்பை மீண்டும் திறக்க (ஹெடரில் உள்ள பட்டனுக்காக)
+        function openLanguageModal() {
+            document.getElementById('langModal').classList.remove('hidden');
+        }
+
+        // தளத்தில் உள்ள உரைகளைத் தேர்ந்தெடுக்கப்பட்ட மொழிக்கு மாற்றுதல்
+        function applyLanguage(lang) {
+            const data = translations[lang] || translations.ta;
+            
+            document.getElementById('current-lang-text').innerText = data.currentLangLabel;
+            document.getElementById('nav-home').innerText = data.navHome;
+            document.getElementById('nav-game').innerText = data.navGame;
+            document.getElementById('nav-leaderboard').innerText = data.navLeaderboard;
+            document.getElementById('nav-login').innerText = data.navLogin;
+            document.getElementById('hero-title').innerText = data.heroTitle;
+            document.getElementById('hero-subtitle').innerText = data.heroSubtitle;
+            document.getElementById('hero-btn').innerText = data.heroBtn;
+            document.getElementById('hero-disclaimer').innerText = data.heroDisclaimer;
+            
+            document.documentElement.lang = lang;
+        }
+    </script>
 </body>
 </html>
