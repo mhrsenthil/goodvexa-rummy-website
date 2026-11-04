@@ -22,17 +22,16 @@
 
         header {
             background-color: #05140b;
-            padding: 12px 20px;
+            padding: 12px 25px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-bottom: 2px solid #16db65;
-            flex-wrap: wrap;
-            gap: 10px;
+            position: relative;
         }
 
         .logo {
-            font-size: 20px;
+            font-size: 22px;
             font-weight: bold;
             color: #16db65;
             letter-spacing: 1px;
@@ -41,37 +40,75 @@
         .nav-links {
             display: flex;
             align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
+            gap: 20px;
         }
 
         .nav-links a {
             color: #fff;
             text-decoration: none;
-            font-size: 14px;
-            display: none; /* Hide extra links on small screens for clean look */
+            font-size: 16px;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #16db65;
         }
 
         .lang-btn {
             background-color: #2d6a4f;
             color: #fff;
             border: 1px solid #16db65;
-            padding: 6px 12px;
+            padding: 7px 14px;
             border-radius: 5px;
             cursor: pointer;
             font-weight: bold;
-            font-size: 13px;
+            font-size: 14px;
         }
 
         .login-nav-btn {
             background-color: #ffb703;
             color: #000;
-            padding: 6px 16px;
+            padding: 7px 18px;
             border: none;
             border-radius: 5px;
             font-weight: bold;
             cursor: pointer;
-            font-size: 13px;
+            font-size: 14px;
+        }
+
+        /* Hamburger Menu Button for Mobile */
+        .hamburger {
+            display: none;
+            font-size: 24px;
+            background: none;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        /* Mobile Dropdown Menu */
+        .mobile-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background-color: #05140b;
+            border-bottom: 2px solid #16db65;
+            flex-direction: column;
+            padding: 15px 25px;
+            gap: 15px;
+            z-index: 100;
+        }
+
+        .mobile-menu.active {
+            display: flex;
+        }
+
+        .mobile-menu a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
         }
 
         main {
@@ -79,11 +116,11 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 30px 20px;
+            padding: 40px 30px;
             max-width: 1200px;
             margin: 0 auto;
             width: 100%;
-            gap: 30px;
+            gap: 40px;
         }
 
         .hero-left {
@@ -92,16 +129,16 @@
         }
 
         .hero-left h1 {
-            font-size: 36px;
-            margin-bottom: 15px;
+            font-size: 40px;
+            margin-bottom: 20px;
             color: #ffffff;
             line-height: 1.2;
         }
 
         .hero-left p {
-            font-size: 16px;
+            font-size: 18px;
             color: #b7e4c7;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             line-height: 1.5;
         }
 
@@ -110,34 +147,34 @@
             background-color: #2d6a4f;
             border: 1px solid #16db65;
             color: #ffb703;
-            padding: 8px 14px;
+            padding: 10px 18px;
             border-radius: 20px;
             font-weight: bold;
-            font-size: 14px;
-            margin-bottom: 15px;
+            font-size: 15px;
+            margin-bottom: 20px;
         }
 
         .disclaimer {
-            margin-top: 12px;
-            font-size: 12px;
+            margin-top: 15px;
+            font-size: 13px;
             color: #74c69d;
         }
 
         .hero-right {
-            width: 380px;
+            width: 400px;
             background-color: #1b4332;
             border: 2px solid #16db65;
             border-radius: 12px;
-            padding: 25px 20px;
+            padding: 35px 30px;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
             text-align: center;
         }
 
         .reg-card-title {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: bold;
             color: #ffb703;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
@@ -146,13 +183,13 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 12px;
             width: 100%;
             background-color: #ffffff;
             color: #000000;
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 600;
-            padding: 12px;
+            padding: 14px;
             border: none;
             border-radius: 8px;
             cursor: pointer;
@@ -165,17 +202,17 @@
         }
 
         .google-icon {
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
         }
 
         .terms-box {
-            margin-top: 20px;
-            font-size: 11px;
+            margin-top: 25px;
+            font-size: 12px;
             color: #95d5b2;
-            line-height: 1.4;
+            line-height: 1.5;
             border-top: 1px solid #2d6a4f;
-            padding-top: 12px;
+            padding-top: 15px;
         }
 
         .terms-box span {
@@ -200,33 +237,33 @@
         .modal-card {
             background-color: #1b4332;
             border: 2px solid #16db65;
-            padding: 25px;
+            padding: 30px;
             border-radius: 12px;
             text-align: center;
-            max-width: 420px;
+            max-width: 480px;
             width: 100%;
-            max-height: 85vh;
+            max-height: 90vh;
             display: flex;
             flex-direction: column;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
 
         .modal-card h2 {
-            font-size: 20px;
-            margin-bottom: 6px;
+            font-size: 22px;
+            margin-bottom: 8px;
             color: #16db65;
         }
 
         .modal-card p {
             color: #d8f3dc;
-            margin-bottom: 15px;
-            font-size: 13px;
+            margin-bottom: 20px;
+            font-size: 14px;
         }
 
         .lang-options {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 10px;
             overflow-y: auto;
             max-height: 50vh;
             padding-right: 5px;
@@ -236,9 +273,9 @@
             background-color: #2d6a4f;
             color: #ffffff;
             border: 1px solid #52b788;
-            padding: 10px;
+            padding: 12px;
             border-radius: 8px;
-            font-size: 15px;
+            font-size: 16px;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.2s ease;
@@ -253,28 +290,29 @@
             display: none !important;
         }
 
+        /* Responsive Media Query */
         @media (max-width: 850px) {
+            .nav-links {
+                display: none; /* Hide desktop menu on mobile */
+            }
+            .hamburger {
+                display: block; /* Show hamburger icon on mobile */
+            }
             main {
                 flex-direction: column;
-                padding: 15px;
-                gap: 20px;
+                padding: 20px;
+                gap: 30px;
             }
             .hero-left {
                 text-align: center;
                 max-width: 100%;
             }
             .hero-left h1 {
-                font-size: 28px;
-            }
-            .hero-left p {
-                font-size: 15px;
+                font-size: 32px;
             }
             .hero-right {
                 width: 100%;
                 max-width: 100%;
-            }
-            .nav-links a {
-                display: none;
             }
         }
     </style>
@@ -283,12 +321,28 @@
 
     <header>
         <div class="logo">GOODVEXA RUMMY</div>
+        
+        <!-- Desktop Nav Links -->
         <div class="nav-links">
             <a href="#" id="nav-home">Home</a>
             <a href="#" id="nav-game">Game</a>
             <a href="#" id="nav-leaderboard">Leaderboard</a>
             <button class="lang-btn" onclick="openLanguageModal()">🌐 <span id="current-lang-text">English</span></button>
             <button class="login-nav-btn" id="nav-login">Login</button>
+        </div>
+
+        <!-- Hamburger Menu Button for Mobile -->
+        <button class="hamburger" onclick="toggleMobileMenu()">☰</button>
+
+        <!-- Mobile Dropdown Menu -->
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="#" id="mob-nav-home">Home</a>
+            <a href="#" id="mob-nav-game">Game</a>
+            <a href="#" id="mob-nav-leaderboard">Leaderboard</a>
+            <div style="display: flex; gap: 10px; margin-top: 10px;">
+                <button class="lang-btn" style="flex:1;" onclick="openLanguageModal()">🌐 <span id="mob-current-lang-text">English</span></button>
+                <button class="login-nav-btn" style="flex:1;" id="mob-nav-login">Login</button>
+            </div>
         </div>
     </header>
 
@@ -422,7 +476,7 @@
                 heroSubtitle: "ಭಾರತದಾದ್ಯಂತ ಇರುವ ಆಟಗಾರರೊಂದಿಗೆ ಸುರಕ್ಷಿತವಾಗಿ 13 ಕಾರ್ಡ್ ರಮ್ಮಿಯನ್ನು ಅಭ್ಯಾಸ ಮಾಡಿ.",
                 heroDisclaimer: "100% ಉಚಿತ ಅಭ್ಯಾಸ ವೇದಿಕೆ. ಯಾವುದೇ ನೈಜ ಹಣವಿಲ್ಲ.",
                 regTitle: "ಲಾಗಿನ್ / ಸೈನ್ ಅಪ್",
-                googleBtnText: "ಗೂಗ್ மூலம் ಮುಂದುವರಿಸಿ",
+                googleBtnText: "ಗೂಗ್ ಮೂಲಕ ಮುಂದುವರಿಸಿ",
                 termsText: "<span>18+ ಪರಿಶೀಲಿಸಿ</span><br>ನೋಂದಾಯಿಸುವ ಮೂಲಕ, ನೀವು 18+ ವರ್ಷ ವಯಸ್ಸಿನವರು ಮತ್ತು ನಿಯಮಗಳನ್ನು ಒಪ್ಪಿಕೊಳ್ಳುತ್ತೀರಿ."
             },
             mr: {
@@ -469,7 +523,7 @@
             },
             pa: {
                 currentLangLabel: "ਪੰਜਾਬੀ",
-                navHome: "ਹੋມ",
+                navHome: "ਹੋਮ",
                 navGame: "ਗੇਮ",
                 navLeaderboard: "ਲੀਡਰਬੋਰਡ",
                 navLogin: "ਲਾਗਇਨ",
@@ -503,14 +557,27 @@
             document.getElementById('langModal').classList.remove('hidden');
         }
 
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('active');
+        }
+
         function applyLanguage(lang) {
             const data = translations[lang] || translations.en;
             
             document.getElementById('current-lang-text').innerText = data.currentLangLabel;
+            document.getElementById('mob-current-lang-text').innerText = data.currentLangLabel;
+            
             document.getElementById('nav-home').innerText = data.navHome;
             document.getElementById('nav-game').innerText = data.navGame;
             document.getElementById('nav-leaderboard').innerText = data.navLeaderboard;
             document.getElementById('nav-login').innerText = data.navLogin;
+
+            document.getElementById('mob-nav-home').innerText = data.navHome;
+            document.getElementById('mob-nav-game').innerText = data.navGame;
+            document.getElementById('mob-nav-leaderboard').innerText = data.navLeaderboard;
+            document.getElementById('mob-nav-login').innerText = data.navLogin;
+
             document.getElementById('hero-badge').innerText = data.heroBadge;
             document.getElementById('hero-title').innerText = data.heroTitle;
             document.getElementById('hero-subtitle').innerText = data.heroSubtitle;
