@@ -68,7 +68,6 @@
             cursor: pointer;
         }
 
-        /* Hero Container with 2 Columns */
         main {
             flex: 1;
             display: flex;
@@ -118,7 +117,6 @@
             color: #74c69d;
         }
 
-        /* Right Side Google Login Card */
         .hero-right {
             width: 400px;
             background-color: #1b4332;
@@ -179,7 +177,6 @@
             font-weight: bold;
         }
 
-        /* Language Modal */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -278,7 +275,6 @@
     </header>
 
     <main>
-        <!-- Left Column -->
         <div class="hero-left">
             <div class="bonus-badge" id="hero-badge">🎁 ₹1,00,000 Free Virtual Coins</div>
             <h1 id="hero-title">Ready to Play Rummy?</h1>
@@ -286,7 +282,6 @@
             <div class="disclaimer" id="hero-disclaimer">100% Free Practice Platform. No real money involved.</div>
         </div>
 
-        <!-- Right Column: Google Login -->
         <div class="hero-right">
             <div class="reg-card-title" id="reg-title">LOGIN / SIGNUP</div>
             
@@ -307,7 +302,6 @@
         </div>
     </main>
 
-    <!-- Language Modal -->
     <div class="modal-overlay" id="langModal">
         <div class="modal-card">
             <h2>Select Language</h2>
@@ -410,7 +404,7 @@
                 heroSubtitle: "ಭಾರತದಾದ್ಯಂತ ಇರುವ ಆಟಗಾರರೊಂದಿಗೆ ಸುರಕ್ಷಿತವಾಗಿ 13 ಕಾರ್ಡ್ ರಮ್ಮಿಯನ್ನು ಅಭ್ಯಾಸ ಮಾಡಿ.",
                 heroDisclaimer: "100% ಉಚಿತ ಅಭ್ಯಾಸ ವೇದಿಕೆ. ಯಾವುದೇ ನೈಜ ಹಣವಿಲ್ಲ.",
                 regTitle: "ಲಾಗಿನ್ / ಸೈನ್ ಅಪ್",
-                googleBtnText: "ಗೂಗ್ ಮೂಲಕ ಮುಂದುವರಿಸಿ",
+                googleBtnText: "ಗೂಗ್ மூலம் ಮುಂದುವರಿಸಿ",
                 termsText: "<span>18+ ಪರಿಶೀಲಿಸಿ</span><br>ನೋಂದಾಯಿಸುವ ಮೂಲಕ, ನೀವು 18+ ವರ್ಷ ವಯಸ್ಸಿನವರು ಮತ್ತು ನಿಯಮಗಳನ್ನು ಒಪ್ಪಿಕೊಳ್ಳುತ್ತೀರಿ."
             },
             mr: {
@@ -459,7 +453,7 @@
                 currentLangLabel: "ਪੰਜਾਬੀ",
                 navHome: "ਹੋਮ",
                 navGame: "ਗੇਮ",
-                navLeaderboard: "ਲੀਡਰബോർഡ്",
+                navLeaderboard: "ਲੀਡਰਬੋਰਡ",
                 navLogin: "ਲਾਗਇਨ",
                 heroBadge: "🎁 ₹1,00,000 ਮੁਫ਼ਤ ਵਰਚੁਅਲ ਸਿੱਕੇ",
                 heroTitle: "ਰਮੀ ਖੇਡਣ ਲਈ ਤਿਆਰ ਹੋ?",
@@ -488,7 +482,7 @@
         }
 
         function openLanguageModal() {
-            document.getElementById('langModal'].classList.remove('hidden');
+            document.getElementById('langModal').classList.remove('hidden');
         }
 
         function applyLanguage(lang) {
@@ -513,7 +507,6 @@
 
         function handleGoogleLogin() {
             alert("Redirecting to Google Secure Login...\n₹1,00,000 Virtual Coins will be credited to your account!");
-            // Here we will integrate Firebase / Google OAuth authentication logic next
         }
     </script>
 </body>
