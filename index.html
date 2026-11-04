@@ -58,7 +58,7 @@
             font-weight: bold;
         }
 
-        .login-btn {
+        .login-nav-btn {
             background-color: #ffb703;
             color: #000;
             padding: 8px 20px;
@@ -68,45 +68,48 @@
             cursor: pointer;
         }
 
+        /* Hero Container with 2 Columns */
         main {
             flex: 1;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 50px;
+            padding: 40px 30px;
             max-width: 1200px;
             margin: 0 auto;
             width: 100%;
+            gap: 40px;
         }
 
-        .hero-text {
-            max-width: 600px;
+        .hero-left {
+            flex: 1;
+            max-width: 550px;
         }
 
-        .hero-text h1 {
+        .hero-left h1 {
             font-size: 42px;
             margin-bottom: 20px;
             color: #ffffff;
             line-height: 1.2;
         }
 
-        .hero-text p {
+        .hero-left p {
             font-size: 18px;
             color: #b7e4c7;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             line-height: 1.5;
         }
 
-        .play-now-btn {
-            background-color: #ffb703;
-            color: #000;
-            font-size: 20px;
+        .bonus-badge {
+            display: inline-block;
+            background-color: #2d6a4f;
+            border: 1px solid #16db65;
+            color: #ffb703;
+            padding: 10px 18px;
+            border-radius: 20px;
             font-weight: bold;
-            padding: 15px 35px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(255, 183, 3, 0.4);
+            font-size: 16px;
+            margin-bottom: 20px;
         }
 
         .disclaimer {
@@ -115,7 +118,99 @@
             color: #74c69d;
         }
 
-        /* மொழி தேர்வு பாப்-அப் (Language Modal with Scroll) */
+        /* Right Side Registration Form Card */
+        .hero-right {
+            width: 380px;
+            background-color: #1b4332;
+            border: 2px solid #16db65;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        .reg-card-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #ffb703;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-align: center;
+        }
+
+        .phone-input-group {
+            display: flex;
+            align-items: center;
+            background-color: #ffffff;
+            border-radius: 6px;
+            padding: 4px 10px;
+            margin-bottom: 12px;
+        }
+
+        .country-code {
+            color: #333;
+            font-weight: bold;
+            font-size: 16px;
+            padding-right: 8px;
+            border-right: 1px solid #ccc;
+        }
+
+        .phone-input {
+            border: none;
+            outline: none;
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+            color: #000;
+        }
+
+        .invite-link {
+            display: block;
+            text-align: right;
+            color: #74c69d;
+            font-size: 13px;
+            text-decoration: underline;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+
+        .get-started-btn {
+            width: 100%;
+            background-color: #ffb703;
+            color: #000;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 14px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(255, 183, 3, 0.3);
+            transition: background-color 0.2s;
+        }
+
+        .get-started-btn:hover {
+            background-color: #ffaaa0;
+        }
+
+        .other-login-link {
+            display: block;
+            text-align: center;
+            color: #d8f3dc;
+            font-size: 14px;
+            margin-top: 15px;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        .terms-text {
+            font-size: 11px;
+            color: #95d5b2;
+            text-align: center;
+            margin-top: 20px;
+            line-height: 1.4;
+        }
+
+        /* Language Modal */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -184,6 +279,21 @@
         .hidden {
             display: none !important;
         }
+
+        /* Responsive Mobile Layout */
+        @media (max-width: 850px) {
+            main {
+                flex-direction: column;
+                padding: 20px;
+            }
+            .hero-left {
+                text-align: center;
+            }
+            .hero-right {
+                width: 100%;
+                max-width: 400px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -195,16 +305,32 @@
             <a href="#" id="nav-game">Game</a>
             <a href="#" id="nav-leaderboard">Leaderboard</a>
             <button class="lang-btn" onclick="openLanguageModal()">🌐 <span id="current-lang-text">English</span></button>
-            <button class="login-btn" id="nav-login">Login</button>
+            <button class="login-nav-btn" id="nav-login">Login</button>
         </div>
     </header>
 
     <main>
-        <div class="hero-text">
+        <!-- Left Column: Branding / Info -->
+        <div class="hero-left">
+            <div class="bonus-badge" id="hero-badge">🎁 ₹1,00,000 Free Virtual Coins</div>
             <h1 id="hero-title">Ready to Play Rummy?</h1>
-            <p id="hero-subtitle">Practice 13-card rummy for free. Sharpen your skills with virtual coins.</p>
-            <button class="play-now-btn" id="hero-btn">Start Playing</button>
-            <div class="disclaimer" id="hero-disclaimer">This is a free practice game. No real money involved (₹1,00,000 virtual coins included).</div>
+            <p id="hero-subtitle">Practice 13-card rummy for free with players across India. Sharpen your skills anytime, anywhere.</p>
+            <div class="disclaimer" id="hero-disclaimer">100% Free Practice Platform. No real money involved.</div>
+        </div>
+
+        <!-- Right Column: Registration / Mobile Form -->
+        <div class="hero-right">
+            <div class="reg-card-title" id="reg-title">LOGIN / SIGNUP</div>
+            <form onsubmit="handleRegistration(event)">
+                <div class="phone-input-group">
+                    <span class="country-code">+91</span>
+                    <input type="tel" id="mobileInput" class="phone-input" placeholder="Enter Mobile Number" maxlength="10" pattern="[0-9]{10}" required>
+                </div>
+                <span class="invite-link" id="invite-code-text">Have an Invite code?</span>
+                <button type="submit" class="get-started-btn" id="btn-get-started">GET STARTED</button>
+            </form>
+            <span class="other-login-link" id="other-methods-text">Login using other methods</span>
+            <div class="terms-text" id="terms-text">By registering, you confirm you are 18+ & agree to our T&C & Privacy Policy.</div>
         </div>
     </main>
 
@@ -236,10 +362,16 @@
                 navGame: "Game",
                 navLeaderboard: "Leaderboard",
                 navLogin: "Login",
+                heroBadge: "🎁 ₹1,00,000 Free Virtual Coins",
                 heroTitle: "Ready to Play Rummy?",
-                heroSubtitle: "Practice 13-card rummy for free. Sharpen your skills with virtual coins.",
-                heroBtn: "Start Playing",
-                heroDisclaimer: "This is a free practice game. No real money involved (₹1,00,000 virtual coins included)."
+                heroSubtitle: "Practice 13-card rummy for free with players across India. Sharpen your skills anytime, anywhere.",
+                heroDisclaimer: "100% Free Practice Platform. No real money involved.",
+                regTitle: "LOGIN / SIGNUP",
+                phonePlaceholder: "Enter Mobile Number",
+                inviteCodeText: "Have an Invite code?",
+                btnGetStarted: "GET STARTED",
+                otherMethodsText: "Login using other methods",
+                termsText: "By registering, you confirm you are 18+ & agree to our T&C & Privacy Policy."
             },
             ta: {
                 currentLangLabel: "தமிழ்",
@@ -247,10 +379,16 @@
                 navGame: "விளையாட்டு",
                 navLeaderboard: "தரவரிசை",
                 navLogin: "உள்நுழை",
+                heroBadge: "🎁 ₹1,00,000 இலவச விர்ச்சுவல் நாணயங்கள்",
                 heroTitle: "ரம்மி விளையாடத் தயாரா?",
-                heroSubtitle: "13 கார்டு ரம்மி விளையாட்டை இலவசமாகப் பயிற்சி செய்யுங்கள். உங்கள் திறமையை வளர்த்துக் கொள்ளுங்கள்.",
-                heroBtn: "விளையாடத் தொடங்குங்கள்",
-                heroDisclaimer: "இது இலவசப் பயிற்சி விளையாட்டு. பணம் வைத்து விளையாடும் வசதி இல்லை (₹1,00,000 விர்ச்சுவல் காயின்கள் வழங்கப்படும்)."
+                heroSubtitle: "இந்தியா முழுவதிலும் உள்ள வீரர்களுடன் இலவசமாக 13 கார்டு ரம்மி பயிற்சி செய்யுங்கள். உங்கள் திறமையை வளர்த்துக் கொள்ளுங்கள்.",
+                heroDisclaimer: "100% இலவசப் பயிற்சி தளம். பணம் வைத்து விளையாடும் வசதி இல்லை.",
+                regTitle: "உள்நுழைவு / பதிவு",
+                phonePlaceholder: "மொபைல் எண்ணை உள்ளிடவும்",
+                inviteCodeText: "அழைப்புக் குறியீடு உள்ளதா?",
+                btnGetStarted: "தொடங்குங்கள்",
+                otherMethodsText: "பிற வழிகளில் உள்நுழையவும்",
+                termsText: "பதிவு செய்வதன் மூலம், நீங்கள் 18+ வயதுடையவர் மற்றும் விதிமுறைகளை ஏற்கிறீர்கள்."
             },
             hi: {
                 currentLangLabel: "हिंदी",
@@ -258,10 +396,16 @@
                 navGame: "गेम",
                 navLeaderboard: "लीडरबोर्ड",
                 navLogin: "लॉगिन",
+                heroBadge: "🎁 ₹1,00,000 मुफ़्त वर्चुअल सिक्के",
                 heroTitle: "रम्मी खेलने के लिए तैयार हैं?",
-                heroSubtitle: "13 कार्ड रम्मी का मुफ़्त में अभ्यास करें। अपने कौशल को सुधारें।",
-                heroBtn: "खेलना शुरू करें",
-                heroDisclaimer: "यह एक मुफ़्त अभ्यास गेम है। कोई असली पैसा शामिल नहीं है (₹1,00,000 वर्चुअल सिक्के शामिल हैं)।"
+                heroSubtitle: "पूरे भारत के खिलाड़ियों के साथ 13 कार्ड रम्मी का मुफ़्त अभ्यास करें।",
+                heroDisclaimer: "100% मुफ़्त अभ्यास मंच। कोई असली पैसा शामिल नहीं है।",
+                regTitle: "लॉगिन / साइनअप",
+                phonePlaceholder: "मोबाइल नंबर दर्ज करें",
+                inviteCodeText: "क्या आपके पास इनवाइट कोड है?",
+                btnGetStarted: "शुरू करें",
+                otherMethodsText: "अन्य तरीकों से लॉगिन करें",
+                termsText: "पंजीकरण करके, आप पुष्टि करते हैं कि आपकी आयु 18+ है और नियमों से सहमत हैं।"
             },
             te: {
                 currentLangLabel: "తెలుగు",
@@ -269,10 +413,16 @@
                 navGame: "ఆట",
                 navLeaderboard: "లీడర్‌బోర్డ్",
                 navLogin: "లాగిన్",
+                heroBadge: "🎁 ₹1,00,000 ఉచిత వర్చువల్ కాయిన్స్",
                 heroTitle: "రమ్మీ ఆడటానికి సిద్ధంగా ఉన్నారా?",
-                heroSubtitle: "13 కార్డ్ రమ్మీని ఉచితంగా ప్రాక్టీస్ చేయండి. మీ నైపుణ్యాలను మెరుగుపరచుకోండి.",
-                heroBtn: "ఆట ప్రారంభించండి",
-                heroDisclaimer: "ఇది ఉచిత ప్రాక్టీస్ గేమ్. అసలు డబ్బు शामिल లేదు (₹1,00,000 వర్చువల్ కాయిన్స్ అందించబడతాయి)."
+                heroSubtitle: "భారతదేశవ్యాప్తంగా ఉన్న ఆటగాళ్లతో 13 కార్డ్ రమ్మీని ఉచితంగా ప్రాక్టీస్ చేయండి.",
+                heroDisclaimer: "100% ఉచిత ప్రాక్టీస్ ప్లాట్‌ఫారమ్. అసలు డబ్బు లేదు.",
+                regTitle: "లాగిన్ / సైన్ అప్",
+                phonePlaceholder: "మొబైల్ నంబర్ నమోదు చేయండి",
+                inviteCodeText: "ఇన్వైట్ కోడ్ ఉందా?",
+                btnGetStarted: "ప్రారంభించండి",
+                otherMethodsText: "ఇతర పద్ధతుల ద్వారా లాగిన్ చేయండి",
+                termsText: "నమోదు చేయడం ద్వారా, మీరు 18+ అని మరియు నిబంధనలకు అంగీకరిస్తున్నారని ధృవీకరిస్తున్నారు."
             },
             ml: {
                 currentLangLabel: "മലയാളം",
@@ -280,10 +430,16 @@
                 navGame: "ഗെയിം",
                 navLeaderboard: "ലീഡർബോർഡ്",
                 navLogin: "ലോഗിൻ",
+                heroBadge: "🎁 ₹1,00,000 സൗജന്യ വെർച്വൽ കോയിനുകൾ",
                 heroTitle: "രമ്മി കളിക്കാൻ തയ്യാറാണോ?",
-                heroSubtitle: "13 കാർഡ് റമ്മി സൗജന്യമായി പരിശീലിക്കുക. നിങ്ങളുടെ കഴിവുകൾ മെച്ചപ്പെടുത്തുക.",
-                heroBtn: "കളി ആരംഭിക്കുക",
-                heroDisclaimer: "ഇത് സൗജന്യ പരിശീലന ഗെയിമാണ്. യഥാർത്ഥ പണം ഉൾപ്പെട്ടിട്ടില്ല (₹1,00,000 വെർച്വൽ കോയിനുകൾ ഉൾപ്പെടുത്തിയിട്ടുണ്ട്)."
+                heroSubtitle: "ഇന്ത്യയിലുടനീളമുള്ള കളിക്കാർക്കൊപ്പം 13 കാർഡ് റമ്മി സൗജന്യമായി പരിശീലിക്കുക.",
+                heroDisclaimer: "100% സൗജന്യ പരിശീലന പ്ലാറ്റ്ഫോം. യഥാർത്ഥ പണം ഇല്ല.",
+                regTitle: "ലോഗിൻ / സൈൻ അപ്പ്",
+                phonePlaceholder: "മൊബൈൽ നമ്പർ നൽകുക",
+                inviteCodeText: "ഇൻവൈറ്റ് കോഡ് ഉണ്ടോ?",
+                btnGetStarted: "ആരംഭിക്കുക",
+                otherMethodsText: "മറ്റ് മാർഗ്ഗങ്ങളിലൂടെ ലോഗിൻ ചെയ്യുക",
+                termsText: "രജിസ്റ്റർ ചെയ്യുന്നതിലൂടെ, നിങ്ങൾക്ക് 18+ വയസ്സുണ്ടെന്നും വ്യവസ്ഥകൾ അംഗീകരിക്കുന്നുവെന്നും സ്ഥിരീകരിക്കുന്നു."
             },
             kn: {
                 currentLangLabel: "ಕನ್ನಡ",
@@ -291,10 +447,16 @@
                 navGame: "ಆಟ",
                 navLeaderboard: "ಲೀಡರ್‌ಬೋರ್ಡ್",
                 navLogin: "ಲಾಗಿನ್",
+                heroBadge: "🎁 ₹1,00,000 ಉಚಿತ ವರ್ಚುವಲ್ ನಾಣ್ಯಗಳು",
                 heroTitle: "ರಮ್ಮಿ ಆಡಲು ಸಿದ್ಧರಿದ್ದೀರಾ?",
-                heroSubtitle: "13 ಕಾರ್ಡ್ ರಮ್ಮಿಯನ್ನು ಉಚಿತವಾಗಿ ಅಭ್ಯಾಸ ಮಾಡಿ. ನಿಮ್ಮ ಕೌಶಲ್ಯಗಳನ್ನು ಬೆಳೆಸಿಕೊಳ್ಳಿ.",
-                heroBtn: "ಆಟ ಪ್ರಾರಂಭಿಸಿ",
-                heroDisclaimer: "ಇದು ಉಚಿತ ಅಭ್ಯಾಸದ ಆಟ. ಯಾವುದೇ ನೈಜ ಹಣವಿಲ್ಲ (₹1,00,000 ವರ್ಚುವಲ್ ನಾಣ್ಯಗಳನ್ನು ಸೇರಿಸಲಾಗಿದೆ)."
+                heroSubtitle: "ಭಾರತದಾದ್ಯಂತ ಇರುವ ಆಟಗಾರರೊಂದಿಗೆ 13 ಕಾರ್ಡ್ ರಮ್ಮಿಯನ್ನು ಉಚಿತವಾಗಿ ಅಭ್ಯಾಸ ಮಾಡಿ.",
+                heroDisclaimer: "100% ಉಚಿತ ಅಭ್ಯಾಸ ವೇದಿಕೆ. ಯಾವುದೇ ನೈಜ ಹಣವಿಲ್ಲ.",
+                regTitle: "ಲಾಗಿನ್ / ಸೈನ್ ಅಪ್",
+                phonePlaceholder: "ಮೊಬೈಲ್ ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ",
+                inviteCodeText: "ಆಹ್ವಾನ ಕೋಡ್ ಇದೆಯೇ?",
+                btnGetStarted: "ಪ್ರಾರಂಭಿಸಿ",
+                otherMethodsText: "ಇತರ ವಿಧಾನಗಳನ್ನು ಬಳಸಿ ಲಾಗಿನ್ ಮಾಡಿ",
+                termsText: "ನೋಂದಾಯಿಸುವ ಮೂಲಕ, ನೀವು 18+ ವರ್ಷ ವಯಸ್ಸಿನವರು ಮತ್ತು ನಿಯಮಗಳನ್ನು ಒಪ್ಪಿಕೊಳ್ಳುತ್ತೀರಿ."
             },
             mr: {
                 currentLangLabel: "मराठी",
@@ -302,10 +464,16 @@
                 navGame: "गेम",
                 navLeaderboard: "लिडरबोर्ड",
                 navLogin: "लॉगिन",
+                heroBadge: "🎁 ₹1,00,000 मोफत व्हर्च्युअल नाणी",
                 heroTitle: "रम्मी खेळण्यास तयार आहात?",
-                heroSubtitle: "13 कार्ड रम्मीचा मोफत सराव करा. तुमचे कौशल्य वाढवा.",
-                heroBtn: "खेळायला सुरुवात करा",
-                heroDisclaimer: "हा एक मोफत सराव खेळ आहे. वास्तविक पैसे गुंतवलेले नाहीत (₹1,00,000 व्हर्च्युअल नाणी समाविष्ट आहेत)."
+                heroSubtitle: "भारतभरातील खेळाडूंसोबत 13 कार्ड रम्मीचा मोफत सराव करा.",
+                heroDisclaimer: "100% मोफत सराव प्लॅटफॉर्म. वास्तविक पैसे समाविष्ट नाहीत.",
+                regTitle: "लॉगिन / साइनअप",
+                phonePlaceholder: "मोबाईल नंबर प्रविष्ट करा",
+                inviteCodeText: "इनव्हाइट कोड आहे का?",
+                btnGetStarted: "सुरू करा",
+                otherMethodsText: "इतर पद्धती वापरून लॉगिन करा",
+                termsText: "नोंदणी करून, तुम्ही तुमचे वय १८+ असल्याची पुष्टी करता."
             },
             bn: {
                 currentLangLabel: "বাংলা",
@@ -313,10 +481,16 @@
                 navGame: "গেম",
                 navLeaderboard: "লিডারবোর্ড",
                 navLogin: "লগইন",
+                heroBadge: "🎁 ₹1,00,000 ফ্রি ভার্চুয়াল কয়েন",
                 heroTitle: "রমি খেলতে প্রস্তুত?",
-                heroSubtitle: "বিনামূল্যে ১৩ কার্ডের রমি অনুশীলন করুন। আপনার দক্ষতা বাড়ান।",
-                heroBtn: "খেলা শুরু করুন",
-                heroDisclaimer: "এটি একটি ফ্রি প্র্যাকটিস গেম। আসল টাকা জড়িত নেই (₹1,00,000 ভার্চুয়াল কয়েন অন্তর্ভুক্ত)।"
+                heroSubtitle: "ভারত জুড়ে খেলোয়াড়দের সাথে বিনামূল্যে ১৩ কার্ডের রমি অনুশীলন করুন।",
+                heroDisclaimer: "১০০% বিনামূল্যে অনুশীলনের প্ল্যাটফর্ম। আসল টাকা নেই।",
+                regTitle: "লগইন / সাইনআপ",
+                phonePlaceholder: "মোবাইল নম্বর লিখুন",
+                inviteCodeText: "ইনভাইট কোড আছে?",
+                btnGetStarted: "শুরু করুন",
+                otherMethodsText: "অন্যান্য উপায়ে লগইন করুন",
+                termsText: "নিবন্ধন করার মাধ্যমে, আপনি নিশ্চিত করছেন যে আপনার বয়স ১৮+ এবং শর্তাবলী মেনে নিচ্ছেন।"
             },
             gu: {
                 currentLangLabel: "ગુજરાતી",
@@ -324,21 +498,33 @@
                 navGame: "ગેમ",
                 navLeaderboard: "લીડરબોર્ડ",
                 navLogin: "લોગિન",
+                heroBadge: "🎁 ₹1,00,000 મફત વર્ચ્યુઅલ સિક્કા",
                 heroTitle: "રમમી રમવા માટે તૈયાર છો?",
-                heroSubtitle: "૧૩ કાર્ડ રમમી મફતમાં પ્રેક્ટિસ કરો. તમારી કુશળતા વધારો.",
-                heroBtn: "રમવાનું શરૂ કરો",
-                heroDisclaimer: "આ એક મફત પ્રેક્ટિસ ગેમ છે. વાસ્તવિક નાણાં સામેલ નથી (₹1,00,000 વર્ચ્યુઅલ સિક્કાઓ સામેલ છે)."
+                heroSubtitle: "ભારતભરના ખેલાડીઓ સાથે ૧૩ કાર્ડ રમમી મફતમાં પ્રેક્ટિસ કરો.",
+                heroDisclaimer: "100% મફત પ્રેક્ટિસ પ્લેટફોર્મ. વાસ્તવિક નાણાં સામેલ નથી.",
+                regTitle: "લોગિન / સાઇનઅપ",
+                phonePlaceholder: "મોબાઈલ નંબર દાખલ કરો",
+                inviteCodeText: "શું તમારી પાસે ઇનવાઇટ કોડ છે?",
+                btnGetStarted: "શરૂ કરો",
+                otherMethodsText: "અન્ય પદ્ધતિઓ દ્વારા લોગિન કરો",
+                termsText: "રજીસ્ટર કરીને, તમે પુષ્ટિ કરો છો કે તમારી ઉંમર ૧૮+ છે."
             },
             pa: {
                 currentLangLabel: "ਪੰਜਾਬੀ",
                 navHome: "ਹੋਮ",
                 navGame: "ਗੇਮ",
                 navLeaderboard: "ਲੀਡਰਬੋਰਡ",
-                navLogin: "ਲਾگਇਨ",
-                heroTitle: "ਰम्मी ਖੇਡਣ ਲਈ ਤਿਆਰ ਹੋ?",
-                heroSubtitle: "13 ਕਾਰਡ ਰम्मी ਦਾ ਮੁਫ਼ਤ ਅਭਿਆਸ ਕਰੋ। ਆਪਣੇ ਹੁਨਰ ਨੂੰ ਨਿਖਾਰੋ।",
-                heroBtn: "ਖੇਡਣਾ ਸ਼ुरू ਕਰੋ",
-                heroDisclaimer: "ਇਹ ਇੱਕ ਮੁਫ਼ਤ ਅਭਿਆਸ ਖੇਡ ਹੈ। ਅਸਲ ਪੈਸਾ ਸ਼ਾਮਲ ਨਹੀਂ ਹੈ (₹1,00,000 ਵਰਚੁਅਲ ਸਿੱਕੇ ਸ਼ਾਮਲ ਹਨ)।"
+                navLogin: "ਲਾਗਇਨ",
+                heroBadge: "🎁 ₹1,00,000 ਮੁਫ਼ਤ ਵਰਚੁਅਲ ਸਿੱਕੇ",
+                heroTitle: "ਰਮੀ ਖੇਡਣ ਲਈ ਤਿਆਰ ਹੋ?",
+                heroSubtitle: "ਭਾਰਤ ਭਰ ਦੇ ਖਿਡਾਰੀਆਂ ਨਾਲ 13 ਕਾਰਡ ਰਮੀ ਦਾ ਮੁਫ਼ਤ ਅਭਿਆਸ ਕਰੋ।",
+                heroDisclaimer: "100% ਮੁਫ਼ਤ ਅਭਿਆਸ ਪਲੇਟਫਾਰਮ। ਕੋਈ ਅਸਲ ਪੈਸਾ ਸ਼ਾਮਲ ਨਹੀਂ ਹੈ।",
+                regTitle: "ਲਾਗਇਨ / ਸਾਈਨ ਅੱਪ",
+                phonePlaceholder: "ਮੋਬਾਈਲ ਨੰਬਰ ਦਰਜ ਕਰੋ",
+                inviteCodeText: "ਕੀ ਇਨਵਾਈਟ ਕੋਡ ਹੈ?",
+                btnGetStarted: "ਸ਼ੁਰੂ ਕਰੋ",
+                otherMethodsText: "ਹੋਰ ਤਰੀਕਿਆਂ ਨਾਲ ਲਾਗਇਨ ਕਰੋ",
+                termsText: "ਰਜਿਸਟਰ ਕਰਕੇ, ਤੁਸੀਂ ਪੁਸ਼ਟੀ ਕਰਦੇ ਹੋ ਕਿ ਤੁਹਾਡੀ ਉਮਰ 18+ ਹੈ।"
             }
         };
 
@@ -370,12 +556,28 @@
             document.getElementById('nav-game').innerText = data.navGame;
             document.getElementById('nav-leaderboard').innerText = data.navLeaderboard;
             document.getElementById('nav-login').innerText = data.navLogin;
+            document.getElementById('hero-badge').innerText = data.heroBadge;
             document.getElementById('hero-title').innerText = data.heroTitle;
             document.getElementById('hero-subtitle').innerText = data.heroSubtitle;
-            document.getElementById('hero-btn').innerText = data.heroBtn;
             document.getElementById('hero-disclaimer').innerText = data.heroDisclaimer;
             
+            document.getElementById('reg-title').innerText = data.regTitle;
+            document.getElementById('mobileInput').placeholder = data.phonePlaceholder;
+            document.getElementById('invite-code-text').innerText = data.inviteCodeText;
+            document.getElementById('btn-get-started').innerText = data.btnGetStarted;
+            document.getElementById('other-methods-text').innerText = data.otherMethodsText;
+            document.getElementById('terms-text').innerText = data.termsText;
+
             document.documentElement.lang = lang;
+        }
+
+        function handleRegistration(event) {
+            event.preventDefault();
+            const mobileNumber = document.getElementById('mobileInput').value;
+            if(mobileNumber.length === 10) {
+                alert("Mobile Number Registered: " + mobileNumber + "\nStarting Game with ₹1,00,000 Free Coins!");
+                // Here we will add backend OTP verification step in the next step
+            }
         }
     </script>
 </body>
