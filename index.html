@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ta">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,6 @@
             flex-direction: column;
         }
 
-        /* ஹெடர் (Header) அமைப்பு */
         header {
             background-color: #05140b;
             padding: 15px 30px;
@@ -69,7 +68,6 @@
             cursor: pointer;
         }
 
-        /* பிரதான பகுதி (Hero Section) */
         main {
             flex: 1;
             display: flex;
@@ -117,7 +115,7 @@
             color: #74c69d;
         }
 
-        /* மொழி தேர்வு பாப்-அப் (Language Modal) */
+        /* மொழி தேர்வு பாப்-அப் (Language Modal with Scroll) */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -134,39 +132,45 @@
         .modal-card {
             background-color: #1b4332;
             border: 2px solid #16db65;
-            padding: 35px;
+            padding: 30px;
             border-radius: 12px;
             text-align: center;
-            max-width: 450px;
+            max-width: 480px;
             width: 90%;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
 
         .modal-card h2 {
-            font-size: 24px;
-            margin-bottom: 10px;
+            font-size: 22px;
+            margin-bottom: 8px;
             color: #16db65;
         }
 
         .modal-card p {
             color: #d8f3dc;
-            margin-bottom: 25px;
-            font-size: 15px;
+            margin-bottom: 20px;
+            font-size: 14px;
         }
 
         .lang-options {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 10px;
+            overflow-y: auto;
+            max-height: 50vh;
+            padding-right: 5px;
         }
 
         .lang-option-btn {
             background-color: #2d6a4f;
             color: #ffffff;
             border: 1px solid #52b788;
-            padding: 14px;
+            padding: 12px;
             border-radius: 8px;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.2s ease;
@@ -184,56 +188,48 @@
 </head>
 <body>
 
-    <!-- ஹெடர் பகுதி -->
     <header>
         <div class="logo">GOODVEXA RUMMY</div>
         <div class="nav-links">
-            <a href="#" id="nav-home">முகப்பு</a>
-            <a href="#" id="nav-game">விளையாட்டு</a>
-            <a href="#" id="nav-leaderboard">தரவரிசை</a>
-            <button class="lang-btn" onclick="openLanguageModal()">🌐 <span id="current-lang-text">தமிழ்</span></button>
+            <a href="#" id="nav-home">Home</a>
+            <a href="#" id="nav-game">Game</a>
+            <a href="#" id="nav-leaderboard">Leaderboard</a>
+            <button class="lang-btn" onclick="openLanguageModal()">🌐 <span id="current-lang-text">English</span></button>
             <button class="login-btn" id="nav-login">Login</button>
         </div>
     </header>
 
-    <!-- பிரதான பக்கம் -->
     <main>
         <div class="hero-text">
-            <h1 id="hero-title">ரம்மி விளையாடத் தயாரா?</h1>
-            <p id="hero-subtitle">13 கார்டு ரம்மி விளையாட்டை இலவசமாகப் பயிற்சி செய்யுங்கள். உங்கள் திறமையை வளர்த்துக் கொள்ளுங்கள்.</p>
-            <button class="play-now-btn" id="hero-btn">விளையாடத் தொடங்குங்கள்</button>
-            <div class="disclaimer" id="hero-disclaimer">இது இலவசப் பயிற்சி விளையாட்டு. பணம் வைத்து விளையாடும் வசதி இல்லை.</div>
+            <h1 id="hero-title">Ready to Play Rummy?</h1>
+            <p id="hero-subtitle">Practice 13-card rummy for free. Sharpen your skills with virtual coins.</p>
+            <button class="play-now-btn" id="hero-btn">Start Playing</button>
+            <div class="disclaimer" id="hero-disclaimer">This is a free practice game. No real money involved (₹1,00,000 virtual coins included).</div>
         </div>
     </main>
 
-    <!-- மொழி தேர்வு பாப்-அப் திரை -->
+    <!-- Language Selection Modal -->
     <div class="modal-overlay" id="langModal">
         <div class="modal-card">
-            <h2>Select Language / மொழியைத் தேர்ந்தெடுக்கவும்</h2>
-            <p>Please select your preferred language to continue / தொடர உங்கள் மொழியைத் தேர்ந்தெடுக்கவும்</p>
+            <h2>Select Language</h2>
+            <p>Please select your preferred language to continue</p>
             <div class="lang-options">
                 <button class="lang-option-btn" onclick="selectLanguage('ta')">தமிழ் (Tamil)</button>
                 <button class="lang-option-btn" onclick="selectLanguage('en')">English</button>
                 <button class="lang-option-btn" onclick="selectLanguage('hi')">हिंदी (Hindi)</button>
+                <button class="lang-option-btn" onclick="selectLanguage('te')">తెలుగు (Telugu)</button>
+                <button class="lang-option-btn" onclick="selectLanguage('ml')">മലയാളം (Malayalam)</button>
+                <button class="lang-option-btn" onclick="selectLanguage('kn')">ಕನ್ನಡ (Kannada)</button>
+                <button class="lang-option-btn" onclick="selectLanguage('mr')">मराठी (Marathi)</button>
+                <button class="lang-option-btn" onclick="selectLanguage('bn')">বাংলা (Bengali)</button>
+                <button class="lang-option-btn" onclick="selectLanguage('gu')">ગુજરાતી (Gujarati)</button>
+                <button class="lang-option-btn" onclick="selectLanguage('pa')">ਪੰਜਾਬੀ (Punjabi)</button>
             </div>
         </div>
     </div>
 
-    <!-- மொழி மாற்றத்திற்கான ஜாவாஸ்கிரிப்ட் -->
     <script>
-        // மொழிக்கான அகராதி (Translations)
         const translations = {
-            ta: {
-                currentLangLabel: "தமிழ்",
-                navHome: "முகப்பு",
-                navGame: "விளையாட்டு",
-                navLeaderboard: "தரவரிசை",
-                navLogin: "Login",
-                heroTitle: "ரம்மி விளையாடத் தயாரா?",
-                heroSubtitle: "13 கார்டு ரம்மி விளையாட்டை இலவசமாகப் பயிற்சி செய்யுங்கள். உங்கள் திறமையை வளர்த்துக் கொள்ளுங்கள்.",
-                heroBtn: "விளையாடத் தொடங்குங்கள்",
-                heroDisclaimer: "இது இலவசப் பயிற்சி விளையாட்டு. பணம் வைத்து விளையாடும் வசதி இல்லை (₹1,00,000 விர்ச்சுவல் காயின்கள் வழங்கப்படும்)."
-            },
             en: {
                 currentLangLabel: "English",
                 navHome: "Home",
@@ -245,6 +241,17 @@
                 heroBtn: "Start Playing",
                 heroDisclaimer: "This is a free practice game. No real money involved (₹1,00,000 virtual coins included)."
             },
+            ta: {
+                currentLangLabel: "தமிழ்",
+                navHome: "முகப்பு",
+                navGame: "விளையாட்டு",
+                navLeaderboard: "தரவரிசை",
+                navLogin: "உள்நுழை",
+                heroTitle: "ரம்மி விளையாடத் தயாரா?",
+                heroSubtitle: "13 கார்டு ரம்மி விளையாட்டை இலவசமாகப் பயிற்சி செய்யுங்கள். உங்கள் திறமையை வளர்த்துக் கொள்ளுங்கள்.",
+                heroBtn: "விளையாடத் தொடங்குங்கள்",
+                heroDisclaimer: "இது இலவசப் பயிற்சி விளையாட்டு. பணம் வைத்து விளையாடும் வசதி இல்லை (₹1,00,000 விர்ச்சுவல் காயின்கள் வழங்கப்படும்)."
+            },
             hi: {
                 currentLangLabel: "हिंदी",
                 navHome: "होम",
@@ -255,37 +262,108 @@
                 heroSubtitle: "13 कार्ड रम्मी का मुफ़्त में अभ्यास करें। अपने कौशल को सुधारें।",
                 heroBtn: "खेलना शुरू करें",
                 heroDisclaimer: "यह एक मुफ़्त अभ्यास गेम है। कोई असली पैसा शामिल नहीं है (₹1,00,000 वर्चुअल सिक्के शामिल हैं)।"
+            },
+            te: {
+                currentLangLabel: "తెలుగు",
+                navHome: "హోమ్",
+                navGame: "ఆట",
+                navLeaderboard: "లీడర్‌బోర్డ్",
+                navLogin: "లాగిన్",
+                heroTitle: "రమ్మీ ఆడటానికి సిద్ధంగా ఉన్నారా?",
+                heroSubtitle: "13 కార్డ్ రమ్మీని ఉచితంగా ప్రాక్టీస్ చేయండి. మీ నైపుణ్యాలను మెరుగుపరచుకోండి.",
+                heroBtn: "ఆట ప్రారంభించండి",
+                heroDisclaimer: "ఇది ఉచిత ప్రాక్టీస్ గేమ్. అసలు డబ్బు शामिल లేదు (₹1,00,000 వర్చువల్ కాయిన్స్ అందించబడతాయి)."
+            },
+            ml: {
+                currentLangLabel: "മലയാളം",
+                navHome: "ഹോം",
+                navGame: "ഗെയിം",
+                navLeaderboard: "ലീഡർബോർഡ്",
+                navLogin: "ലോഗിൻ",
+                heroTitle: "രമ്മി കളിക്കാൻ തയ്യാറാണോ?",
+                heroSubtitle: "13 കാർഡ് റമ്മി സൗജന്യമായി പരിശീലിക്കുക. നിങ്ങളുടെ കഴിവുകൾ മെച്ചപ്പെടുത്തുക.",
+                heroBtn: "കളി ആരംഭിക്കുക",
+                heroDisclaimer: "ഇത് സൗജന്യ പരിശീലന ഗെയിമാണ്. യഥാർത്ഥ പണം ഉൾപ്പെട്ടിട്ടില്ല (₹1,00,000 വെർച്വൽ കോയിനുകൾ ഉൾപ്പെടുത്തിയിട്ടുണ്ട്)."
+            },
+            kn: {
+                currentLangLabel: "ಕನ್ನಡ",
+                navHome: "ಹೋಮ್",
+                navGame: "ಆಟ",
+                navLeaderboard: "ಲೀಡರ್‌ಬೋರ್ಡ್",
+                navLogin: "ಲಾಗಿನ್",
+                heroTitle: "ರಮ್ಮಿ ಆಡಲು ಸಿದ್ಧರಿದ್ದೀರಾ?",
+                heroSubtitle: "13 ಕಾರ್ಡ್ ರಮ್ಮಿಯನ್ನು ಉಚಿತವಾಗಿ ಅಭ್ಯಾಸ ಮಾಡಿ. ನಿಮ್ಮ ಕೌಶಲ್ಯಗಳನ್ನು ಬೆಳೆಸಿಕೊಳ್ಳಿ.",
+                heroBtn: "ಆಟ ಪ್ರಾರಂಭಿಸಿ",
+                heroDisclaimer: "ಇದು ಉಚಿತ ಅಭ್ಯಾಸದ ಆಟ. ಯಾವುದೇ ನೈಜ ಹಣವಿಲ್ಲ (₹1,00,000 ವರ್ಚುವಲ್ ನಾಣ್ಯಗಳನ್ನು ಸೇರಿಸಲಾಗಿದೆ)."
+            },
+            mr: {
+                currentLangLabel: "मराठी",
+                navHome: "होम",
+                navGame: "गेम",
+                navLeaderboard: "लिडरबोर्ड",
+                navLogin: "लॉगिन",
+                heroTitle: "रम्मी खेळण्यास तयार आहात?",
+                heroSubtitle: "13 कार्ड रम्मीचा मोफत सराव करा. तुमचे कौशल्य वाढवा.",
+                heroBtn: "खेळायला सुरुवात करा",
+                heroDisclaimer: "हा एक मोफत सराव खेळ आहे. वास्तविक पैसे गुंतवलेले नाहीत (₹1,00,000 व्हर्च्युअल नाणी समाविष्ट आहेत)."
+            },
+            bn: {
+                currentLangLabel: "বাংলা",
+                navHome: "হোম",
+                navGame: "গেম",
+                navLeaderboard: "লিডারবোর্ড",
+                navLogin: "লগইন",
+                heroTitle: "রমি খেলতে প্রস্তুত?",
+                heroSubtitle: "বিনামূল্যে ১৩ কার্ডের রমি অনুশীলন করুন। আপনার দক্ষতা বাড়ান।",
+                heroBtn: "খেলা শুরু করুন",
+                heroDisclaimer: "এটি একটি ফ্রি প্র্যাকটিস গেম। আসল টাকা জড়িত নেই (₹1,00,000 ভার্চুয়াল কয়েন অন্তর্ভুক্ত)।"
+            },
+            gu: {
+                currentLangLabel: "ગુજરાતી",
+                navHome: "હોમ",
+                navGame: "ગેમ",
+                navLeaderboard: "લીડરબોર્ડ",
+                navLogin: "લોગિન",
+                heroTitle: "રમમી રમવા માટે તૈયાર છો?",
+                heroSubtitle: "૧૩ કાર્ડ રમમી મફતમાં પ્રેક્ટિસ કરો. તમારી કુશળતા વધારો.",
+                heroBtn: "રમવાનું શરૂ કરો",
+                heroDisclaimer: "આ એક મફત પ્રેક્ટિસ ગેમ છે. વાસ્તવિક નાણાં સામેલ નથી (₹1,00,000 વર્ચ્યુઅલ સિક્કાઓ સામેલ છે)."
+            },
+            pa: {
+                currentLangLabel: "ਪੰਜਾਬੀ",
+                navHome: "ਹੋਮ",
+                navGame: "ਗੇਮ",
+                navLeaderboard: "ਲੀਡਰਬੋਰਡ",
+                navLogin: "ਲਾگਇਨ",
+                heroTitle: "ਰम्मी ਖੇਡਣ ਲਈ ਤਿਆਰ ਹੋ?",
+                heroSubtitle: "13 ਕਾਰਡ ਰम्मी ਦਾ ਮੁਫ਼ਤ ਅਭਿਆਸ ਕਰੋ। ਆਪਣੇ ਹੁਨਰ ਨੂੰ ਨਿਖਾਰੋ।",
+                heroBtn: "ਖੇਡਣਾ ਸ਼ुरू ਕਰੋ",
+                heroDisclaimer: "ਇਹ ਇੱਕ ਮੁਫ਼ਤ ਅਭਿਆਸ ਖੇਡ ਹੈ। ਅਸਲ ਪੈਸਾ ਸ਼ਾਮਲ ਨਹੀਂ ਹੈ (₹1,00,000 ਵਰਚੁਅਲ ਸਿੱਕੇ ਸ਼ਾਮਲ ਹਨ)।"
             }
         };
 
-        // பக்கம் லோடு ஆகும்போது இயக்கப்படும் ஃபங்க்ஷன்
         window.onload = function() {
             const savedLang = localStorage.getItem('goodvexa_lang');
             if (savedLang && translations[savedLang]) {
-                // ஏற்கனவே மொழி தேர்ந்தெடுக்கப்பட்டிருந்தால் பாப்-அப்பை மறைத்துவிட்டு அந்த மொழியை அமைக்கவும்
                 applyLanguage(savedLang);
                 document.getElementById('langModal').classList.add('hidden');
             } else {
-                // முதன்முறை வருகையாளர் என்றால் பாப்-அப்பைக் காட்டவும்
                 document.getElementById('langModal').classList.remove('hidden');
             }
         };
 
-        // மொழியைத் தேர்ந்தெடுக்கும்போது
         function selectLanguage(langCode) {
             localStorage.setItem('goodvexa_lang', langCode);
             applyLanguage(langCode);
             document.getElementById('langModal').classList.add('hidden');
         }
 
-        // பாப்-அப்பை மீண்டும் திறக்க (ஹெடரில் உள்ள பட்டனுக்காக)
         function openLanguageModal() {
             document.getElementById('langModal').classList.remove('hidden');
         }
 
-        // தளத்தில் உள்ள உரைகளைத் தேர்ந்தெடுக்கப்பட்ட மொழிக்கு மாற்றுதல்
         function applyLanguage(lang) {
-            const data = translations[lang] || translations.ta;
+            const data = translations[lang] || translations.en;
             
             document.getElementById('current-lang-text').innerText = data.currentLangLabel;
             document.getElementById('nav-home').innerText = data.navHome;
