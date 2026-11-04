@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Goodvexa Rummy - Game Table</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #0b2514;
+            color: #ffffff;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* Top Bar for Game Info & Wallet */
+        .game-header {
+            background-color: #05140b;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #16db65;
+            height: 50px;
+        }
+
+        .table-info {
+            font-size: 14px;
+            color: #b7e4c7;
+            font-weight: bold;
+        }
+
+        .wallet-display {
+            background-color: #2d6a4f;
+            border: 1px solid #ffb703;
+            color: #ffb703;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .back-btn {
+            background-color: #d90429;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* Green Felt Rummy Table Area */
+        .rummy-table {
+            flex: 1;
+            background: radial-gradient(circle, #134e2c 0%, #0d381f 100%);
+            margin: 10px;
+            border-radius: 20px;
+            border: 4px solid #16db65;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.6);
+        }
+
+        /* Center Decks Area */
+        .center-decks {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .card-slot {
+            width: 70px;
+            height: 100px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 2px dashed #b7e4c7;
+            border-radius: 6px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
+            color: #b7e4c7;
+            text-align: center;
+        }
+
+        .card-slot.deck {
+            background-color: #ffffff;
+            color: #000;
+            font-weight: bold;
+            border: 2px solid #000;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        /* Player's Hand Area at the Bottom */
+        .player-hand-area {
+            background-color: rgba(5, 20, 11, 0.9);
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-top: 2px solid #16db65;
+        }
+
+        .hand-title {
+            font-size: 12px;
+            color: #ffb703;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .cards-container {
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            max-width: 100%;
+            padding-bottom: 5px;
+        }
+
+        .playing-card {
+            width: 55px;
+            height: 80px;
+            background-color: #fff;
+            color: #000;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.4);
+            cursor: pointer;
+            transition: transform 0.2s;
+            user-select: none;
+        }
+
+        .playing-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .playing-card.red {
+            color: #d90429;
+        }
+
+        .action-btns {
+            margin-top: 10px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .game-action-btn {
+            background-color: #ffb703;
+            color: #000;
+            border: none;
+            padding: 6px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .game-action-btn.declare {
+            background-color: #16db65;
+            color: #000;
+        }
+
+        /* Landscape warning for portrait mobile users */
+        @media screen and (orientation: portrait) {
+            .landscape-warning {
+                display: flex;
+            }
+        }
+
+        @media screen and (orientation: landscape) {
+            .landscape-warning {
+                display: none;
+            }
+        }
+
+        .landscape-warning {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #0d2818;
+            z-index: 9999;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            color: #ffb703;
+            font-size: 18px;
+            gap: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Landscape Warning Screen for Mobiles -->
+    <div class="landscape-warning" id="rotateWarning">
+        <h2>📱 Please Rotate Your Phone</h2>
+        <p style="color: #b7e4c7; font-size: 14px;">சிறந்த ரம்மி அனுபவத்திற்கு உங்களது மொபைலை கிடைமட்டமாக (Landscape) திருப்பவும்.</p>
+        <div style="font-size: 40px;">🔄</div>
+    </div>
+
+    <!-- Top Header -->
+    <div class="game-header">
+        <button class="back-btn" onclick="goHome()">Exit</button>
+        <div class="table-info">Points Rummy | Table #101</div>
+        <div class="wallet-display">💰 ₹1,00,000</div>
+    </div>
+
+    <!-- Green Rummy Table -->
+    <div class="rummy-table">
+        <div class="center-decks">
+            <div class="card-slot deck">CLOSED<br>DECK</div>
+            <div class="card-slot">OPEN<br>DECK</div>
+        </div>
+    </div>
+
+    <!-- Player's 13 Cards Hand -->
+    <div class="player-hand-area">
+        <div class="hand-title">YOUR CARDS (13)</div>
+        <div class="cards-container">
+            <div class="playing-card red"><span>A♥</span><span>♥</span></div>
+            <div class="playing-card red"><span>2♥</span><span>♥</span></div>
+            <div class="playing-card red"><span>3♥</span><span>♥</span></div>
+            <div class="playing-card"><span>K♠</span><span>♠</span></div>
+            <div class="playing-card"><span>Q♠</span><span>♠</span></div>
+            <div class="playing-card"><span>J♠</span><span>♠</span></div>
+            <div class="playing-card red"><span>10♦</span><span>♦</span></div>
+            <div class="playing-card red"><span>9♦</span><span>♦</span></div>
+            <div class="playing-card"><span>7♣</span><span>♣</span></div>
+            <div class="playing-card"><span>8♣</span><span>♣</span></div>
+            <div class="playing-card red"><span>5♥</span><span>JOKER</span></div>
+            <div class="playing-card"><span>4♠</span><span>♠</span></div>
+            <div class="playing-card red"><span>A♦</span><span>♦</span></div>
+        </div>
+        <div class="action-btns">
+            <button class="game-action-btn" onclick="alert('Card Discarded!')">Discard</button>
+            <button class="game-action-btn declare" onclick="alert('Declared Successfully!')">Declare</button>
+        </div>
+    </div>
+
+    <script>
+        function goHome() {
+            window.location.href = "index.html";
+        }
+    </script>
+</body>
+</html>
