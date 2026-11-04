@@ -76,6 +76,17 @@
             font-size: 14px;
         }
 
+        .logout-nav-btn {
+            background-color: #d90429;
+            color: #fff;
+            padding: 7px 18px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
         /* Hamburger Menu Button for Mobile */
         .hamburger {
             display: none;
@@ -290,13 +301,12 @@
             display: none !important;
         }
 
-        /* Responsive Media Query */
         @media (max-width: 850px) {
             .nav-links {
-                display: none; /* Hide desktop menu on mobile */
+                display: none;
             }
             .hamburger {
-                display: block; /* Show hamburger icon on mobile */
+                display: block;
             }
             main {
                 flex-direction: column;
@@ -324,11 +334,13 @@
         
         <!-- Desktop Nav Links -->
         <div class="nav-links">
-            <a href="#" id="nav-home">Home</a>
-            <a href="#" id="nav-game">Game</a>
+            <a href="index.html" id="nav-home">Home</a>
+            <a href="game.html" id="nav-game">Game</a>
             <a href="#" id="nav-leaderboard">Leaderboard</a>
             <button class="lang-btn" onclick="openLanguageModal()">🌐 <span id="current-lang-text">English</span></button>
-            <button class="login-nav-btn" id="nav-login">Login</button>
+            <div id="auth-btn-container">
+                <button class="login-nav-btn" id="nav-login" onclick="handleGoogleLogin()">Login</button>
+            </div>
         </div>
 
         <!-- Hamburger Menu Button for Mobile -->
@@ -336,12 +348,14 @@
 
         <!-- Mobile Dropdown Menu -->
         <div class="mobile-menu" id="mobileMenu">
-            <a href="#" id="mob-nav-home">Home</a>
-            <a href="#" id="mob-nav-game">Game</a>
+            <a href="index.html" id="mob-nav-home">Home</a>
+            <a href="game.html" id="mob-nav-game">Game</a>
             <a href="#" id="mob-nav-leaderboard">Leaderboard</a>
-            <div style="display: flex; gap: 10px; margin-top: 10px;">
+            <div style="display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap;">
                 <button class="lang-btn" style="flex:1;" onclick="openLanguageModal()">🌐 <span id="mob-current-lang-text">English</span></button>
-                <button class="login-nav-btn" style="flex:1;" id="mob-nav-login">Login</button>
+                <div id="mob-auth-btn-container" style="flex:1;">
+                    <button class="login-nav-btn" style="width:100%;" id="mob-nav-login" onclick="handleGoogleLogin()">Login</button>
+                </div>
             </div>
         </div>
     </header>
@@ -401,6 +415,7 @@
                 navGame: "Game",
                 navLeaderboard: "Leaderboard",
                 navLogin: "Login",
+                navLogout: "Logout",
                 heroBadge: "🎁 ₹1,00,000 Free Virtual Coins",
                 heroTitle: "Ready to Play Rummy?",
                 heroSubtitle: "Practice 13-card rummy for free with players across India. Sharpen your skills anytime, anywhere securely.",
@@ -415,6 +430,7 @@
                 navGame: "விளையாட்டு",
                 navLeaderboard: "தரவரிசை",
                 navLogin: "உள்நுழை",
+                navLogout: "வெளியேறு",
                 heroBadge: "🎁 ₹1,00,000 இலவச விர்ச்சுவல் நாணயங்கள்",
                 heroTitle: "ரம்மி விளையாடத் தயாரா?",
                 heroSubtitle: "இந்தியா முழுவதிலும் உள்ள வீரர்களுடன் பாதுகாப்பாக 13 கார்டு ரம்மி பயிற்சி செய்யுங்கள்.",
@@ -429,6 +445,7 @@
                 navGame: "गेम",
                 navLeaderboard: "लीडरबोर्ड",
                 navLogin: "लॉगिन",
+                navLogout: "लॉग आउट",
                 heroBadge: "🎁 ₹1,00,000 मुफ़्त वर्चुअल सिक्के",
                 heroTitle: "रम्मी खेलने के लिए तैयार हैं?",
                 heroSubtitle: "पूरे भारत के खिलाड़ियों के साथ सुरक्षित रूप से 13 कार्ड रम्मी का अभ्यास करें।",
@@ -443,6 +460,7 @@
                 navGame: "ఆట",
                 navLeaderboard: "లీడర్‌బోర్డ్",
                 navLogin: "లాగిన్",
+                navLogout: "లాగ్‌అవుట్",
                 heroBadge: "🎁 ₹1,00,000 ఉచిత వర్చువల్ కాయిన్స్",
                 heroTitle: "రమ్మీ ఆడటానికి సిద్ధంగా ఉన్నారా?",
                 heroSubtitle: "భారతదేశవ్యాప్తంగా ఉన్న ఆటగాళ్లతో సురక్షితంగా 13 కార్డ్ రమ్మీని ప్రాక్టీస్ చేయండి.",
@@ -457,6 +475,7 @@
                 navGame: "ഗെയിം",
                 navLeaderboard: "ലീഡർബോർഡ്",
                 navLogin: "ലോഗിൻ",
+                navLogout: "പുറത്തിറങ്ങുക",
                 heroBadge: "🎁 ₹1,00,000 സൗജന്യ വെർച്വൽ കോയിനുകൾ",
                 heroTitle: "രമ്മി കളിക്കാൻ തയ്യാറാണോ?",
                 heroSubtitle: "ഇന്ത്യയിലുടനീളമുള്ള കളിക്കാർക്കൊപ്പം സുരക്ഷിതമായി 13 കാർഡ് റമ്മി പരിശീലിക്കുക.",
@@ -471,12 +490,13 @@
                 navGame: "ಆಟ",
                 navLeaderboard: "ಲೀಡರ್‌ಬೋರ್ಡ್",
                 navLogin: "ಲಾಗಿನ್",
+                navLogout: "ಹೊರಬಡಿ",
                 heroBadge: "🎁 ₹1,00,000 ಉಚಿತ ವರ್ಚುವಲ್ ನಾಣ್ಯಗಳು",
                 heroTitle: "ರಮ್ಮಿ ಆಡಲು ಸಿದ್ಧರಿದ್ದೀರಾ?",
                 heroSubtitle: "ಭಾರತದಾದ್ಯಂತ ಇರುವ ಆಟಗಾರರೊಂದಿಗೆ ಸುರಕ್ಷಿತವಾಗಿ 13 ಕಾರ್ಡ್ ರಮ್ಮಿಯನ್ನು ಅಭ್ಯಾಸ ಮಾಡಿ.",
                 heroDisclaimer: "100% ಉಚಿತ ಅಭ್ಯಾಸ ವೇದಿಕೆ. ಯಾವುದೇ ನೈಜ ಹಣವಿಲ್ಲ.",
                 regTitle: "ಲಾಗಿನ್ / ಸೈನ್ ಅಪ್",
-                googleBtnText: "ಗೂಗ್ ಮೂಲಕ ಮುಂದುವರಿಸಿ",
+                googleBtnText: "ಗೂಗ್ மூலம் ಮುಂದುವರಿಸಿ",
                 termsText: "<span>18+ ಪರಿಶೀಲಿಸಿ</span><br>ನೋಂದಾಯಿಸುವ ಮೂಲಕ, ನೀವು 18+ ವರ್ಷ ವಯಸ್ಸಿನವರು ಮತ್ತು ನಿಯಮಗಳನ್ನು ಒಪ್ಪಿಕೊಳ್ಳುತ್ತೀರಿ."
             },
             mr: {
@@ -485,6 +505,7 @@
                 navGame: "गेम",
                 navLeaderboard: "लिडरबोर्ड",
                 navLogin: "लॉगिन",
+                navLogout: "बाहेर پدا",
                 heroBadge: "🎁 ₹1,00,000 मोफत व्हर्च्युअल नाणी",
                 heroTitle: "रम्मी खेळण्यास तयार आहात?",
                 heroSubtitle: "भारतभरातील खेळाडूंसोबत सुरक्षितपणे 13 कार्ड रम्मीचा सराव करा.",
@@ -499,6 +520,7 @@
                 navGame: "গেম",
                 navLeaderboard: "লিডারবোর্ড",
                 navLogin: "লগইন",
+                navLogout: "লগআউট",
                 heroBadge: "🎁 ₹1,00,000 ফ্রি ভার্চুয়াল কয়েন",
                 heroTitle: "রমি খেলতে প্রস্তুত?",
                 heroSubtitle: "ভারত জুড়ে খেলোয়াড়দের সাথে নিরাপদে ১৩ কার্ডের রমি অনুশীলন করুন।",
@@ -513,6 +535,7 @@
                 navGame: "ગેમ",
                 navLeaderboard: "લીડરબોર્ડ",
                 navLogin: "લોગિન",
+                navLogout: "બહાર નીકળો",
                 heroBadge: "🎁 ₹1,00,000 મફત વર્ચ્યુઅલ સિક્કા",
                 heroTitle: "રમમી રમવા માટે તૈયાર છો?",
                 heroSubtitle: "ભારતભરના ખેલાડીઓ સાથે સુરક્ષિત રીતે ૧૩ કાર્ડ રમમી પ્રેક્ટિસ કરો.",
@@ -525,13 +548,14 @@
                 currentLangLabel: "ਪੰਜਾਬੀ",
                 navHome: "ਹੋਮ",
                 navGame: "ਗੇਮ",
-                navLeaderboard: "ਲੀਡਰਬੋਰਡ",
+                navLeaderboard: "ਲੀਡਰബോർഡ്",
                 navLogin: "ਲਾਗਇਨ",
+                navLogout: "ਬਾਹਰ ਜਾਓ",
                 heroBadge: "🎁 ₹1,00,000 ਮੁਫ਼ਤ ਵਰਚੁਅਲ ਸਿੱਕੇ",
                 heroTitle: "ਰਮੀ ਖੇਡਣ ਲਈ ਤਿਆਰ ਹੋ?",
                 heroSubtitle: "ਭਾਰਤ ਭਰ ਦੇ ਖਿਡਾਰੀਆਂ ਨਾਲ ਸੁਰੱਖਿਅਤ ਢੰਗ ਨਾਲ 13 ਕਾਰਡ ਰਮੀ ਦਾ ਅਭਿਆਸ ਕਰੋ।",
                 heroDisclaimer: "100% ਮੁਫ਼ਤ ਅਭਿਆਸ ਪਲੇਟਫਾਰਮ। ਕੋਈ ਅਸਲ ਪੈਸਾ ਸ਼ਾਮਲ ਨਹੀਂ ਹੈ।",
-                regTitle: "ਲਾਗਇਨ / ਸਾਈਨ ਅੱਪ",
+                regTitle: "ਲਾਗਇਨ / ਸਾਈન ਅੱਪ",
                 googleBtnText: "ਗੂਗਲ ਨਾਲ ਜਾਰੀ ਰੱਖੋ",
                 termsText: "<span>18+ ਤਸਦੀਕ ਕਰੋ</span><br>ਰਜਿਸਟਰ ਕਰਕੇ, ਤੁਸੀਂ ਪੁਸ਼ਟੀ ਕਰਦੇ ਹੋ ਕਿ ਤੁਹਾਡੀ ਉਮਰ 18+ ਹੈ।"
             }
@@ -545,6 +569,7 @@
             } else {
                 document.getElementById('langModal').classList.remove('hidden');
             }
+            checkUserLoginState();
         };
 
         function selectLanguage(langCode) {
@@ -562,6 +587,23 @@
             menu.classList.toggle('active');
         }
 
+        function checkUserLoginState() {
+            const savedUser = localStorage.getItem('rummy_user');
+            const currentLang = localStorage.getItem('goodvexa_lang') || 'en';
+            const t = translations[currentLang] || translations.en;
+
+            const authContainer = document.getElementById('auth-btn-container');
+            const mobAuthContainer = document.getElementById('mob-auth-btn-container');
+
+            if (savedUser) {
+                authContainer.innerHTML = `<button class="logout-nav-btn" onclick="handleLogout()">${t.navLogout}</button>`;
+                mobAuthContainer.innerHTML = `<button class="logout-nav-btn" style="width:100%;" onclick="handleLogout()">${t.navLogout}</button>`;
+            } else {
+                authContainer.innerHTML = `<button class="login-nav-btn" id="nav-login" onclick="handleGoogleLogin()">${t.navLogin}</button>`;
+                mobAuthContainer.innerHTML = `<button class="login-nav-btn" style="width:100%;" id="mob-nav-login" onclick="handleGoogleLogin()">${t.navLogin}</button>`;
+            }
+        }
+
         function applyLanguage(lang) {
             const data = translations[lang] || translations.en;
             
@@ -571,12 +613,10 @@
             document.getElementById('nav-home').innerText = data.navHome;
             document.getElementById('nav-game').innerText = data.navGame;
             document.getElementById('nav-leaderboard').innerText = data.navLeaderboard;
-            document.getElementById('nav-login').innerText = data.navLogin;
 
             document.getElementById('mob-nav-home').innerText = data.navHome;
             document.getElementById('mob-nav-game').innerText = data.navGame;
             document.getElementById('mob-nav-leaderboard').innerText = data.navLeaderboard;
-            document.getElementById('mob-nav-login').innerText = data.navLogin;
 
             document.getElementById('hero-badge').innerText = data.heroBadge;
             document.getElementById('hero-title').innerText = data.heroTitle;
@@ -588,10 +628,43 @@
             document.getElementById('terms-box').innerHTML = data.termsText;
 
             document.documentElement.lang = lang;
+            checkUserLoginState();
         }
 
-        function handleGoogleLogin() {
-            alert("Redirecting to Google Secure Login...\n₹1,00,000 Virtual Coins will be credited to your account!");
+        async function handleGoogleLogin() {
+            let userName = prompt("Enter your Name for Rummy Login / Gmail ID:", "Senthilkumar");
+            if (!userName) return;
+
+            try {
+                const response = await fetch('https://goodvexa-rummy-server.onrender.com/api/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username: userName })
+                });
+
+                const data = await response.json();
+                if (data.success) {
+                    localStorage.setItem('rummy_user', data.user.username);
+                    localStorage.setItem('rummy_wallet', data.user.wallet);
+                    
+                    alert("Login Successful! ₹1,00,000 Virtual Coins Credited.");
+                    window.location.href = "game.html";
+                } else {
+                    alert("Login Failed: " + data.error);
+                }
+            } catch (err) {
+                console.error("Connection Error:", err);
+                alert("Server connection error. Please try again.");
+            }
+        }
+
+        function handleLogout() {
+            localStorage.removeItem('rummy_user');
+            localStorage.removeItem('rummy_wallet');
+            alert("Logged out successfully!");
+            window.location.reload();
         }
     </script>
 </body>
