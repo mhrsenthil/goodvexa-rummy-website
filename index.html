@@ -1,627 +1,742 @@
+
 <!DOCTYPE html>
 <html lang="ta">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Goodvexa Rummy</title>
-    <!-- Google Official Sign-In Script -->
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#071b12">
+<meta name="description" content="GOODVEXA RUMMY - இலவசமாக 13 கார்டு ரம்மி விளையாடுங்கள். Practice Rummy and enjoy free virtual coins.">
+<title>GOODVEXA RUMMY | Free Rummy Game</title>
 
-        body {
-            background-color: #0d2818;
-            color: #ffffff;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 
-        header {
-            background-color: #05140b;
-            padding: 12px 25px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid #16db65;
-            position: relative;
-        }
+<style>
+:root {
+    --bg:#071b12;
+    --panel:#102b1d;
+    --panel2:#163b28;
+    --green:#20d879;
+    --green2:#0eaa5b;
+    --gold:#f5c451;
+    --white:#f5fff8;
+    --muted:#a9c7b4;
+    --border:rgba(73,214,132,.22);
+}
+* {box-sizing:border-box;margin:0;padding:0}
+html {scroll-behavior:smooth}
+body {
+    background:var(--bg);
+    color:var(--white);
+    font-family:Arial,"Noto Sans Tamil",sans-serif;
+    line-height:1.6;
+}
+a {color:inherit;text-decoration:none}
+button {font:inherit;cursor:pointer}
+.container {width:min(1160px,92%);margin:auto}
 
-        .logo {
-            font-size: 22px;
-            font-weight: bold;
-            color: #16db65;
-            letter-spacing: 1px;
-        }
+/* HEADER */
+header {
+    position:sticky;top:0;z-index:100;
+    background:rgba(5,20,13,.96);
+    border-bottom:1px solid var(--border);
+    backdrop-filter:blur(12px);
+}
+.navbar {
+    min-height:72px;
+    display:flex;align-items:center;
+    justify-content:space-between;gap:18px;
+}
+.logo {
+    font-size:22px;font-weight:900;
+    color:var(--green);letter-spacing:1px;
+}
+.logo span {color:var(--gold)}
+.nav-links {display:flex;align-items:center;gap:23px}
+.nav-links a {font-size:14px;color:#d8eee0}
+.nav-links a:hover {color:var(--green)}
+.nav-actions {display:flex;align-items:center;gap:10px}
+.lang-btn,.menu-btn {
+    border:1px solid var(--border);
+    background:var(--panel2);color:white;
+    padding:8px 12px;border-radius:9px;
+}
+.menu-btn {display:none;font-size:22px}
+.mobile-menu {
+    display:none;padding:12px 4%;
+    background:#081e13;border-top:1px solid var(--border);
+}
+.mobile-menu a {display:block;padding:10px 0;color:#e4f5e9}
+.mobile-menu.show {display:block}
+.logout-nav-btn {
+    background:#b52d3a;color:white;
+    border:0;border-radius:8px;padding:8px 13px;
+}
 
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
+/* BUTTONS */
+.btn {
+    display:inline-flex;align-items:center;
+    justify-content:center;gap:8px;
+    padding:13px 21px;border-radius:10px;
+    border:1px solid transparent;font-weight:800;
+    transition:.2s;
+}
+.btn:hover {transform:translateY(-2px);filter:brightness(1.08)}
+.btn-primary {
+    color:#062012;background:linear-gradient(135deg,#5af09a,#16c76a);
+    box-shadow:0 8px 25px rgba(32,216,121,.18);
+}
+.btn-outline {
+    color:var(--white);border-color:#4d9c6e;
+    background:rgba(255,255,255,.03);
+}
+.btn-gold {background:var(--gold);color:#2b2008}
 
-        .nav-links a {
-            color: #fff;
-            text-decoration: none;
-            font-size: 16px;
-            transition: color 0.2s;
-        }
+/* HERO */
+.hero {
+    padding:65px 0 55px;
+    background:
+      radial-gradient(ellipse at 75% 30%,rgba(28,150,82,.22),transparent 48%),
+      linear-gradient(180deg,#0a2417,#071b12);
+}
+.hero-grid {
+    display:grid;grid-template-columns:1.1fr .9fr;
+    gap:45px;align-items:center;
+}
+.eyebrow {
+    display:inline-block;padding:7px 13px;
+    border:1px solid rgba(245,196,81,.4);
+    background:rgba(245,196,81,.09);
+    color:var(--gold);border-radius:30px;
+    font-size:13px;font-weight:bold;margin-bottom:18px;
+}
+.hero h1 {
+    font-size:clamp(36px,5vw,58px);
+    line-height:1.13;margin-bottom:20px;
+    letter-spacing:-1px;
+}
+.hero h1 span {color:var(--green)}
+.hero-description {
+    color:var(--muted);font-size:17px;
+    max-width:590px;margin-bottom:26px;
+}
+.hero-buttons {display:flex;flex-wrap:wrap;gap:12px}
+.hero-note {margin-top:20px;color:#8db69a;font-size:13px}
+.hero-art {
+    min-height:330px;position:relative;
+    display:flex;align-items:center;justify-content:center;
+    background:radial-gradient(circle,rgba(31,166,91,.2),transparent 68%);
+}
+.table-art {
+    width:min(390px,100%);height:275px;
+    border-radius:50%;border:13px solid #7b5529;
+    background:radial-gradient(ellipse,#167a47,#07512e 75%);
+    box-shadow:0 22px 45px #0008,inset 0 0 0 4px #d5a64a;
+    display:flex;align-items:center;justify-content:center;
+    transform:rotate(-5deg);
+}
+.playing-cards {display:flex;align-items:center;justify-content:center}
+.playing-card {
+    width:90px;height:130px;border-radius:10px;
+    background:#fff;color:#17251c;
+    border:2px solid #e5e5e5;
+    box-shadow:0 8px 18px #0008;
+    display:flex;align-items:center;justify-content:center;
+    font-size:34px;font-weight:900;
+}
+.playing-card:nth-child(1){transform:rotate(-17deg) translateX(20px)}
+.playing-card:nth-child(2){transform:translateY(-14px);z-index:2}
+.playing-card:nth-child(3){transform:rotate(17deg) translateX(-20px)}
+.red-card {color:#d52d40}
+.art-label {
+    position:absolute;bottom:8px;right:8%;
+    background:#092519;border:1px solid var(--gold);
+    color:var(--gold);padding:9px 15px;
+    border-radius:30px;font-size:13px;font-weight:bold;
+}
 
-        .nav-links a:hover {
-            color: #16db65;
-        }
+/* LOGIN */
+.login-section {padding:0 0 38px}
+.login-box {
+    max-width:570px;margin:auto;text-align:center;
+    padding:24px;background:var(--panel);
+    border:1px solid var(--border);border-radius:17px;
+}
+.login-box h2 {font-size:21px;margin-bottom:7px}
+.login-box p {color:var(--muted);font-size:14px;margin-bottom:17px}
+.google-wrap {display:flex;justify-content:center;min-height:42px}
+.terms {
+    color:#8db69a;font-size:12px;margin-top:15px;
+}
+.terms strong {color:var(--gold)}
 
-        .lang-btn {
-            background-color: #2d6a4f;
-            color: #fff;
-            border: 1px solid #16db65;
-            padding: 7px 14px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 14px;
-        }
+/* SECTION COMMON */
+.section {padding:65px 0}
+.section-heading {text-align:center;margin-bottom:34px}
+.section-heading h2 {font-size:clamp(25px,4vw,36px);margin-bottom:8px}
+.section-heading h2 span {color:var(--green)}
+.section-heading p {color:var(--muted);font-size:15px}
 
-        .logout-nav-btn {
-            background-color: #d90429;
-            color: #fff;
-            padding: 7px 18px;
-            border: none;
-            border-radius: 5px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 14px;
-        }
+/* GAME MODES */
+.mode-grid {
+    display:grid;grid-template-columns:repeat(3,1fr);gap:18px;
+}
+.mode-card {
+    background:linear-gradient(145deg,#153b28,#0e281b);
+    border:1px solid var(--border);border-radius:16px;
+    padding:23px;min-height:215px;
+    display:flex;flex-direction:column;
+    transition:.2s;
+}
+.mode-card:hover {
+    transform:translateY(-5px);
+    border-color:var(--green);
+}
+.mode-icon {
+    font-size:34px;margin-bottom:12px;
+}
+.mode-card h3 {font-size:19px;margin-bottom:7px}
+.mode-card p {color:var(--muted);font-size:14px;flex:1}
+.mode-card .mode-link {
+    display:inline-block;color:var(--green);
+    font-weight:bold;margin-top:17px;font-size:14px;
+}
+.coming {
+    display:inline-block;margin-top:14px;
+    font-size:11px;color:var(--gold);
+    border:1px solid rgba(245,196,81,.4);
+    padding:4px 9px;border-radius:20px;width:max-content;
+}
 
-        .hamburger {
-            display: none;
-            font-size: 24px;
-            background: none;
-            border: none;
-            color: #fff;
-            cursor: pointer;
-        }
+/* FEATURES */
+.features {background:#0a2115}
+.feature-grid {
+    display:grid;grid-template-columns:repeat(3,1fr);gap:17px;
+}
+.feature {
+    padding:22px;border-radius:13px;
+    background:var(--panel);
+    border:1px solid var(--border);
+}
+.feature-icon {font-size:27px;margin-bottom:10px}
+.feature h3 {font-size:17px;margin-bottom:6px}
+.feature p {font-size:13px;color:var(--muted)}
 
-        .mobile-menu {
-            display: none;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            width: 100%;
-            background-color: #05140b;
-            border-bottom: 2px solid #16db65;
-            flex-direction: column;
-            padding: 15px 25px;
-            gap: 15px;
-            z-index: 100;
-        }
+/* HOW TO PLAY */
+.steps {
+    display:grid;grid-template-columns:repeat(3,1fr);gap:18px;
+}
+.step {
+    text-align:center;background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:14px;padding:25px 18px;
+}
+.step-number {
+    width:42px;height:42px;border-radius:50%;
+    display:grid;place-items:center;margin:0 auto 13px;
+    background:var(--green);color:#062012;font-weight:900;
+}
+.step h3 {font-size:17px;margin-bottom:7px}
+.step p {font-size:13px;color:var(--muted)}
 
-        .mobile-menu.active {
-            display: flex;
-        }
+/* ABOUT / NOTICE */
+.notice {
+    background:linear-gradient(135deg,#163b28,#102b1d);
+    border:1px solid rgba(245,196,81,.35);
+    border-radius:16px;padding:27px;text-align:center;
+}
+.notice h2 {color:var(--gold);margin-bottom:9px}
+.notice p {color:#c5ddcd;font-size:14px}
 
-        .mobile-menu a {
-            color: #fff;
-            text-decoration: none;
-            font-size: 16px;
-        }
+/* FOOTER */
+footer {
+    padding:28px 0;background:#04140b;
+    border-top:1px solid var(--border);
+    text-align:center;color:#8eaa98;font-size:13px;
+}
+.footer-links {
+    display:flex;justify-content:center;
+    flex-wrap:wrap;gap:18px;margin:12px 0;
+}
+.footer-links a:hover {color:var(--green)}
 
-        main {
-            flex: 1;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 40px 30px;
-            max-width: 1200px;
-            margin: 0 auto;
-            width: 100%;
-            gap: 40px;
-        }
+/* LANGUAGE MODAL */
+.modal-overlay {
+    position:fixed;inset:0;z-index:1000;
+    background:rgba(0,0,0,.86);
+    display:flex;align-items:center;justify-content:center;
+    padding:15px;
+}
+.modal-card {
+    background:#123523;border:1px solid var(--green);
+    border-radius:16px;padding:25px;
+    width:min(440px,100%);max-height:88vh;
+    overflow:auto;text-align:center;
+}
+.modal-card h2 {color:var(--green);margin-bottom:6px}
+.modal-card p {color:var(--muted);font-size:13px;margin-bottom:18px}
+.lang-options {
+    display:grid;grid-template-columns:1fr 1fr;gap:9px;
+}
+.lang-option-btn {
+    background:#20543a;color:white;
+    border:1px solid #438b60;border-radius:9px;
+    padding:11px 7px;font-weight:bold;
+}
+.lang-option-btn:hover {background:var(--green);color:#062012}
+.hidden {display:none!important}
 
-        .hero-left {
-            flex: 1;
-            max-width: 550px;
-        }
-
-        .hero-left h1 {
-            font-size: 40px;
-            margin-bottom: 20px;
-            color: #ffffff;
-            line-height: 1.2;
-        }
-
-        .hero-left p {
-            font-size: 18px;
-            color: #b7e4c7;
-            margin-bottom: 25px;
-            line-height: 1.5;
-        }
-
-        .bonus-badge {
-            display: inline-block;
-            background-color: #2d6a4f;
-            border: 1px solid #16db65;
-            color: #ffb703;
-            padding: 10px 18px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 15px;
-            margin-bottom: 20px;
-        }
-
-        .disclaimer {
-            margin-top: 15px;
-            font-size: 13px;
-            color: #74c69d;
-        }
-
-        .hero-right {
-            width: 400px;
-            background-color: #1b4332;
-            border: 2px solid #16db65;
-            border-radius: 12px;
-            padding: 35px 30px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .reg-card-title {
-            font-size: 20px;
-            font-weight: bold;
-            color: #ffb703;
-            margin-bottom: 25px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .terms-box {
-            margin-top: 25px;
-            font-size: 12px;
-            color: #95d5b2;
-            line-height: 1.5;
-            border-top: 1px solid #2d6a4f;
-            padding-top: 15px;
-            width: 100%;
-        }
-
-        .terms-box span {
-            color: #ffb703;
-            font-weight: bold;
-        }
-
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.85);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            padding: 15px;
-        }
-
-        .modal-card {
-            background-color: #1b4332;
-            border: 2px solid #16db65;
-            padding: 30px;
-            border-radius: 12px;
-            text-align: center;
-            max-width: 480px;
-            width: 100%;
-            max-height: 90vh;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        }
-
-        .modal-card h2 {
-            font-size: 22px;
-            margin-bottom: 8px;
-            color: #16db65;
-        }
-
-        .modal-card p {
-            color: #d8f3dc;
-            margin-bottom: 20px;
-            font-size: 14px;
-        }
-
-        .lang-options {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            overflow-y: auto;
-            max-height: 50vh;
-            padding-right: 5px;
-        }
-
-        .lang-option-btn {
-            background-color: #2d6a4f;
-            color: #ffffff;
-            border: 1px solid #52b788;
-            padding: 12px;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .lang-option-btn:hover {
-            background-color: #16db65;
-            color: #000;
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
-        @media (max-width: 850px) {
-            .nav-links {
-                display: none;
-            }
-            .hamburger {
-                display: block;
-            }
-            main {
-                flex-direction: column;
-                padding: 20px;
-                gap: 30px;
-            }
-            .hero-left {
-                text-align: center;
-                max-width: 100%;
-            }
-            .hero-left h1 {
-                font-size: 32px;
-            }
-            .hero-right {
-                width: 100%;
-                max-width: 100%;
-            }
-        }
-    </style>
+@media(max-width:850px) {
+    .nav-links {display:none}
+    .menu-btn {display:block}
+    .hero {padding:42px 0 35px}
+    .hero-grid {grid-template-columns:1fr;gap:15px;text-align:center}
+    .hero-description {margin-left:auto;margin-right:auto}
+    .hero-buttons {justify-content:center}
+    .hero-art {min-height:270px}
+    .table-art {height:220px;width:310px}
+    .playing-card {width:70px;height:105px;font-size:28px}
+    .mode-grid,.feature-grid {grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:560px) {
+    .navbar {min-height:62px}
+    .logo {font-size:18px}
+    .hero h1 {font-size:37px}
+    .hero-description {font-size:15px}
+    .btn {padding:12px 16px;font-size:14px}
+    .mode-grid,.feature-grid,.steps {grid-template-columns:1fr}
+    .mode-card {min-height:190px}
+    .section {padding:48px 0}
+    .login-box {padding:20px 12px}
+    .art-label {right:0}
+}
+</style>
 </head>
+
 <body>
 
-    <header>
-        <div class="logo">GOODVEXA RUMMY</div>
-        
-        <div class="nav-links">
-            <a href="index.html" id="nav-home">Home</a>
+<header>
+    <div class="container navbar">
+        <a class="logo" href="index.html">GOODVEXA <span>RUMMY</span></a>
+
+        <nav class="nav-links">
+            <a href="#home" id="nav-home">முகப்பு</a>
+            <a href="#games" id="nav-games">விளையாட்டுகள்</a>
             <a href="game.html" id="nav-game">Game</a>
-            <a href="#" id="nav-leaderboard">Leaderboard</a>
-            <button class="lang-btn" onclick="openLanguageModal()">🌐 <span id="current-lang-text">English</span></button>
+            <a href="#leaderboard" id="nav-leaderboard">தரவரிசை</a>
+            <button class="lang-btn" onclick="openLanguageModal()">🌐 <span id="current-lang-text">தமிழ்</span></button>
             <div id="auth-btn-container"></div>
-        </div>
+        </nav>
 
-        <button class="hamburger" onclick="toggleMobileMenu()">☰</button>
+        <button class="menu-btn" onclick="toggleMobileMenu()" aria-label="Menu">☰</button>
+    </div>
 
-        <div class="mobile-menu" id="mobileMenu">
-            <a href="index.html" id="mob-nav-home">Home</a>
-            <a href="game.html" id="mob-nav-game">Game</a>
-            <a href="#" id="mob-nav-leaderboard">Leaderboard</a>
-            <div style="display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap;">
-                <button class="lang-btn" style="flex:1;" onclick="openLanguageModal()">🌐 <span id="mob-current-lang-text">English</span></button>
-                <div id="mob-auth-btn-container" style="flex:1;"></div>
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#home" onclick="closeMobileMenu()">முகப்பு</a>
+        <a href="#games" onclick="closeMobileMenu()">விளையாட்டுகள்</a>
+        <a href="game.html">13 Card Rummy</a>
+        <a href="#features" onclick="closeMobileMenu()">சிறப்பம்சங்கள்</a>
+        <a href="#leaderboard" onclick="closeMobileMenu()">தரவரிசை</a>
+        <button class="lang-btn" onclick="openLanguageModal()">🌐 மொழியைத் தேர்வு செய்க</button>
+        <div id="mob-auth-btn-container"></div>
+    </div>
+</header>
+
+<main>
+<section class="hero" id="home">
+    <div class="container hero-grid">
+        <div>
+            <div class="eyebrow">🎁 இலவச Virtual Coins விளையாட்டு</div>
+            <h1>ரம்மி விளையாடத் <span>தயாரா?</span></h1>
+            <p class="hero-description">
+                GOODVEXA RUMMY-ல் 13 கார்டு ரம்மி விளையாடுங்கள்.
+                முதலில் Practice Mode மூலம் பயிற்சி செய்து,
+                உங்கள் ரம்மி திறமையை மேம்படுத்துங்கள்.
+            </p>
+            <div class="hero-buttons">
+                <a href="practice.html" class="btn btn-primary">🎮 Practice Rummy</a>
+                <a href="game.html" class="btn btn-outline">🃏 13 Card Rummy</a>
             </div>
-        </div>
-    </header>
-
-    <main>
-        <div class="hero-left">
-            <div class="bonus-badge" id="hero-badge">🎁 ₹1,00,000 Free Virtual Coins</div>
-            <h1 id="hero-title">Ready to Play Rummy?</h1>
-            <p id="hero-subtitle">Practice 13-card rummy for free with players across India. Sharpen your skills anytime, anywhere securely.</p>
-            <div class="disclaimer" id="hero-disclaimer">100% Free Practice Platform. No real money involved.</div>
+            <p class="hero-note">✓ இலவச விளையாட்டு &nbsp; ✓ Virtual Coins மட்டும் &nbsp; ✓ மொபைல் ஆதரவு</p>
         </div>
 
-        <div class="hero-right">
-            <div class="reg-card-title" id="reg-title">LOGIN / SIGNUP</div>
-            
-            <!-- Google Official Sign-In Button Container -->
+        <div class="hero-art">
+            <div class="table-art">
+                <div class="playing-cards">
+                    <div class="playing-card red-card">♥</div>
+                    <div class="playing-card">A♠</div>
+                    <div class="playing-card red-card">♦</div>
+                </div>
+            </div>
+            <div class="art-label">♠ PLAY • PRACTICE • ENJOY</div>
+        </div>
+    </div>
+</section>
+
+<section class="login-section">
+    <div class="container">
+        <div class="login-box">
+            <h2>உங்கள் கணக்கில் உள்நுழையுங்கள்</h2>
+            <p>Google கணக்கைப் பயன்படுத்தி Login / Signup செய்யலாம்.</p>
+
             <div id="g_id_onload"
                  data-client_id="502301926611-s67jla88d0bm2vko88odlgv7iqptgqfl.apps.googleusercontent.com"
                  data-callback="handleCredentialResponse"
                  data-auto_prompt="false">
             </div>
-            <div class="g_id_signin" 
-                 data-type="standard" 
-                 data-shape="rectangular" 
-                 data-theme="outline" 
-                 data-text="continue_with" 
-                 data-size="large" 
-                 data-logo_alignment="left">
+
+            <div class="google-wrap">
+                <div class="g_id_signin"
+                     data-type="standard"
+                     data-shape="rectangular"
+                     data-theme="outline"
+                     data-text="continue_with"
+                     data-size="large"
+                     data-logo_alignment="left">
+                </div>
             </div>
 
-            <div class="terms-box" id="terms-box">
-                <span>Verify 18+</span><br>
-                By registering, you accept you are 18+ & agree to our T&C & Privacy Policy.
-            </div>
-        </div>
-    </main>
-
-    <div class="modal-overlay" id="langModal">
-        <div class="modal-card">
-            <h2>Select Language</h2>
-            <p>Please select your preferred language to continue</p>
-            <div class="lang-options">
-                <button class="lang-option-btn" onclick="selectLanguage('ta')">தமிழ் (Tamil)</button>
-                <button class="lang-option-btn" onclick="selectLanguage('en')">English</button>
-                <button class="lang-option-btn" onclick="selectLanguage('hi')">हिंदी (Hindi)</button>
-                <button class="lang-option-btn" onclick="selectLanguage('te')">తెలుగు (Telugu)</button>
-                <button class="lang-option-btn" onclick="selectLanguage('ml')">മലയാളം (Malayalam)</button>
-                <button class="lang-option-btn" onclick="selectLanguage('kn')">ಕನ್ನಡ (Kannada)</button>
-                <button class="lang-option-btn" onclick="selectLanguage('mr')">मराठी (Marathi)</button>
-                <button class="lang-option-btn" onclick="selectLanguage('bn')">বাংলা (Bengali)</button>
-                <button class="lang-option-btn" onclick="selectLanguage('gu')">ગુજરાતી (Gujarati)</button>
-                <button class="lang-option-btn" onclick="selectLanguage('pa')">ਪੰਜਾਬੀ (Punjabi)</button>
+            <div class="terms">
+                <strong>18+ வயதினருக்கானது.</strong><br>
+                இது உண்மையான பணம் அல்லது பணப் பரிசுகள் இல்லாத
+                இலவச Virtual Coins விளையாட்டு.
             </div>
         </div>
     </div>
+</section>
 
-    <script>
-        const translations = {
-            en: {
-                currentLangLabel: "English",
-                navHome: "Home",
-                navGame: "Game",
-                navLeaderboard: "Leaderboard",
-                navLogout: "Logout",
-                heroBadge: "🎁 ₹1,00,000 Free Virtual Coins",
-                heroTitle: "Ready to Play Rummy?",
-                heroSubtitle: "Practice 13-card rummy for free with players across India. Sharpen your skills anytime, anywhere securely.",
-                heroDisclaimer: "100% Free Practice Platform. No real money involved.",
-                regTitle: "LOGIN / SIGNUP",
-                termsText: "<span>Verify 18+</span><br>By registering, you accept you are 18+ & agree to our T&C & Privacy Policy."
-            },
-            ta: {
-                currentLangLabel: "தமிழ்",
-                navHome: "முகப்பு",
-                navGame: "விளையாட்டு",
-                navLeaderboard: "தரவரிசை",
-                navLogout: "வெளியேறு",
-                heroBadge: "🎁 ₹1,00,000 இலவச விர்ச்சுவல் நாணயங்கள்",
-                heroTitle: "ரம்மி விளையாடத் தயாரா?",
-                heroSubtitle: "இந்தியா முழுவதிலும் உள்ள வீரர்களுடன் பாதுகாப்பாக 13 கார்டு ரம்மி பயிற்சி செய்யுங்கள்.",
-                heroDisclaimer: "100% இலவசப் பயிற்சி தளம். பணம் வைத்து விளையாடும் வசதி இல்லை.",
-                regTitle: "உள்நுழைவு / பதிவு",
-                termsText: "<span>18+ வயதை உறுதிப்படுத்தவும்</span><br>பதிவு செய்வதன் மூலம், உங்களுக்கு 18+ வயது என்றும் விதிமுறைகளை ஏற்பதாகவும் உறுதிப்படுத்துகிறீர்கள்."
-            },
-            hi: {
-                currentLangLabel: "हिंदी",
-                navHome: "होम",
-                navGame: "गेम",
-                navLeaderboard: "लीडरबोर्ड",
-                navLogout: "लॉग आउट",
-                heroBadge: "🎁 ₹1,00,000 मुफ़्त वर्चुअल सिक्के",
-                heroTitle: "रम्मी खेलने के लिए तैयार हैं?",
-                heroSubtitle: "पूरे भारत के खिलाड़ियों के साथ सुरक्षित रूप से 13 कार्ड रम्मी का अभ्यास करें।",
-                heroDisclaimer: "100% मुफ़्त अभ्यास मंच। कोई असली पैसा शामिल नहीं है।",
-                regTitle: "लॉगिन / साइनअप",
-                termsText: "<span>18+ सत्यापित करें</span><br>पंजीकरण करके, आप पुष्टि करते हैं कि आपकी आयु 18+ है और नियमों से सहमत हैं।"
-            },
-            te: {
-                currentLangLabel: "తెలుగు",
-                navHome: "హోమ్",
-                navGame: "ఆట",
-                navLeaderboard: "లీడర్‌బోర్డ్",
-                navLogout: "లాగ్‌అవుట్",
-                heroBadge: "🎁 ₹1,00,000 ఉచిత వర్చువల్ కాయిన్స్",
-                heroTitle: "రమ్మీ ఆడటానికి సిద్ధంగా ఉన్నారా?",
-                heroSubtitle: "భారతదేశవ్యాప్తంగా ఉన్న ఆటగాళ్లతో సురక్షితంగా 13 కార్డ్ రమ్మీని ప్రాక్టీస్ చేయండి.",
-                heroDisclaimer: "100% ఉచిత ప్రాక్టీస్ ప్లాట్‌ఫారమ్. అసలు డబ్బు లేదు.",
-                regTitle: "లాగిన్ / సైన్ అప్",
-                termsText: "<span>18+ ధృవీకరించండి</span><br>నమోదు చేయడం ద్వారా, మీరు 18+ అని మరియు నిబంధనలకు అంగీకరిస్తున్నారని ధృవీకరిస్తున్నారు."
-            },
-            ml: {
-                currentLangLabel: "മലയാളം",
-                navHome: "ഹോം",
-                navGame: "ഗെയിം",
-                navLeaderboard: "ലീഡർബോർഡ്",
-                navLogout: "പുറത്തിറങ്ങുക",
-                heroBadge: "🎁 ₹1,00,000 സൗജന്യ വെർച്വൽ കോയിനുകൾ",
-                heroTitle: "രമ്മി കളിക്കാൻ തയ്യാറാണോ?",
-                heroSubtitle: "ഇന്ത്യയിലുടനീളമുള്ള കളിക്കാർക്കൊപ്പം സുരക്ഷിതമായി 13 കാർഡ് റമ്മി പരിശീലിക്കുക.",
-                heroDisclaimer: "100% സൗജന്യ പരിശീലന പ്ലാറ്റ്ഫോം. യഥാർത്ഥ പണം ഇല്ല.",
-                regTitle: "ലോഗിൻ / സൈൻ അപ്പ്",
-                termsText: "<span>18+ സ്ഥിരീകരിക്കുക</span><br>രജിസ്റ്റർ ചെയ്യുന്നതിലൂടെ, നിങ്ങൾക്ക് 18+ വയസ്സുണ്ടെന്നും വ്യവസ്ഥകൾ അംഗീകരിക്കുന്നുവെന്നും സ്ഥിരീകരിക്കുന്നു."
-            },
-            kn: {
-                currentLangLabel: "ಕನ್ನಡ",
-                navHome: "ಹೋಮ್",
-                navGame: "ಆಟ",
-                navLeaderboard: "ಲೀಡರ್‌ಬೋರ್ಡ್",
-                navLogout: "ಹೊರಬಡಿ",
-                heroBadge: "🎁 ₹1,00,000 ಉಚಿತ ವರ್ಚುವಲ್ ನಾಣ್ಯಗಳು",
-                heroTitle: "ರಮ್ಮಿ ಆಡಲು ಸಿದ್ಧರಿದ್ದೀರಾ?",
-                heroSubtitle: "ಭಾರತದಾದ್ಯಂತ ಇರುವ ಆಟಗಾರರೊಂದಿಗೆ ಸುರಕ್ಷಿತವಾಗಿ 13 ಕಾರ್ಡ್ ರಮ್ಮಿಯನ್ನು ಅಭ್ಯಾಸ ಮಾಡಿ.",
-                heroDisclaimer: "100% ಉಚಿತ ಅಭ್ಯಾಸ ವೇದಿಕೆ. ಯಾವುದೇ ನೈಜ ಹಣವಿಲ್ಲ.",
-                regTitle: "ಲಾಗಿನ್ / ಸೈನ್ ಅಪ್",
-                termsText: "<span>18+ ಪರಿಶೀಲಿಸಿ</span><br>ನೋಂದಾಯಿಸುವ ಮೂಲಕ, ನೀವು 18+ ವರ್ಷ ವಯಸ್ಸಿನವರು ಮತ್ತು ನಿಯಮಗಳನ್ನು ಒಪ್ಪಿಕೊಳ್ಳುತ್ತೀರಿ."
-            },
-            mr: {
-                currentLangLabel: "मराठी",
-                navHome: "होम",
-                navGame: "गेम",
-                navLeaderboard: "लिडरबोर्ड",
-                navLogout: "बाहेर ਪدا",
-                heroBadge: "🎁 ₹1,00,000 मोफत व्हर्च्युअल नाणी",
-                heroTitle: "रम्मी खेळण्यास तयार आहात?",
-                heroSubtitle: "भारतभरातील खेळाडूंसोबत सुरक्षितपणे 13 कार्ड रम्मीचा सराव करा.",
-                heroDisclaimer: "100% मोफत सराव प्लॅटफॉर्म. वास्तविक पैसे समाविष्ट नाहीत.",
-                regTitle: "लॉगिन / साइनअप",
-                termsText: "<span>18+ सत्यापित करा</span><br>नोंदणी करून, तुम्ही तुमचे वय १८+ असल्याची पुष्टी करता."
-            },
-            bn: {
-                currentLangLabel: "বাংলা",
-                navHome: "হোম",
-                navGame: "গেম",
-                navLeaderboard: "লিডারবোর্ড",
-                navLogout: "লগআউট",
-                heroBadge: "🎁 ₹1,00,000 ফ্রি ভার্চুয়াল কয়েন",
-                heroTitle: "রমি খেলতে প্রস্তুত?",
-                heroSubtitle: "ভারত জুড়ে খেলোয়াড়দের সাথে নিরাপদে ১৩ কার্ডের রমি অনুশীলন করুন।",
-                heroDisclaimer: "১০০% বিনামূল্যে অনুশীলনের প্ল্যাটফর্ম। আসল টাকা নেই।",
-                regTitle: "লগইন / সাইনআপ",
-                termsText: "<span>১৮+ যাচাই করুন</span><br>নিবন্ধন করার মাধ্যমে, আপনি নিশ্চিত করছেন যে আপনার বয়স ১৮+।"
-            },
-            gu: {
-                currentLangLabel: "ગુજરાતી",
-                navHome: "હોમ",
-                navGame: "ગેમ",
-                navLeaderboard: "લીડરબોર્ડ",
-                navLogout: "બહાર નીકળો",
-                heroBadge: "🎁 ₹1,00,000 મફત વર્ચ્યુઅલ સિક્કા",
-                heroTitle: "રમમી રમવા માટે તૈયાર છો?",
-                heroSubtitle: "ભારતભરના ખેલાડીઓ સાથે સુરક્ષિત રીતે ૧૩ કાર્ડ રમમી પ્રેક્ટિસ કરો.",
-                heroDisclaimer: "100% મફત પ્રેક્ટિસ પ્લેટફોર્મ. વાસ્તવિક નાણાં સામેલ નથી.",
-                regTitle: "લોગિન / સાઇનઅપ",
-                termsText: "<span>૧૮+ ચકાસો</span><br>રજીસ્ટર કરીને, તમે પુષ્ટિ કરો છો કે તમારી ઉંમર ૧૮+ છે."
-            },
-            pa: {
-                currentLangLabel: "ਪੰਜਾਬੀ",
-                navHome: "ਹੋম",
-                navGame: "ਗੇਮ",
-                navLeaderboard: "ਲੀਡਰబోർഡ്",
-                navLogout: "ਬਾਹਰ ਜਾਓ",
-                heroBadge: "🎁 ₹1,00,000 ਮੁਫ਼ਤ ਵਰਚੁਅਲ ਸਿੱਕੇ",
-                heroTitle: "ਰਮੀ ਖੇਡਣ ਲਈ ਤਿਆਰ ਹੋ?",
-                heroSubtitle: "ਭਾਰਤ ਭਰ ਦੇ ਖਿਡਾਰੀਆਂ ਨਾਲ ਸੁਰੱਖਿਅਤ ਢੰਗ ਨਾਲ 13 ਕਾਰਡ ਰਮੀ ਦਾ ਅਭਿਆस ਕਰੋ।",
-                heroDisclaimer: "100% ਮੁਫ਼ܬ ਅਭਿਆਸ ਪਲੇਟਫਾਰਮ। ਕੋਈ ਅਸਲ ਪੈਸਾ ਸ਼ਾਮਲ ਨਹੀਂ.",
-                regTitle: "ਲਾਗਇਨ / ਸਾਈਨ ਅੱਪ",
-                termsText: "<span>18+ ਤਸਦੀਕ ਕਰੋ</span><br>ਰਜਿਸਟਰ ਕਰਕੇ, ਤੁਸੀਂ ਪੁਸ਼ਟੀ ਕਰਦੇ ਹੋ ਕਿ ਤੁਹਾਡੀ ਉਮਰ 18+ ਹੈ।"
+<section class="section" id="games">
+    <div class="container">
+        <div class="section-heading">
+            <h2>விளையாட்டு <span>வகைகள்</span></h2>
+            <p>உங்களுக்கு விருப்பமான விளையாட்டு முறையைத் தேர்வு செய்யுங்கள்.</p>
+        </div>
+
+        <div class="mode-grid">
+            <div class="mode-card">
+                <div class="mode-icon">🤖</div>
+                <h3>Practice Rummy</h3>
+                <p>AI எதிராளிகளுடன் பயிற்சி செய்யுங்கள். ரம்மி விதிகளைக் கற்றுக்கொள்ளுங்கள்.</p>
+                <a class="mode-link" href="practice.html">பயிற்சியைத் தொடங்குங்கள் →</a>
+            </div>
+
+            <div class="mode-card">
+                <div class="mode-icon">🃏</div>
+                <h3>13 Card Rummy</h3>
+                <p>13 கார்டு ரம்மி விளையாட்டைத் தொடங்கி உங்கள் திறமையைப் பயன்படுத்துங்கள்.</p>
+                <a class="mode-link" href="game.html">விளையாடுங்கள் →</a>
+            </div>
+
+            <div class="mode-card">
+                <div class="mode-icon">👥</div>
+                <h3>Friends & Multiplayer</h3>
+                <p>நண்பர்களுடன் விளையாடும் வசதி.</p>
+                <span class="coming">விரைவில் வருகிறது</span>
+            </div>
+
+            <div class="mode-card">
+                <div class="mode-icon">🏆</div>
+                <h3>Tournaments</h3>
+                <p>சிறப்பு போட்டிகளில் பங்கேற்கும் வசதி.</p>
+                <span class="coming">விரைவில் வருகிறது</span>
+            </div>
+
+            <div class="mode-card" id="leaderboard">
+                <div class="mode-icon">📊</div>
+                <h3>Leaderboard</h3>
+                <p>வீரர்களின் தரவரிசை மற்றும் விளையாட்டு முன்னேற்றம்.</p>
+                <span class="coming">விரைவில் வருகிறது</span>
+            </div>
+
+            <div class="mode-card">
+                <div class="mode-icon">📖</div>
+                <h3>Learn Rummy</h3>
+                <p>ரம்மி விதிகள், Sequence, Set மற்றும் Declaration பற்றி அறியுங்கள்.</p>
+                <span class="coming">விரைவில் வருகிறது</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section features" id="features">
+    <div class="container">
+        <div class="section-heading">
+            <h2>GOODVEXA RUMMY <span>சிறப்பம்சங்கள்</span></h2>
+            <p>எளிமையான மற்றும் மகிழ்ச்சியான விளையாட்டு அனுபவம்.</p>
+        </div>
+
+        <div class="feature-grid">
+            <div class="feature">
+                <div class="feature-icon">🎮</div>
+                <h3>இலவச விளையாட்டு</h3>
+                <p>பணம் செலுத்தாமல் விளையாடுவதற்கான அனுபவம்.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">📱</div>
+                <h3>Mobile Friendly</h3>
+                <p>மொபைல் மற்றும் கணினி இரண்டிலும் பயன்படுத்தலாம்.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🧠</div>
+                <h3>திறன் பயிற்சி</h3>
+                <p>ரம்மி விதிகளையும் கார்டு அமைப்புகளையும் கற்றுக்கொள்ளுங்கள்.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🌐</div>
+                <h3>பல மொழிகள்</h3>
+                <p>உங்களுக்கு விருப்பமான மொழியைத் தேர்வு செய்யும் வசதி.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🃏</div>
+                <h3>13 Card Rummy</h3>
+                <p>பிரபலமான 13 கார்டு ரம்மி விளையாட்டு முறை.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">✨</div>
+                <h3>எளிய வடிவமைப்பு</h3>
+                <p>புதிய வீரர்களும் எளிதாகப் பயன்படுத்தக்கூடிய அமைப்பு.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="section-heading">
+            <h2>எப்படி <span>விளையாடுவது?</span></h2>
+            <p>மூன்று எளிய படிகளில் தொடங்குங்கள்.</p>
+        </div>
+
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Login செய்யுங்கள்</h3>
+                <p>உங்கள் Google கணக்கைப் பயன்படுத்தி உள்நுழையுங்கள்.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>விளையாட்டைத் தேர்வு செய்யுங்கள்</h3>
+                <p>Practice Rummy அல்லது 13 Card Rummy தேர்வு செய்யுங்கள்.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>விளையாடத் தொடங்குங்கள்</h3>
+                <p>ரம்மி விதிகளைப் பின்பற்றி விளையாட்டை மகிழ்ச்சியாக அனுபவியுங்கள்.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="notice">
+            <h2>முக்கிய அறிவிப்பு</h2>
+            <p>
+                GOODVEXA RUMMY ஒரு இலவச பொழுதுபோக்கு மற்றும் பயிற்சி விளையாட்டு.
+                இங்கு பயன்படுத்தப்படும் Virtual Coins-க்கு பண மதிப்பு இல்லை.
+                பணம் செலுத்துதல், பணம் எடுப்பது அல்லது பணப் பரிசுகள் வழங்குவது
+                போன்ற வசதிகள் இந்தத் தளத்தில் இல்லை.
+            </p>
+        </div>
+    </div>
+</section>
+</main>
+
+<footer>
+    <div class="container">
+        <div class="logo">GOODVEXA <span>RUMMY</span></div>
+        <div class="footer-links">
+            <a href="index.html">முகப்பு</a>
+            <a href="game.html">Game</a>
+            <a href="practice.html">Practice</a>
+        </div>
+        <p>© <span id="year"></span> GOODVEXA RUMMY. All Rights Reserved.</p>
+        <p>Free Virtual Coins Game • No Real Money</p>
+    </div>
+</footer>
+
+<!-- LANGUAGE SELECTION -->
+<div class="modal-overlay" id="langModal">
+    <div class="modal-card">
+        <h2>மொழியைத் தேர்வு செய்க</h2>
+        <p>Please select your preferred language</p>
+        <div class="lang-options">
+            <button class="lang-option-btn" onclick="selectLanguage('ta')">தமிழ்</button>
+            <button class="lang-option-btn" onclick="selectLanguage('en')">English</button>
+            <button class="lang-option-btn" onclick="selectLanguage('hi')">हिंदी</button>
+            <button class="lang-option-btn" onclick="selectLanguage('te')">తెలుగు</button>
+            <button class="lang-option-btn" onclick="selectLanguage('ml')">മലയാളം</button>
+            <button class="lang-option-btn" onclick="selectLanguage('kn')">ಕನ್ನಡ</button>
+            <button class="lang-option-btn" onclick="selectLanguage('mr')">मराठी</button>
+            <button class="lang-option-btn" onclick="selectLanguage('bn')">বাংলা</button>
+            <button class="lang-option-btn" onclick="selectLanguage('gu')">ગુજરાતી</button>
+            <button class="lang-option-btn" onclick="selectLanguage('pa')">ਪੰਜਾਬੀ</button>
+        </div>
+    </div>
+</div>
+
+<script>
+const translations = {
+    ta: {
+        label:"தமிழ்",home:"முகப்பு",games:"விளையாட்டுகள்",
+        game:"விளையாட்டு",leaderboard:"தரவரிசை",logout:"வெளியேறு"
+    },
+    en: {
+        label:"English",home:"Home",games:"Games",
+        game:"Game",leaderboard:"Leaderboard",logout:"Logout"
+    },
+    hi: {
+        label:"हिंदी",home:"होम",games:"गेम",
+        game:"खेल",leaderboard:"लीडरबोर्ड",logout:"लॉग आउट"
+    },
+    te: {
+        label:"తెలుగు",home:"హోమ్",games:"ఆటలు",
+        game:"ఆట",leaderboard:"లీడర్‌బోర్డ్",logout:"లాగ్ అవుట్"
+    },
+    ml: {
+        label:"മലയാളം",home:"ഹോം",games:"ഗെയിമുകൾ",
+        game:"ഗെയിം",leaderboard:"ലീഡർബോർഡ്",logout:"ലോഗ് ഔട്ട്"
+    },
+    kn: {
+        label:"ಕನ್ನಡ",home:"ಹೋಮ್",games:"ಆಟಗಳು",
+        game:"ಆಟ",leaderboard:"ಲೀಡರ್‌ಬೋರ್ಡ್",logout:"ಲಾಗ್ ಔಟ್"
+    },
+    mr: {
+        label:"मराठी",home:"होम",games:"खेळ",
+        game:"गेम",leaderboard:"लीडरबोर्ड",logout:"लॉग आउट"
+    },
+    bn: {
+        label:"বাংলা",home:"হোম",games:"গেম",
+        game:"খেলা",leaderboard:"লিডারবোর্ড",logout:"লগ আউট"
+    },
+    gu: {
+        label:"ગુજરાતી",home:"હોમ",games:"રમતો",
+        game:"ગેમ",leaderboard:"લીડરબોર્ડ",logout:"લૉગ આઉટ"
+    },
+    pa: {
+        label:"ਪੰਜਾਬੀ",home:"ਹੋਮ",games:"ਖੇਡਾਂ",
+        game:"ਗੇਮ",leaderboard:"ਲੀਡਰਬੋਰਡ",logout:"ਲੌਗ ਆਉਟ"
+    }
+};
+
+window.addEventListener("load", function() {
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    const savedLang = localStorage.getItem("goodvexa_lang");
+    if (savedLang && translations[savedLang]) {
+        applyLanguage(savedLang);
+        document.getElementById("langModal").classList.add("hidden");
+    } else {
+        document.getElementById("langModal").classList.remove("hidden");
+    }
+
+    checkUserLoginState();
+});
+
+function selectLanguage(lang) {
+    if (!translations[lang]) return;
+    localStorage.setItem("goodvexa_lang", lang);
+    applyLanguage(lang);
+    document.getElementById("langModal").classList.add("hidden");
+}
+
+function applyLanguage(lang) {
+    const t = translations[lang] || translations.ta;
+
+    document.getElementById("current-lang-text").textContent = t.label;
+    document.getElementById("nav-home").textContent = t.home;
+    document.getElementById("nav-games").textContent = t.games;
+    document.getElementById("nav-game").textContent = t.game;
+    document.getElementById("nav-leaderboard").textContent = t.leaderboard;
+
+    document.documentElement.lang = lang;
+    checkUserLoginState();
+}
+
+function openLanguageModal() {
+    document.getElementById("langModal").classList.remove("hidden");
+}
+
+function toggleMobileMenu() {
+    document.getElementById("mobileMenu").classList.toggle("show");
+}
+
+function closeMobileMenu() {
+    document.getElementById("mobileMenu").classList.remove("show");
+}
+
+function checkUserLoginState() {
+    const savedEmail = localStorage.getItem("rummy_email");
+    const lang = localStorage.getItem("goodvexa_lang") || "ta";
+    const t = translations[lang] || translations.ta;
+
+    const desktop = document.getElementById("auth-btn-container");
+    const mobile = document.getElementById("mob-auth-btn-container");
+
+    if (savedEmail) {
+        desktop.innerHTML = `<button class="logout-nav-btn" onclick="handleLogout()">${t.logout}</button>`;
+        mobile.innerHTML = `<button class="logout-nav-btn" onclick="handleLogout()">${t.logout}</button>`;
+    } else {
+        desktop.innerHTML = "";
+        mobile.innerHTML = "";
+    }
+}
+
+/* GOOGLE LOGIN CALLBACK */
+async function handleCredentialResponse(response) {
+    try {
+        const responsePayload = parseJwt(response.credential);
+        const userEmail = responsePayload.email;
+        const userName = responsePayload.name || userEmail.split("@")[0];
+
+        const apiResponse = await fetch(
+            "https://goodvexa-rummy-server.onrender.com/api/login",
+            {
+                method:"POST",
+                headers:{"Content-Type":"application/json"},
+                body:JSON.stringify({
+                    email:userEmail,
+                    username:userName
+                })
             }
-        };
+        );
 
-        window.onload = function() {
-            const savedLang = localStorage.getItem('goodvexa_lang');
-            if (savedLang && translations[savedLang]) {
-                applyLanguage(savedLang);
-                document.getElementById('langModal').classList.add('hidden');
-            } else {
-                document.getElementById('langModal').classList.remove('hidden');
-            }
-            checkUserLoginState();
-        };
+        const data = await apiResponse.json();
 
-        function selectLanguage(langCode) {
-            localStorage.setItem('goodvexa_lang', langCode);
-            applyLanguage(langCode);
-            document.getElementById('langModal').classList.add('hidden');
+        if (data.success) {
+            localStorage.setItem("rummy_email", data.user.email);
+            localStorage.setItem("rummy_user", data.user.username);
+            localStorage.setItem("rummy_wallet", data.user.wallet);
+
+            alert("Login Successful!");
+            window.location.href = "game.html";
+        } else {
+            alert("Login Failed: " + (data.error || "Please try again."));
         }
+    } catch (error) {
+        console.error("Login Error:", error);
+        alert("Server connection error. Please try again later.");
+    }
+}
 
-        function openLanguageModal() {
-            document.getElementById('langModal').classList.remove('hidden');
-        }
+function parseJwt(token) {
+    const base64Url = token.split(".")[1];
+    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    const jsonPayload = decodeURIComponent(
+        atob(base64).split("").map(function(c) {
+            return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join("")
+    );
+    return JSON.parse(jsonPayload);
+}
 
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobileMenu');
-            menu.classList.toggle('active');
-        }
+function handleLogout() {
+    localStorage.removeItem("rummy_email");
+    localStorage.removeItem("rummy_user");
+    localStorage.removeItem("rummy_wallet");
+    alert("வெற்றிகரமாக வெளியேறிவிட்டீர்கள்!");
+    window.location.reload();
+}
+</script>
 
-        function checkUserLoginState() {
-            const savedEmail = localStorage.getItem('rummy_email');
-            const currentLang = localStorage.getItem('goodvexa_lang') || 'en';
-            const t = translations[currentLang] || translations.en;
-
-            const authContainer = document.getElementById('auth-btn-container');
-            const mobAuthContainer = document.getElementById('mob-auth-btn-container');
-
-            if (savedEmail) {
-                authContainer.innerHTML = `<button class="logout-nav-btn" onclick="handleLogout()">${t.navLogout}</button>`;
-                mobAuthContainer.innerHTML = `<button class="logout-nav-btn" style="width:100%;" onclick="handleLogout()">${t.navLogout}</button>`;
-            } else {
-                authContainer.innerHTML = '';
-                mobAuthContainer.innerHTML = '';
-            }
-        }
-
-        function applyLanguage(lang) {
-            const data = translations[lang] || translations.en;
-            
-            document.getElementById('current-lang-text').innerText = data.currentLangLabel;
-            document.getElementById('mob-current-lang-text').innerText = data.currentLangLabel;
-            
-            document.getElementById('nav-home').innerText = data.navHome;
-            document.getElementById('nav-game').innerText = data.navGame;
-            document.getElementById('nav-leaderboard').innerText = data.navLeaderboard;
-
-            document.getElementById('mob-nav-home').innerText = data.navHome;
-            document.getElementById('mob-nav-game').innerText = data.navGame;
-            document.getElementById('mob-nav-leaderboard').innerText = data.navLeaderboard;
-
-            document.getElementById('hero-badge').innerText = data.heroBadge;
-            document.getElementById('hero-title').innerText = data.heroTitle;
-            document.getElementById('hero-subtitle').innerText = data.heroSubtitle;
-            document.getElementById('hero-disclaimer').innerText = data.heroDisclaimer;
-            
-            document.getElementById('reg-title').innerText = data.regTitle;
-            document.getElementById('terms-box').innerHTML = data.termsText;
-
-            document.documentElement.lang = lang;
-            checkUserLoginState();
-        }
-
-        // Google Official Callback Function (ஜிமெயில் லாகின் வெற்றிகரமாக முடிந்தவுடன் இது இயங்கும்)
-        async function handleCredentialResponse(response) {
-            try {
-                const responsePayload = parseJwt(response.credential);
-                const userEmail = responsePayload.email;
-                const userName = responsePayload.name;
-
-                const apiResponse = await fetch('https://goodvexa-rummy-server.onrender.com/api/login', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ email: userEmail, username: userName })
-                });
-
-                const data = await apiResponse.json();
-                if (data.success) {
-                    localStorage.setItem('rummy_email', data.user.email);
-                    localStorage.setItem('rummy_user', data.user.username);
-                    localStorage.setItem('rummy_wallet', data.user.wallet);
-                    
-                    alert("Login Successful! ₹1,00,000 Virtual Coins Credited to: " + data.user.email);
-                    window.location.href = "game.html";
-                } else {
-                    alert("Login Failed: " + data.error);
-                }
-            } catch (err) {
-                console.error("Connection Error:", err);
-                alert("Server connection error. Please check your backend server.");
-            }
-        }
-
-        function parseJwt(token) {
-            var base64Url = token.split('.')[1];
-            var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-            var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
-                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-            }).join(''));
-            return JSON.parse(jsonPayload);
-        }
-
-        function handleLogout() {
-            localStorage.removeItem('rummy_email');
-            localStorage.removeItem('rummy_user');
-            localStorage.removeItem('rummy_wallet');
-            alert("வெற்றிகரமாக வெளியேறிவிட்டீர்கள் (Logged out)!");
-            window.location.reload();
-        }
-    </script>
 </body>
 </html>
