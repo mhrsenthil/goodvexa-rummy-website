@@ -911,7 +911,7 @@ const translations = {
         terms: "<strong>18+ ਉਮਰ ਲਈ।</strong><br>ਇਹ ਅਸਲ ਪੈਸੇ ਤੋਂ ਬਿਨਾਂ ਇੱਕ ਮੁਫਤ ਵਰਚੁਅਲ ਕాయిਂਸ ਗੇਮ ਹੈ।",
         gamesHeading: "ਗੇਮ <span>ਕਿਸਮਾਂ</span>",
         gamesSub: "ਆਪਣਾ ਮਨਪਸੰਦ ਗੇਮ ਮੋਡ ਚੁਣੋ।",
-        m1Title: "ਪ੍ਰੈਕਟਿਸ ਰമ്മി", m1Desc: "AI ਵਿਰੋਧੀਆਂ ਨਾਲ ਅਭਿਆਸ ਕਰੋ।", m1Link: "ਸ਼ੁਰੂ ਕਰੋ →",
+        m1Title: "ਪ੍ਰੈਕਟિસ ਰമ്മി", m1Desc: "AI ਵਿਰੋਧੀਆਂ ਨਾਲ ਅਭਿਆਸ ਕਰੋ।", m1Link: "ਸ਼ੁਰੂ ਕਰੋ →",
         m2Title: "13 ਕਾਰਡ ਰമ്മി", m2Desc: "13 ਕਾਰਡ ਰമ്മി ਖੇਡਣਾ ਸ਼ुरू ਕਰੋ।", m2Link: "ਖੇਡੋ →",
         m3Title: "ਮਲਟੀਪਲੇਅਰ", m3Desc: "ਦੋਸਤਾਂ ਨਾਲ ਖੇਡਣ ਦੀ ਸਹੂਲਤ.", coming: "ਜਲਦੀ ਆ ਰਿਹਾ ਹੈ",
         m4Title: "ਟੂਰਨਾਮੈਂਟ", m4Desc: "ਖਾਸ ਮੁਕਾਬਲੇ।",
@@ -1090,8 +1090,9 @@ async function handleCredentialResponse(response) {
                 method:"POST",
                 headers:{"Content-Type":"application/json"},
                 body:JSON.stringify({
-                    email:userEmail,
-                    username:userName
+                    email: userEmail,
+                    username: userName,
+                    token: response.credential
                 })
             }
         );
