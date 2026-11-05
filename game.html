@@ -550,30 +550,208 @@ function sortHand() {
   showMessage("அட்டைகள் வரிசைப்படுத்தப்பட்டன (Sorted).");
 }
 
+// ஒரு Group செல்லுபடியாகும் Sequence அல்லது Set ஆக உள்ளதா?
+function getGroupType(cards) {
+  if (!Array.isArray(cards) || cards.length < 3 || cards.length > 13) {
+    return null;
+  }
+
+  const jokers = cards.filter(c => c.joker);
+  const natural = cards.filter(c => !c.joker);
+
+  // SEQUENCE CHECK
+  if (natural.length > 0) {
+    const suits = new Set(natural.map(c => c.suit));
+
+    if (suits.size === 1) {
+      for (let start = 1; start <= 14 - cards.length + 1; start++) {
+        const needed = [];
+
+        for (let r = start; r < start + cards.length; r++) {
+          needed.push(r);
+        }
+
+        const ranks = natural.map(c =>
+          c.rank === 1 && start >= 12 ? 14 : c.rank
+        );
+
+        if (new Set(ranks).size !== ranks.length) continue;
+
+        if (ranks.every(r => needed.includes(r))) {
+          const missing = needed.filter(r => !ranks.includes(r)).length;
+
+          if (missing === jokers.length) {
+            return jokers.length === 0 ? "pure" : "impure";
+          }
+        }
+      }
+    }
+  }
+
+  // SET CHECK
+  if (natural.length > 0 && natural.length <= 4) {
+    const ranks = new Set(natural.map(c => c.rank));
+    const suits = new Set(natural.map(c => c.suit));
+
+    if (
+      ranks.size === 1 &&
+      suits.size === natural.length &&
+      natural.length + jokers.length <= 4
+    ) {
+      return "set";
+    }
+  }
+
+  return null;
+}
+
+// GROUP CREATE
 function createGroup() {
   if (!gameStarted || selected.length < 3) {
     showMessage("Group உருவாக்க குறைந்தது 3 கார்டுகளைத் தேர்ந்தெடுக்கவும்.");
     return;
   }
+
+  // ஏற்கனவே Group-ல் உள்ள கார்டுகளை மீண்டும் சேர்க்கக்கூடாது.
+  const alreadyGrouped = groups.flat();
+
+  if (selected.some(i => alreadyGrouped.includes(hand[i]))) {
+    showMessage("இந்த கார்டு ஏற்கனவே Group-ல் உள்ளது!");
+    return;
+  }
+
   const groupCards = selected.map(i => hand[i]);
+  const type = getGroupType(groupCards);
+
+  if (!type) {
+    showMessage("தவறான Group! Sequence அல்லது Set அமைக்கவும்.");
+    return;
+  }
+
   groups.push(groupCards);
   selected = [];
+
   render();
-  showMessage("புதிய Group உருவாக்கப்பட்டது!");
+
+  if (type === "pure") {
+    showMessage("✅ Pure Sequence உருவாக்கப்பட்டது!");
+  } else if (type === "impure") {
+    showMessage("✅ Impure Sequence உருவாக்கப்பட்டது!");
+  } else {
+    showMessage("✅ Valid Set உருவாக்கப்பட்டது!");
+  }
 }
 
+// REMOVE GROUP
 function removeGroup(index) {
   groups.splice(index, 1);
   render();
 }
 
+// முழு கையையும் சரிபார்க்கும் Rummy Validation
+function validateRummy(cards) {
+
+  if (cards.length !== 13) {
+    return {
+      valid: false,
+      reason: "சரியாக 13 கார்டுகள் இருக்க வேண்டும்."
+    };
+  }
+
+  const memo = new Map();
+
+  function search(remaining, sequenceCount, hasPure) {
+
+    if (remaining.length === 0) {
+      return sequenceCount >= 2 && hasPure;
+    }
+
+    const key =
+      remaining.join(",") + "|" + sequenceCount + "|" + hasPure;
+
+    if (memo.has(key)) return memo.get(key);
+
+    // மீதமுள்ள முதல் கார்டு இடம்பெறும் Group-களைத் தேடுதல்.
+    for (let mask = 1; mask < (1 << remaining.length); mask++) {
+
+      if (!(mask & 1)) continue;
+
+      const indexes = [];
+
+      for (let bit = 0; bit < remaining.length; bit++) {
+        if (mask & (1 << bit)) {
+          indexes.push(bit);
+        }
+      }
+
+      if (indexes.length < 3) continue;
+
+      const group = indexes.map(i => cards[remaining[i]]);
+      const type = getGroupType(group);
+
+      if (!type) continue;
+
+      const rest = remaining.filter((_, i) => !indexes.includes(i));
+
+      const nextSequenceCount =
+        sequenceCount +
+        (type === "pure" || type === "impure" ? 1 : 0);
+
+      const nextHasPure = hasPure || type === "pure";
+
+      if (search(rest, nextSequenceCount, nextHasPure)) {
+        memo.set(key, true);
+        return true;
+      }
+    }
+
+    memo.set(key, false);
+    return false;
+  }
+
+  const valid = search(cards.map((_, i) => i), 0, false);
+
+  if (!valid) {
+    return {
+      valid: false,
+      reason:
+        "குறைந்தது 2 Sequence தேவை. அதில் 1 Pure Sequence கட்டாயம். மீதமுள்ள கார்டுகளும் செல்லுபடியாகும் Group-களாக இருக்க வேண்டும்."
+    };
+  }
+
+  return {
+    valid: true,
+    reason: "அனைத்து Rummy விதிகளும் பூர்த்தியாகியுள்ளன!"
+  };
+}
+
+// DECLARE
 function declareRummy() {
-  if (!gameStarted || hand.length !== 13) {
-    showMessage("Declare செய்ய 13 கார்டுகள் சரியாக அமைய வேண்டும்.");
+
+  if (!gameStarted) {
+    showMessage("முதலில் START GAME அழுத்தவும்.");
     return;
   }
-  alert("🏆 RUMMY DECLARE! நீங்கள் வெற்றி பெற்றுவிட்டீர்கள்!");
-  showMessage("வெற்றி! வாழ்த்துகள்!");
+
+  if (mustDiscard || hand.length !== 13) {
+    showMessage("உங்கள் திருப்பத்தை முடித்து 13 கார்டுகளுடன் Declare செய்யவும்.");
+    return;
+  }
+
+  const result = validateRummy(hand);
+
+  if (!result.valid) {
+    showMessage("❌ Declare செல்லாது: " + result.reason);
+    alert("INVALID DECLARE\n" + result.reason);
+    return;
+  }
+
+  alert("🏆 VALID RUMMY DECLARE! வாழ்த்துகள்!");
+
+  showMessage("🏆 " + result.reason);
+
+  gameStarted = false;
+  render();
 }
 
 function showMessage(msg) {
