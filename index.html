@@ -316,7 +316,7 @@ footer {
             <a href="#home" id="t-home">முகப்பு</a>
             <a href="#games" id="t-games">விளையாட்டுகள்</a>
             <a href="game.html" id="t-gameLink">Game</a>
-            <a href="#leaderboard" id="t-leaderboard">தரவரிசை</a>
+            <a href="leaderboard.html" id="t-leaderboard">தரவரிசை</a>
             <button class="lang-btn" onclick="openLanguageModal()">🌐 <span id="current-lang-text">தமிழ்</span></button>
             <div id="auth-btn-container"></div>
         </nav>
@@ -329,7 +329,7 @@ footer {
         <a href="#games" onclick="closeMobileMenu()" id="tm-games">விளையாட்டுகள்</a>
         <a href="game.html" id="tm-gameLink">13 Card Rummy</a>
         <a href="#features" onclick="closeMobileMenu()" id="tm-features">சிறப்பம்சங்கள்</a>
-        <a href="#leaderboard" onclick="closeMobileMenu()" id="tm-leaderboard">தரவரிசை</a>
+        <a href="leaderboard.html" onclick="closeMobileMenu()" id="tm-leaderboard">தரவரிசை</a>
         <button class="lang-btn" onclick="openLanguageModal()" id="tm-langBtn" style="width:100%; margin-bottom:10px;">🌐 மொழியைத் தேர்வு செய்க</button>
         <div id="mob-auth-btn-container"></div>
     </div>
@@ -345,8 +345,8 @@ footer {
                 GOODVEXA RUMMY-ல் 13 கார்டு ரம்மி விளையாடுங்கள். முதலில் Practice Mode மூலம் பயிற்சி செய்து, உங்கள் ரம்மி திறமையை மேம்படுத்துங்கள்.
             </p>
             <div class="hero-buttons">
-                <a href="practice.html" class="btn btn-primary" id="t-btnPractice">🎮 Practice Rummy</a>
-                <a href="game.html" class="btn btn-outline" id="t-btnGame">🃏 13 Card Rummy</a>
+                <a href="game.html?mode=practice" class="btn btn-primary" id="t-btnPractice">🎮 Practice Rummy</a>
+                <a href="game.html?mode=classic" class="btn btn-outline" id="t-btnGame">🃏 13 Card Rummy</a>
             </div>
             <p class="hero-note" id="t-heroNote">✓ இலவச விளையாட்டு &nbsp; ✓ Virtual Coins மட்டும் &nbsp; ✓ மொபைல் ஆதரவு</p>
         </div>
@@ -403,46 +403,52 @@ footer {
         </div>
 
         <div class="mode-grid">
+            <!-- 1. Practice Rummy Mode -->
             <div class="mode-card">
                 <div class="mode-icon">🤖</div>
                 <h3 id="t-m1Title">Practice Rummy</h3>
                 <p id="t-m1Desc">AI எதிராளிகளுடன் பயிற்சி செய்யுங்கள். ரம்மி விதிகளைக் கற்றுக்கொள்ளுங்கள்.</p>
-                <a class="mode-link" href="practice.html" id="t-m1Link">பயிற்சியைத் தொடங்குங்கள் →</a>
+                <a class="mode-link" href="game.html?mode=practice" id="t-m1Link">பயிற்சியைத் தொடங்குங்கள் →</a>
             </div>
 
+            <!-- 2. 13 Card Classic Rummy Mode -->
             <div class="mode-card">
                 <div class="mode-icon">🃏</div>
                 <h3 id="t-m2Title">13 Card Rummy</h3>
                 <p id="t-m2Desc">13 கார்டு ரம்மி விளையாட்டைத் தொடங்கி உங்கள் திறமையைப் பயன்படுத்துங்கள்.</p>
-                <a class="mode-link" href="game.html" id="t-m2Link">விளையாடுங்கள் →</a>
+                <a class="mode-link" href="game.html?mode=classic" id="t-m2Link">விளையாடுங்கள் →</a>
             </div>
 
+            <!-- 3. Friends & Multiplayer Mode -->
             <div class="mode-card">
                 <div class="mode-icon">👥</div>
                 <h3 id="t-m3Title">Friends & Multiplayer</h3>
                 <p id="t-m3Desc">நண்பர்களுடன் விளையாடும் வசதி.</p>
-                <span class="coming" id="t-coming1">விரைவில் வருகிறது</span>
+                <a class="mode-link" href="game.html?mode=multiplayer" id="t-m3Link">விளையாடுங்கள் →</a>
             </div>
 
+            <!-- 4. Tournaments Mode -->
             <div class="mode-card">
                 <div class="mode-icon">🏆</div>
                 <h3 id="t-m4Title">Tournaments</h3>
                 <p id="t-m4Desc">சிறப்பு போட்டிகளில் பங்கேற்கும் வசதி.</p>
-                <span class="coming" id="t-coming2">விரைவில் வருகிறது</span>
+                <a class="mode-link" href="game.html?mode=tournament" id="t-m4Link">பங்கேற்க →</a>
             </div>
 
+            <!-- 5. Separate Page: Leaderboard -->
             <div class="mode-card" id="leaderboard">
                 <div class="mode-icon">📊</div>
                 <h3 id="t-m5Title">Leaderboard</h3>
                 <p id="t-m5Desc">வீரர்களின் தரவரிசை மற்றும் விளையாட்டு முன்னேற்றம்.</p>
-                <span class="coming" id="t-coming3">விரைவில் வருகிறது</span>
+                <a class="mode-link" href="leaderboard.html" id="t-m5Link">தரவரிசையைப் பார்க்க →</a>
             </div>
 
+            <!-- 6. Separate Page: Learn Rummy -->
             <div class="mode-card">
                 <div class="mode-icon">📖</div>
                 <h3 id="t-m6Title">Learn Rummy</h3>
                 <p id="t-m6Desc">ரம்மி விதிகள், Sequence, Set மற்றும் Declaration பற்றி அறியுங்கள்.</p>
-                <span class="coming" id="t-coming4">விரைவில் வருகிறது</span>
+                <a class="mode-link" href="learn.html" id="t-m6Link">கற்றுக்கொள்ள →</a>
             </div>
         </div>
     </div>
@@ -535,7 +541,7 @@ footer {
         <div class="footer-links">
             <a href="index.html" id="t-ftHome">முகப்பு</a>
             <a href="game.html" id="t-ftGame">Game</a>
-            <a href="practice.html" id="t-ftPractice">Practice</a>
+            <a href="game.html?mode=practice" id="t-ftPractice">Practice</a>
         </div>
         <p>© <span id="year"></span> GOODVEXA RUMMY. All Rights Reserved.</p>
         <p id="t-ftSub">Free Virtual Coins Game • No Real Money</p>
@@ -580,10 +586,10 @@ const translations = {
         gamesSub: "உங்களுக்கு விருப்பமான விளையாட்டு முறையைத் தேர்வு செய்யுங்கள்.",
         m1Title: "Practice Rummy", m1Desc: "AI எதிராளிகளுடன் பயிற்சி செய்யுங்கள். ரம்மி விதிகளைக் கற்றுக்கொள்ளுங்கள்.", m1Link: "பயிற்சியைத் தொடங்குங்கள் →",
         m2Title: "13 Card Rummy", m2Desc: "13 கார்டு ரம்மி விளையாட்டைத் தொடங்கி உங்கள் திறமையைப் பயன்படுத்துங்கள்.", m2Link: "விளையாடுங்கள் →",
-        m3Title: "Friends & Multiplayer", m3Desc: "நண்பர்களுடன் விளையாடும் வசதி.", coming: "விரைவில் வருகிறது",
-        m4Title: "Tournaments", m4Desc: "சிறப்பு போட்டிகளில் பங்கேற்கும் வசதி.",
-        m5Title: "Leaderboard", m5Desc: "வீரர்களின் தரவரிசை மற்றும் விளையாட்டு முன்னேற்றம்.",
-        m6Title: "Learn Rummy", m6Desc: "ரம்மி விதிகள், Sequence, Set மற்றும் Declaration பற்றி அறியுங்கள்.",
+        m3Title: "Friends & Multiplayer", m3Desc: "நண்பர்களுடன் விளையாடும் வசதி.", m3Link: "விளையாடுங்கள் →",
+        m4Title: "Tournaments", m4Desc: "சிறப்பு போட்டிகளில் பங்கேற்கும் வசதி.", m4Link: "பங்கேற்க →",
+        m5Title: "Leaderboard", m5Desc: "வீரர்களின் தரவரிசை மற்றும் விளையாட்டு முன்னேற்றம்.", m5Link: "தரவரிசையைப் பார்க்க →",
+        m6Title: "Learn Rummy", m6Desc: "ரம்மி விதிகள், Sequence, Set மற்றும் Declaration பற்றி அறியுங்கள்.", m6Link: "கற்றுக்கொள்ள →",
         featHeading: "GOODVEXA RUMMY <span>சிறப்பம்சங்கள்</span>",
         featSub: "எளிமையான மற்றும் மகிழ்ச்சியான விளையாட்டு அனுபவம்.",
         f1Title: "இலவச விளையாட்டு", f1Desc: "பணம் செலுத்தாமல் விளையாடுவதற்கான அனுபவம்.",
@@ -617,10 +623,10 @@ const translations = {
         gamesSub: "Choose your favorite game mode to start playing.",
         m1Title: "Practice Rummy", m1Desc: "Practice with AI opponents and learn rummy rules.", m1Link: "Start Practice →",
         m2Title: "13 Card Rummy", m2Desc: "Start playing 13 Card Rummy and test your skills.", m2Link: "Play Now →",
-        m3Title: "Friends & Multiplayer", m3Desc: "Play with your friends.", coming: "Coming Soon",
-        m4Title: "Tournaments", m4Desc: "Participate in special tournaments.",
-        m5Title: "Leaderboard", m5Desc: "Player rankings and game progress.",
-        m6Title: "Learn Rummy", m6Desc: "Learn rules, sequences, sets, and declarations.",
+        m3Title: "Friends & Multiplayer", m3Desc: "Play with your friends.", m3Link: "Play Now →",
+        m4Title: "Tournaments", m4Desc: "Participate in special tournaments.", m4Link: "Join Now →",
+        m5Title: "Leaderboard", m5Desc: "Player rankings and game progress.", m5Link: "View Leaderboard →",
+        m6Title: "Learn Rummy", m6Desc: "Learn rules, sequences, sets, and declarations.", m6Link: "Start Learning →",
         featHeading: "GOODVEXA RUMMY <span>Features</span>",
         featSub: "Simple and joyful gaming experience.",
         f1Title: "Free to Play", f1Desc: "Experience the game without spending money.",
@@ -654,10 +660,10 @@ const translations = {
         gamesSub: "अपनी पसंद का गेम मोड चुनें।",
         m1Title: "प्रैक्टिस रम्मी", m1Desc: "AI विरोधियों के साथ अभ्यास करें और नियम सीखें।", m1Link: "अभ्यास शुरू करें →",
         m2Title: "13 कार्ड रम्मी", m2Desc: "13 कार्ड रम्मी खेलना शुरू करें।", m2Link: "खेलें →",
-        m3Title: "फ्रेंड्स और मल्टीप्लेयर", m3Desc: "दोस्तों के साथ खेलने की सुविधा।", coming: "जल्द आ रहा है",
-        m4Title: "टूर्नामेंट", m4Desc: "विशेष टूर्नामेंट में भाग लें।",
-        m5Title: "लीडरबोर्ड", m5Desc: "खिलाड़ियों की रैंकिंग।",
-        m6Title: "रम्मी सीखें", m6Desc: "नियम और सीक्वेंस सीखें।",
+        m3Title: "फ्रेंड्स और मल्टीप्लेयर", m3Desc: "दोस्तों के साथ खेलने की सुविधा।", m3Link: "खेलें →",
+        m4Title: "टूर्नामेंट", m4Desc: "विशेष टूर्नामेंट में भाग लें।", m4Link: "भाग लें →",
+        m5Title: "लीडरबोर्ड", m5Desc: "खिलाड़ियों की रैंकिंग।", m5Link: "लीडरबोर्ड देखें →",
+        m6Title: "रम्मी सीखें", m6Desc: "नियम और सीक्वेंस सीखें।", m6Link: "सीखें →",
         featHeading: "GOODVEXA RUMMY <span>विशेषताएं</span>",
         featSub: "सरल और आनंददायक गेमिंग अनुभव।",
         f1Title: "मुफ्त खेल", f1Desc: "बिना पैसे खर्च किए खेलें।",
@@ -679,7 +685,7 @@ const translations = {
         label: "తెలుగు",
         home: "హోమ్", games: "ఆటలు", game: "ఆట", leaderboard: "లీడర్‌బోర్డ్", logout: "లాగ్ అవుట్",
         eyebrow: "🎁 ఉచిత వర్చువల్ కాయిన్స్ గేమ్",
-        heroTitle: "రమ్మీ ఆడటానికి <span>సిద్ధமா?</span>",
+        heroTitle: "రమ్మీ ఆడటానికి <span>సిద్ధమా?</span>",
         heroDesc: "GOODVEXA RUMMY లో 13 కార్డ్ రమ్మీ ఆడండి. ప్రాక్టీస్ మోడ్‌తో మీ నైపుణ్యాలను మెరుగుపరచుకోండి.",
         btnPractice: "🎮 ప్రాక్టీస్ రమ్మీ", btnGame: "🃏 13 కార్డ్ రమ్మీ",
         heroNote: "✓ ఉచిత ఆట &nbsp; ✓ వర్చువల్ కాయిన్స్ మాత్రమే &nbsp; ✓ మొబైల్ సపోర్ట్",
@@ -691,10 +697,10 @@ const translations = {
         gamesSub: "మీకు నచ్చిన గేమ్ మోడ్‌ను ఎంచుకోండి.",
         m1Title: "ప్రాక్టీస్ రమ్మీ", m1Desc: "AI తో ప్రాక్టీస్ చేయండి.", m1Link: "ప్రారంభించండి →",
         m2Title: "13 కార్డ్ రమ్మీ", m2Desc: "13 కార్డ్ రమ్మీ ఆడండి.", m2Link: "ఆడండి →",
-        m3Title: "మల్టీప్లేయర్", m3Desc: "స్నేహితులతో ఆడే సదుపాయం.", coming: "త్వరలో వస్తుంది",
-        m4Title: "టూర్నమెంట్స్", m4Desc: "ప్రత్యేక పోటీలు.",
-        m5Title: "లీడర్‌బోర్డ్", m5Desc: "ప్లేయర్ ర్యాంకింగ్స్.",
-        m6Title: "రమ్మీ నేర్చుకోండి", m6Desc: "నియమాలు తెలుసుకోండి.",
+        m3Title: "మల్టీప్లేయర్", m3Desc: "స్నేహితులతో ఆడే సదుపాయం.", m3Link: "ఆడండి →",
+        m4Title: "టూర్నమెంట్స్", m4Desc: "ప్రత్యేక పోటీలు.", m4Link: "పాల్గొనండి →",
+        m5Title: "లీడర్‌బోర్డ్", m5Desc: "ప్లేయర్ ర్యాంకింగ్స్.", m5Link: "ర్యాంకింగ్స్ చూడండి →",
+        m6Title: "రమ్మీ నేర్చుకోండి", m6Desc: "నియమాలు తెలుసుకోండి.", m6Link: "నేర్చుకోండి →",
         featHeading: "GOODVEXA RUMMY <span>ఫీచర్స్</span>",
         featSub: "అద్భుతమైన గేమింగ్ అనుభవం.",
         f1Title: "ఉచిత ఆట", f1Desc: "డబ్బు చెల్లించకుండా ఆడండి.",
@@ -728,10 +734,10 @@ const translations = {
         gamesSub: "നിങ്ങളുടെ ഇഷ്ടമുള്ള ഗെയിം മോഡ് തിരഞ്ഞെടുക്കുക.",
         m1Title: "പ്രാക്ടീസ് റമ്മി", m1Desc: "AI എതിരാളികളുമായി പരിശീലിക്കുക.", m1Link: "തുടങ്ങുക →",
         m2Title: "13 കാർഡ് റമ്മി", m2Desc: "13 കാർഡ് റമ്മി കളിക്കുക.", m2Link: "കളിക്കുക →",
-        m3Title: "സുഹൃത്തുക്കൾ & മൾട്ടിപ്ലെയർ", m3Desc: "സുഹൃത്തുക്കളുമൊത്ത് കളിക്കാം.", coming: "ഉടൻ വരുന്നു",
-        m4Title: "ടൂർണമെന്റുകൾ", m4Desc: "പ്രത്യേക മത്സരങ്ങൾ.",
-        m5Title: "ലീഡർബോർഡ്", m5Desc: "കളിക്കാരുടെ റാങ്കിംഗ്.",
-        m6Title: "റമ്മി പഠിക്കുക", m6Desc: "നിയമങ്ങൾ മനസ്സിലാക്കുക.",
+        m3Title: "സുഹൃത്തുക്കൾ & മൾട്ടിപ്ലെയർ", m3Desc: "സുഹൃത്തുക്കളുമൊത്ത് കളിക്കാം.", m3Link: "കളിക്കുക →",
+        m4Title: "ടൂർണമെന്റുകൾ", m4Desc: "പ്രത്യേക മത്സരങ്ങൾ.", m4Link: "പങ്കെടുക്കുക →",
+        m5Title: "ലീഡർബോർഡ്", m5Desc: "കളിക്കാരുടെ റാങ്കിംഗ്.", m5Link: "റാങ്കിംഗ് കാണുക →",
+        m6Title: "റമ്മി പഠിക്കുക", m6Desc: "നിയമങ്ങൾ മനസ്സിലാക്കുക.", m6Link: "പഠിക്കുക →",
         featHeading: "GOODVEXA RUMMY <span>പ്രത്യേകതകൾ</span>",
         featSub: "ലളിതമായ ഗെയിമിംഗ് അനുഭവം.",
         f1Title: "സൗജന്യ കളി", f1Desc: "പണം ചെലവഴിക്കാതെ കളിക്കാം.",
@@ -765,10 +771,10 @@ const translations = {
         gamesSub: "ನಿಮ್ಮಿಷ್ಟದ ಆಟದ ವಿಧಾನವನ್ನು ಆಯ್ಕೆಮಾಡಿ.",
         m1Title: "ಪ್ರಾಕ್ಟೀಸ್ ರಮ್ಮಿ", m1Desc: "AI ಜೊತೆ ಅಭ್ಯಾಸ ಮಾಡಿ.", m1Link: "ಪ್ರಾರಂಭಿಸಿ →",
         m2Title: "13 ಕಾರ್ಡ್ ರಮ್ಮಿ", m2Desc: "13 ಕಾರ್ಡ್ ರಮ್ಮಿ ಆಡಿ.", m2Link: "ಆಡಿ →",
-        m3Title: "ಮಲ್ಟಿಪ್ಲೇಯರ್", m3Desc: "ಸ್ನೇಹಿತರೊಂದಿಗೆ ಆಟ.", coming: "ಶೀಘ್ರದಲ್ಲೇ ಬರಲಿದೆ",
-        m4Title: "ಪಂದ್ಯಾವಳಿಗಳು", m4Desc: "ವಿಶೇಷ ಪಂದ್ಯಗಳು.",
-        m5Title: "ಲೀಡರ್‌ಬೋರ್ಡ್", m5Desc: "ಆಟಗಾರರ ಶ್ರೇಯಾಂಕ.",
-        m6Title: "ರಮ್ಮಿ ಕಲಿಯಿರಿ", m6Desc: "ನಿಯಮಗಳನ್ನು ತಿಳಿಯಿರಿ.",
+        m3Title: "ಮಲ್ಟಿಪ್ಲೇಯರ್", m3Desc: "ಸ್ನೇಹಿತರೊಂದಿಗೆ ಆಟ.", m3Link: "ಆಡಿ →",
+        m4Title: "ಪಂದ್ಯಾವಳಿಗಳು", m4Desc: "ವಿಶೇಷ ಪಂದ್ಯಗಳು.", m4Link: "ಭಾಗವಹಿಸಿ →",
+        m5Title: "ಲೀಡರ್‌ಬೋರ್ಡ್", m5Desc: "ಆಟಗಾರರ ಶ್ರೇಯಾಂಕ.", m5Link: "ಶ್ರೇಯಾಂಕ ನೋಡಿ →",
+        m6Title: "ರಮ್ಮಿ ಕಲಿಯಿರಿ", m6Desc: "ನಿಯಮಗಳನ್ನು ತಿಳಿಯಿರಿ.", m6Link: "ಕಲಿಯಿರಿ →",
         featHeading: "GOODVEXA RUMMY <span>ವೈಶಿಷ್ಟ್ಯಗಳು</span>",
         featSub: "ಸರಳ ಮತ್ತು ಸುಂದರ ಆಟದ ಅನುಭವ.",
         f1Title: "ಉಚಿತ ಆಟ", f1Desc: "ಹಣವಿಲ್ಲದೆ ಆಡಿ.",
@@ -802,10 +808,10 @@ const translations = {
         gamesSub: "तुमचा आवडता गेम मोड निवडा.",
         m1Title: "प्रॅक्टिस रम्मी", m1Desc: "AI विरोधकांसोबत सराव करा.", m1Link: "सुरू करा →",
         m2Title: "13 कार्ड रम्मी", m2Desc: "13 कार्ड रम्मी खेळा.", m2Link: "खेळा →",
-        m3Title: "मल्टीप्लेअर", m3Desc: "मित्रांसोबत खेळण्याची सोय.", coming: "लवकरच येत आहे",
-        m4Title: "टूर्नामेंट्स", m4Desc: "विशेष स्पर्धा.",
-        m5Title: "लीडरबोर्ड", m5Desc: "खेळाडूंचे रँकिंग.",
-        m6Title: "रम्मी शिका", m6Desc: "नियम समजून घ्या.",
+        m3Title: "मल्टीप्लेअर", m3Desc: "मित्रांसोबत खेळण्याची सोय.", m3Link: "खेळा →",
+        m4Title: "टूर्नामेंट्स", m4Desc: "विशेष स्पर्धा.", m4Link: "सहभाग घ्या →",
+        m5Title: "लीडरबोर्ड", m5Desc: "खेळाडूंचे रँकिंग.", m5Link: "रँकिंग पहा →",
+        m6Title: "रम्मी शिका", m6Desc: "नियम समजून घ्या.", m6Link: "शिका →",
         featHeading: "GOODVEXA RUMMY <span>वैशिष्ट्ये</span>",
         featSub: "सोपा आणि आनंदी गेमिंग अनुभव.",
         f1Title: "मोफत खेळ", f1Desc: "पैसे न देता खेळा.",
@@ -839,10 +845,10 @@ const translations = {
         gamesSub: "আপনার পছন্দের গেম মোড বেছে নিন।",
         m1Title: "প্র্যাকটিস রমি", m1Desc: "AI বিরোধীদের সাথে অনুশীলন করুন।", m1Link: "শুরু করুন →",
         m2Title: "১৩ কার্ড রমি", m2Desc: "১৩ কার্ড রমি খেলা শুরু করুন।", m2Link: "খেলুন →",
-        m3Title: "মাল্টিপ্লেয়ার", m3Desc: "বন্ধুদের সাথে খেলার সুবিধা।", coming: "শীঘ্রই আসছে",
-        m4Title: "টুর্নামেন্ট", m4Desc: "বিশেষ প্রতিযোগিতা।",
-        m5Title: "লিডারবোর্ড", m5Desc: "খেলোয়াড়দের র‍্যাঙ্কিং।",
-        m6Title: "রমি শিখুন", m6Desc: "নিয়মগুলো জানুন।",
+        m3Title: "মাল্টিপ্লেয়ার", m3Desc: "বন্ধুদের সাথে খেলার সুবিধা।", m3Link: "খেলুন →",
+        m4Title: "টুর্নামেন্ট", m4Desc: "বিশেষ প্রতিযোগিতা।", m4Link: "অংশগ্রহণ করুন →",
+        m5Title: "লিডারবোর্ড", m5Desc: "খেলোয়াড়দের র‍্যাঙ্কিং।", m5Link: "র‍্যাঙ্কিং দেখুন →",
+        m6Title: "রমি শিখুন", m6Desc: "নিয়মগুলো জানুন।", m6Link: "শিখুন →",
         featHeading: "GOODVEXA RUMMY <span>বৈশিষ্ট্য</span>",
         featSub: "সহজ এবং আনন্দদায়ক গেমিং অভিজ্ঞতা।",
         f1Title: "বিনামূল্যে খেলা", f1Desc: "টাকা খরচ না করে খেলুন।",
@@ -876,10 +882,10 @@ const translations = {
         gamesSub: "તમારો મનપસંદ ગેમ મોડ પસંદ કરો.",
         m1Title: "પ્રેક્ટિસ રમી", m1Desc: "AI વિરોધીઓ સાથે પ્રેક્ટિસ કરો.", m1Link: "શરૂ કરો →",
         m2Title: "13 કાર્ડ રમી", m2Desc: "13 કાર્ડ રમી રમવાનું શરૂ કરો.", m2Link: "રમો →",
-        m3Title: "મલ્ટીપ્લેયર", m3Desc: "મિત્રો સાથે રમવાની સુવિધા.", coming: "જલ્દી આવી રહ્યું છે",
-        m4Title: "ટૂર્નામેન્ટ્સ", m4Desc: "ખાસ સ્પર્ધાઓ.",
-        m5Title: "લીડરબોર્ડ", m5Desc: "ખેલાડીઓની રેન્કિંગ.",
-        m6Title: "રમી શીખો", m6Desc: "નિયમો સમજો.",
+        m3Title: "મલ્ટીપ્લેયર", m3Desc: "મિત્રો સાથે રમવાની સુવિધા.", m3Link: "રમો →",
+        m4Title: "ટૂર્નામેન્ટ્સ", m4Desc: "ખાસ સ્પર્ધાઓ.", m4Link: "ભાગ લો →",
+        m5Title: "લીડરબોર્ડ", m5Desc: "ખેલાડીઓની રેન્કિંગ.", m5Link: "રેન્કિંગ જુઓ →",
+        m6Title: "રમી શીખો", m6Desc: "નિયમો સમજો.", m6Link: "શીખો →",
         featHeading: "GOODVEXA RUMMY <span>વિશેષતાઓ</span>",
         featSub: "સરળ અને આનંદદાયક ગેમિંગ અનુભવ.",
         f1Title: "મફત રમત", f1Desc: "પૈસા ખર્ચ્યા વગર રમો.",
@@ -900,39 +906,39 @@ const translations = {
     pa: {
         label: "ਪੰਜਾਬੀ",
         home: "ਹੋਮ", games: "ਖੇਡਾਂ", game: "ਗੇਮ", leaderboard: "ਲੀਡਰਬੋਰਡ", logout: "ਲੌਗ ਆਉਟ",
-        eyebrow: "🎁 ਮੁਫਤ ਵਰਚੁਅਲ ਕాయిਂਸ ਗੇਮ",
-        heroTitle: "ਰമ്മി ਖੇਡਣ ਲਈ <span>ਤਿਆਰ ਹੋ?</span>",
-        heroDesc: "GOODVEXA RUMMY 'ਤੇ 13 ਕਾਰਡ ਰമ്മി ਖੇਡੋ। ਪ੍ਰੈਕਟਿਸ ਮੋਡ ਨਾਲ ਆਪਣੀ ਕੁਸ਼ਲਤਾ ਸੁਧਾਰੋ।",
-        btnPractice: "🎮 ਪ੍ਰੈਕਟਿਸ ਰമ്മി", btnGame: "🃏 13 ਕਾਰਡ ਰമ്മി",
-        heroNote: "✓ ਮੁਫਤ ਖੇਡ &nbsp; ✓ ਸਿਰਫ ਵਰਚੁਅਲ ਕాయిਂਸ &nbsp; ✓ ਮੋਬਾਈਲ ਸਪੋਰਟ",
+        eyebrow: "🎁 ਮੁਫਤ ਵਰਚੁਅਲ ਕਾਈਂਸ ਗੇਮ",
+        heroTitle: "ਰਮੀ ਖੇਡਣ ਲਈ <span>ਤਿਆਰ ਹੋ?</span>",
+        heroDesc: "GOODVEXA RUMMY 'ਤੇ 13 ਕਾਰਡ ਰਮੀ ਖੇਡੋ। ਪ੍ਰੈਕਟਿਸ ਮੋਡ ਨਾਲ ਆਪਣੀ ਕੁਸ਼ਲਤਾ ਸੁਧਾਰੋ।",
+        btnPractice: "🎮 ਪ੍ਰੈਕਟਿਸ ਰਮੀ", btnGame: "🃏 13 ਕਾਰਡ ਰਮੀ",
+        heroNote: "✓ ਮੁਫਤ ਖੇਡ &nbsp; ✓ ਸਿਰਫ ਵਰਚੁਅਲ ਕਾਈਂਸ &nbsp; ✓ ਮੋਬਾਈਲ ਸਪੋਰਟ",
         artLabel: "♠ PLAY • PRACTICE • ENJOY",
         loginTitle: "ਆਪਣੇ ਖਾਤੇ ਵਿੱਚ ਲੌਗ ਇਨ ਕਰੋ",
         loginDesc: "Google ਖਾਤੇ ਦੀ ਵਰਤੋਂ ਕਰਕੇ ਲੌਗ ਇਨ / ਸਾਈਨ ਅੱਪ ਕਰੋ.",
-        terms: "<strong>18+ ਉਮਰ ਲਈ।</strong><br>ਇਹ ਅਸਲ ਪੈਸੇ ਤੋਂ ਬਿਨਾਂ ਇੱਕ ਮੁਫਤ ਵਰਚੁਅਲ ਕాయిਂਸ ਗੇਮ ਹੈ।",
+        terms: "<strong>18+ ਉਮਰ ਲਈ।</strong><br>ਇਹ ਅਸਲ ਪੈਸੇ ਤੋਂ ਬਿਨਾਂ ਇੱਕ ਮੁਫਤ ਵਰਚੁਅਲ ਕਾਈਂਸ ਗੇਮ ਹੈ।",
         gamesHeading: "ਗੇਮ <span>ਕਿਸਮਾਂ</span>",
         gamesSub: "ਆਪਣਾ ਮਨਪਸੰਦ ਗੇਮ ਮੋਡ ਚੁਣੋ।",
-        m1Title: "ਪ੍ਰੈਕਟિસ ਰമ്മി", m1Desc: "AI ਵਿਰੋਧੀਆਂ ਨਾਲ ਅਭਿਆਸ ਕਰੋ।", m1Link: "ਸ਼ੁਰੂ ਕਰੋ →",
-        m2Title: "13 ਕਾਰਡ ਰമ്മി", m2Desc: "13 ਕਾਰਡ ਰമ്മി ਖੇਡਣਾ ਸ਼ुरू ਕਰੋ।", m2Link: "ਖੇਡੋ →",
-        m3Title: "ਮਲਟੀਪਲੇਅਰ", m3Desc: "ਦੋਸਤਾਂ ਨਾਲ ਖੇਡਣ ਦੀ ਸਹੂਲਤ.", coming: "ਜਲਦੀ ਆ ਰਿਹਾ ਹੈ",
-        m4Title: "ਟੂਰਨਾਮੈਂਟ", m4Desc: "ਖਾਸ ਮੁਕਾਬਲੇ।",
-        m5Title: "ਲੀਡਰਬੋਰਡ", m5Desc: "ਖਿਡਾਰੀਆਂ ਦੀ ਰੈਂਕਿੰਗ.",
-        m6Title: "ਰമ്മി ਸਿੱਖੋ", m6Desc: "ਨਿਯਮ ਜਾਣੋ.",
+        m1Title: "ਪ੍ਰੈਕਟਿਸ ਰਮੀ", m1Desc: "AI ਵਿਰੋਧੀਆਂ ਨਾਲ ਅਭਿਆਸ ਕਰੋ।", m1Link: "ਸ਼ੁਰੂ ਕਰੋ →",
+        m2Title: "13 ਕਾਰਡ ਰਮੀ", m2Desc: "13 ਕਾਰਡ ਰਮੀ ਖੇਡਣਾ ਸ਼ੁਰੂ ਕਰੋ।", m2Link: "ਖੇਡੋ →",
+        m3Title: "ਮਲਟੀਪਲੇਅਰ", m3Desc: "ਦੋਸਤਾਂ ਨਾਲ ਖੇਡਣ ਦੀ ਸਹੂਲਤ.", m3Link: "ਖੇਡੋ →",
+        m4Title: "ਟੂਰਨਾਮੈਂਟ", m4Desc: "ਖਾਸ ਮੁਕਾਬਲੇ।", m4Link: "ਹਿੱਸਾ ਲਓ →",
+        m5Title: "ਲੀਡਰਬੋਰਡ", m5Desc: "ਖਿਡਾਰੀਆਂ ਦੀ ਰੈਂਕਿੰਗ.", m5Link: "ਰੈਂਕਿੰਗ ਦੇਖੋ →",
+        m6Title: "ਰਮੀ ਸਿੱਖੋ", m6Desc: "ਨਿਯਮ ਜਾਣੋ.", m6Link: "ਸਿੱਖੋ →",
         featHeading: "GOODVEXA RUMMY <span>ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ</span>",
         featSub: "ਸਧਾਰਨ ਅਤੇ ਆਨੰਦਦਾਇਕ ਗੇਮਿੰਗ ਅਨੁਭਵ।",
         f1Title: "ਮੁਫਤ ਖੇਡ", f1Desc: "ਪੈਸੇ ਖਰਚ ਕੀਤੇ ਬਿਨਾਂ ਖੇਡੋ।",
         f2Title: "ਮੋਬਾਈਲ ਫਰੈਂਡਲੀ", f2Desc: "ਸਾਰੇ ਡਿਵਾਈਸਾਂ ਲਈ ਉਚਿਤ।",
         f3Title: "ਸਕਿੱਲ ਸਿਖਲਾਈ", f3Desc: "ਨਿਯਮ ਸਿੱਖੋ।",
         f4Title: "ਬਹੁ-ਭਾਸ਼ਾ", f4Desc: "ਆਪਣੀ ਭਾਸ਼ਾ ਚੁਣੋ।",
-        f5Title: "13 ਕਾਰਡ ਰമ്മി", f5Desc: "ਪ੍ਰਸਿੱਧ ਰമ്മി ਗੇਮ।",
+        f5Title: "13 ਕਾਰਡ ਰਮੀ", f5Desc: "ਪ੍ਰਸਿੱਧ ਰਮੀ ਗੇਮ।",
         f6Title: "ਸਧਾਰਨ ਡਿਜ਼ਾਈਨ", f6Desc: "ਨਵੇਂ ਖਿਡਾਰੀਆਂ ਲਈ ਆਸਾਨ।",
         stepHeading: "ਕਿਵੇਂ <span>ਖੇਡਣਾ ਹੈ?</span>",
         stepSub: "ਤਿੰਨ ਆਸਾਨ ਕਦਮਾਂ ਵਿੱਚ ਸ਼ੁਰੂ ਕਰੋ।",
         s1Title: "ਲੌਗ ਇਨ ਕਰੋ", s1Desc: "Google ਖਾਤੇ ਨਾਲ ਸਾਈਨ ਇਨ ਕਰੋ.",
-        s2Title: "ਗੇਮ ਚੁਣੋ", s2Desc: "ਪ੍ਰੈਕਟਿਸ ਜਾਂ 13 ਕਾਰਡ ਰമ്മി ਚੁਣੋ.",
+        s2Title: "ਗੇਮ ਚੁਣੋ", s2Desc: "ਪ੍ਰੈਕਟਿਸ ਜਾਂ 13 ਕਾਰਡ ਰਮੀ ਚੁਣੋ.",
         s3Title: "ਖੇਡਣਾ ਸ਼ੁਰੂ ਕਰੋ", s3Desc: "ਆਨੰਦ ਮਾנו.",
         noticeTitle: "ਮਹੱਤਵਪੂਰਨ ਸੂਚਨਾ",
-        noticeDesc: "GOODVEXA RUMMY ਮਨੋਰੰਜਨ ਲਈ ਹੈ। ਇੱਥੇ ਵਰਤੇ ਜਾਂਦੇ ਵਰਚੁਅਲ ਕాయిਂਸ ਦਾ ਕੋਈ ਨਕਦ ਮੁੱਲ ਨਹੀਂ ਹੈ।",
-        ftHome: "ਹੋਮ", ftGame: "ਗੇਮ", ftPractice: "ਪ੍ਰੈਕਟিস", ftSub: "ਮੁਫਤ ਵਰਚੁਅਲ ਕాయిਂਸ ਗੇਮ • ਕੋਈ ਅਸਲ ਪੈਸਾ ਨਹੀਂ"
+        noticeDesc: "GOODVEXA RUMMY ਮਨੋਰੰਜਨ ਲਈ ਹੈ। ਇੱਥੇ ਵਰਤੇ ਜਾਂਦੇ ਵਰਚੁਅਲ ਕਾਈਂਸ ਦਾ ਕੋਈ ਨਕਦ ਮੁੱਲ ਨਹੀਂ ਹੈ।",
+        ftHome: "ਹੋਮ", ftGame: "ਗੇਮ", ftPractice: "ਪ੍ਰੈਕਟਿਸ", ftSub: "ਮੁਫਤ ਵਰਚੁਅਲ ਕਾਈਂਸ ਗੇਮ • ਕੋਈ ਅਸਲ ਪੈਸਾ ਨਹੀਂ"
     }
 };
 
@@ -1000,16 +1006,16 @@ function applyLanguage(lang) {
     document.getElementById("t-m2Link").textContent = t.m2Link;
     document.getElementById("t-m3Title").textContent = t.m3Title;
     document.getElementById("t-m3Desc").textContent = t.m3Desc;
-    document.getElementById("t-coming1").textContent = t.coming;
+    document.getElementById("t-m3Link").textContent = t.m3Link;
     document.getElementById("t-m4Title").textContent = t.m4Title;
     document.getElementById("t-m4Desc").textContent = t.m4Desc;
-    document.getElementById("t-coming2").textContent = t.coming;
+    document.getElementById("t-m4Link").textContent = t.m4Link;
     document.getElementById("t-m5Title").textContent = t.m5Title;
     document.getElementById("t-m5Desc").textContent = t.m5Desc;
-    document.getElementById("t-coming3").textContent = t.coming;
+    document.getElementById("t-m5Link").textContent = t.m5Link;
     document.getElementById("t-m6Title").textContent = t.m6Title;
     document.getElementById("t-m6Desc").textContent = t.m6Desc;
-    document.getElementById("t-coming4").textContent = t.coming;
+    document.getElementById("t-m6Link").textContent = t.m6Link;
 
     // Features Section
     document.getElementById("t-featHeading").innerHTML = t.featHeading;
