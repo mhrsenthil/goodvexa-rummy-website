@@ -1,266 +1,511 @@
 <!DOCTYPE html>
 <html lang="ta">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Goodvexa Rummy - Game Table</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GOODVEXA RUMMY - Game Table</title>
 
-        body {
-            background-color: #0b2514;
-            color: #ffffff;
-            height: 100vh;
-            width: 100vw;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
+<style>
+* {
+  box-sizing: border-box;
+}
 
-        /* Top Bar for Game Info & Wallet */
-        .game-header {
-            background-color: #05140b;
-            padding: 10px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid #16db65;
-            height: 50px;
-        }
+body {
+  margin: 0;
+  background: #073b2b;
+  color: white;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
 
-        .table-info {
-            font-size: 14px;
-            color: #b7e4c7;
-            font-weight: bold;
-        }
+header {
+  padding: 14px 20px;
+  background: #052c21;
+  border-bottom: 2px solid #d6ad45;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-        .wallet-display {
-            background-color: #2d6a4f;
-            border: 1px solid #ffb703;
-            color: #ffb703;
-            padding: 5px 15px;
-            border-radius: 15px;
-            font-size: 14px;
-            font-weight: bold;
-        }
+header h2 {
+  margin: 0;
+  color: #f4d477;
+  font-size: 20px;
+}
 
-        .back-btn {
-            background-color: #d90429;
-            color: white;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-        }
+.user-info {
+  background: #114b38;
+  padding: 8px 15px;
+  border-radius: 8px;
+  border: 1px solid #d6ad45;
+  font-size: 14px;
+  color: #d8eadf;
+}
 
-        /* Green Felt Rummy Table Area */
-        .rummy-table {
-            flex: 1;
-            background: radial-gradient(circle, #134e2c 0%, #0d381f 100%);
-            margin: 10px;
-            border-radius: 20px;
-            border: 4px solid #16db65;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            box-shadow: inset 0 0 30px rgba(0,0,0,0.6);
-        }
+.user-info span {
+  color: #ffb703;
+  font-weight: bold;
+}
 
-        /* Center Decks Area */
-        .center-decks {
-            display: flex;
-            gap: 30px;
-            align-items: center;
-        }
+main {
+  max-width: 950px;
+  margin: auto;
+  padding: 12px;
+}
 
-        .card-slot {
-            width: 70px;
-            height: 100px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border: 2px dashed #b7e4c7;
-            border-radius: 6px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 12px;
-            color: #b7e4c7;
-            text-align: center;
-        }
+.panel {
+  background: #0b513b;
+  border: 1px solid #b9953d;
+  border-radius: 12px;
+  padding: 15px;
+  margin: 15px 0;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
 
-        .card-slot.deck {
-            background-color: #ffffff;
-            color: #000;
-            font-weight: bold;
-            border: 2px solid #000;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-        }
+button {
+  background: #e1bd57;
+  color: #172d20;
+  border: 0;
+  border-radius: 7px;
+  padding: 10px 14px;
+  font-weight: bold;
+  margin: 5px;
+  cursor: pointer;
+  transition: 0.2s;
+}
 
-        /* Player's Hand Area at the Bottom */
-        .player-hand-area {
-            background-color: rgba(5, 20, 11, 0.9);
-            padding: 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            border-top: 2px solid #16db65;
-        }
+button:hover {
+  background: #ffcf36;
+}
 
-        .hand-title {
-            font-size: 12px;
-            color: #ffb703;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
+button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
 
-        .cards-container {
-            display: flex;
-            gap: 6px;
-            overflow-x: auto;
-            max-width: 100%;
-            padding-bottom: 5px;
-        }
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 7px;
+  min-height: 90px;
+}
 
-        .playing-card {
-            width: 55px;
-            height: 80px;
-            background-color: #fff;
-            color: #000;
-            border-radius: 5px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 4px;
-            font-size: 12px;
-            font-weight: bold;
-            box-shadow: 0 3px 6px rgba(0,0,0,0.4);
-            cursor: pointer;
-            transition: transform 0.2s;
-            user-select: none;
-        }
+.card {
+  width: 52px;
+  height: 76px;
+  background: white;
+  color: #111;
+  border-radius: 7px;
+  border: 2px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 5px;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 2px 5px #002;
+  user-select: none;
+}
 
-        .playing-card:hover {
-            transform: translateY(-10px);
-        }
+.card.red {
+  color: #d21f30;
+}
 
-        .playing-card.red {
-            color: #d90429;
-        }
+.card.selected {
+  border: 3px solid #ffcf36;
+  transform: translateY(-8px);
+}
 
-        .action-btns {
-            margin-top: 10px;
-            display: flex;
-            gap: 15px;
-        }
+.card.grouped {
+  opacity: 0.4;
+  border: 2px solid #e1bd57;
+  cursor: not-allowed;
+}
 
-        .game-action-btn {
-            background-color: #ffb703;
-            color: #000;
-            border: none;
-            padding: 6px 20px;
-            border-radius: 5px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 13px;
-        }
+.card small {
+  font-size: 11px;
+}
 
-        .game-action-btn.declare {
-            background-color: #16db65;
-            color: #000;
-        }
+.zone-title {
+  color: #f4d477;
+  font-weight: bold;
+  margin-bottom: 12px;
+  font-size: 17px;
+}
 
-        /* Landscape warning for portrait mobile users */
-        @media screen and (orientation: portrait) {
-            .landscape-warning {
-                display: flex;
-            }
-        }
+.status {
+  font-size: 14px;
+  color: #d8eadf;
+}
 
-        @media screen and (orientation: landscape) {
-            .landscape-warning {
-                display: none;
-            }
-        }
+.group-box {
+  background: #073b2b;
+  border: 1px solid #d6ad45;
+  border-radius: 8px;
+  padding: 12px;
+  margin: 10px 0;
+}
 
-        .landscape-warning {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: #0d2818;
-            z-index: 9999;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 20px;
-            color: #ffb703;
-            font-size: 18px;
-            gap: 15px;
-        }
-    </style>
+.group-box p {
+  font-size: 18px;
+  letter-spacing: 3px;
+}
+
+#message {
+  min-height: 25px;
+  color: #ffe38b;
+  margin: 10px;
+  font-weight: bold;
+}
+
+#result {
+  margin-top: 15px;
+  color: #ffe38b;
+  overflow-wrap: anywhere;
+}
+
+.instructions {
+  color: #d8eadf;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.ai-status {
+  background: #145a43;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  border: 1px dashed #d6ad45;
+  font-size: 14px;
+}
+
+@media(max-width: 500px) {
+  .card {
+    width: 43px;
+    height: 65px;
+    font-size: 15px;
+    padding: 4px;
+  }
+  header {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+</style>
 </head>
+
 <body>
 
-    <!-- Landscape Warning Screen for Mobiles -->
-    <div class="landscape-warning" id="rotateWarning">
-        <h2>📱 Please Rotate Your Phone</h2>
-        <p style="color: #b7e4c7; font-size: 14px;">சிறந்த ரம்மி அனுபவத்திற்கு உங்களது மொபைலை கிடைமட்டமாக (Landscape) திருப்பவும்.</p>
-        <div style="font-size: 40px;">🔄</div>
-    </div>
+<header>
+  <h2>♠ GOODVEXA RUMMY ♥</h2>
+  <div class="user-info">
+    வீரர்: <span id="playerName">Guest</span> | 💰 காயின்கள்: <span id="playerWallet">1,00,000</span>
+  </div>
+</header>
 
-    <!-- Top Header -->
-    <div class="game-header">
-        <button class="back-btn" onclick="goHome()">Exit</button>
-        <div class="table-info">Points Rummy | Table #101</div>
-        <div class="wallet-display">💰 ₹1,00,000</div>
-    </div>
+<main>
 
-    <!-- Green Rummy Table -->
-    <div class="rummy-table">
-        <div class="center-decks">
-            <div class="card-slot deck">CLOSED<br>DECK</div>
-            <div class="card-slot">OPEN<br>DECK</div>
-        </div>
-    </div>
+  <!-- GAME START PANEL -->
+  <div class="panel">
+    <h3>13 கார்டுகள் ரம்மி மேசை (Practice with AI)</h3>
+    <p class="status">AI பாட் (Bot) எதிராளியுடன் விளையாடி உங்கள் திறமையைச் சோதிக்கவும்.</p>
 
-    <!-- Player's 13 Cards Hand -->
-    <div class="player-hand-area">
-        <div class="hand-title">YOUR CARDS (13)</div>
-        <div class="cards-container">
-            <div class="playing-card red"><span>A♥</span><span>♥</span></div>
-            <div class="playing-card red"><span>2♥</span><span>♥</span></div>
-            <div class="playing-card red"><span>3♥</span><span>♥</span></div>
-            <div class="playing-card"><span>K♠</span><span>♠</span></div>
-            <div class="playing-card"><span>Q♠</span><span>♠</span></div>
-            <div class="playing-card"><span>J♠</span><span>♠</span></div>
-            <div class="playing-card red"><span>10♦</span><span>♦</span></div>
-            <div class="playing-card red"><span>9♦</span><span>♦</span></div>
-            <div class="playing-card"><span>7♣</span><span>♣</span></div>
-            <div class="playing-card"><span>8♣</span><span>♣</span></div>
-            <div class="playing-card red"><span>5♥</span><span>JOKER</span></div>
-            <div class="playing-card"><span>4♠</span><span>♠</span></div>
-            <div class="playing-card red"><span>A♦</span><span>♦</span></div>
-        </div>
-        <div class="action-btns">
-            <button class="game-action-btn" onclick="alert('Card Discarded!')">Discard</button>
-            <button class="game-action-btn declare" onclick="alert('Declared Successfully!')">Declare</button>
-        </div>
-    </div>
+    <button onclick="startGame()">புதிய விளையாட்டைத் தொடங்கு</button>
+    <button onclick="window.location.href='index.html'" style="background:#d90429; color:white;">முகப்புப் பக்கத்திற்குச் செல்</button>
 
-    <script>
-        function goHome() {
-            window.location.href = "index.html";
-        }
-    </script>
+    <div id="message">விளையாட்டைத் தொடங்க மேலே உள்ள பொத்தானை அழுத்தவும்.</div>
+  </div>
+
+  <!-- AI OPPONENT STATUS -->
+  <div class="panel ai-status" id="aiStatusPanel">
+    🤖 எதிராளி (AI Bot): விளையாடத் காத்திருக்கிறது...
+  </div>
+
+  <!-- PLAYER HAND -->
+  <div class="panel">
+    <div class="zone-title">உங்கள் அட்டைகள் (13 Cards)</div>
+    <div class="instructions">அட்டைகளைத் தொட்டு தேர்வு செய்து குரூப் செய்யவும் அல்லது கார்டை வெளியேற்றவும்.</div>
+
+    <div id="hand" class="cards"></div>
+
+    <p id="count" class="status">அட்டைகள்: 0</p>
+
+    <button onclick="sortHand()">அட்டைகளை வரிசைப்படுத்து</button>
+    <button onclick="discardSelected()" id="discardBtn" disabled>தேர்ந்த அட்டையை வெளியேற்று</button>
+  </div>
+
+  <!-- GROUP MANAGEMENT -->
+  <div class="panel">
+    <div class="zone-title">உங்கள் Groups (Sequences / Sets)</div>
+    <button onclick="createGroup()">＋ Create Group</button>
+    <button onclick="clearSelection()">Clear Selection</button>
+
+    <div id="groups"></div>
+  </div>
+
+  <!-- DRAW CARDS -->
+  <div class="panel">
+    <div class="zone-title">அட்டைகளை எடுக்கவும்</div>
+    <p>மூடிய டெக் அட்டைகள்: <b id="deckCount">0</b></p>
+
+    <button onclick="drawFromDeck()" id="drawBtn" disabled>மூடிய அட்டையிலிருந்து எடு</button>
+    <button onclick="drawFromDiscard()" id="pileBtn" disabled>வெளியேற்றிய அட்டையிலிருந்து எடு</button>
+  </div>
+
+  <!-- DISCARD PILE -->
+  <div class="panel">
+    <div class="zone-title">வெளியேற்றப்பட்ட அட்டை (Discard Pile)</div>
+    <div id="discardTop" class="cards">இன்னும் அட்டை இல்லை</div>
+  </div>
+
+  <!-- DECLARE -->
+  <div class="panel">
+    <div class="zone-title">🏆 Rummy Declare</div>
+    <button onclick="declareRummy()" style="background:#16db65; color:black; font-size:16px;">🏆 Declare Rummy</button>
+    <div id="result"></div>
+  </div>
+
+</main>
+
+<script>
+"use strict";
+
+let deck = [];
+let hand = [];
+let discardPile = [];
+let selected = [];
+let groups = [];
+let mustDiscard = false;
+let gameStarted = false;
+
+// Load User Details from LocalStorage
+window.onload = function() {
+    const savedUser = localStorage.getItem('rummy_user');
+    const savedWallet = localStorage.getItem('rummy_wallet');
+
+    if (savedUser) {
+        document.getElementById('playerName').textContent = savedUser;
+    }
+    if (savedWallet) {
+        document.getElementById('playerWallet').textContent = Number(savedWallet).toLocaleString('en-IN');
+    }
+};
+
+const suits = [
+  {symbol:"♠", name:"Spades", red:false},
+  {symbol:"♥", name:"Hearts", red:true},
+  {symbol:"♦", name:"Diamonds", red:true},
+  {symbol:"♣", name:"Clubs", red:false}
+];
+
+function createDeck() {
+  let cards = [];
+  for (const suit of suits) {
+    for (let rank = 1; rank <= 13; rank++) {
+      cards.push({ suit: suit.symbol, rank: rank, red: suit.red, joker: false });
+    }
+  }
+  cards.push({ suit: "★", rank: 0, red: false, joker: true });
+  cards.push({ suit: "★", rank: 0, red: true, joker: true });
+
+  for (let i = cards.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [cards[i], cards[j]] = [cards[j], cards[i]];
+  }
+  return cards;
+}
+
+function rankText(card) {
+  if (card.joker) return "JOKER";
+  if (card.rank === 1) return "A";
+  if (card.rank === 11) return "J";
+  if (card.rank === 12) return "Q";
+  if (card.rank === 13) return "K";
+  return String(card.rank);
+}
+
+function isGrouped(card) {
+  return groups.some(group => group.includes(card));
+}
+
+function cardHTML(card, index, selectable) {
+  const color = card.red ? "red" : "";
+  const chosen = selectable && selected.includes(index);
+  const grouped = selectable && isGrouped(card);
+  const label = card.joker ? "JOKER" : rankText(card);
+
+  return `
+    <div class="card ${color} ${chosen ? "selected" : ""} ${grouped ? "grouped" : ""}"
+         onclick="${selectable ? `selectCard(${index})` : ""}">
+      <small>${label}</small>
+      <span>${card.suit}</span>
+      <small>${card.joker ? "★" : card.suit}</small>
+    </div>
+  `;
+}
+
+function startGame() {
+  deck = createDeck();
+  hand = [];
+  discardPile = [];
+  selected = [];
+  groups = [];
+  mustDiscard = false;
+  gameStarted = true;
+
+  document.getElementById("result").innerHTML = "";
+
+  for (let i = 0; i < 13; i++) {
+    hand.push(deck.pop());
+  }
+  discardPile.push(deck.pop());
+
+  showMessage("விளையாட்டு தொடங்கியது! உங்கள் கார்டுகளைச் சரிபார்த்து அட்டையை எடுக்கவும்.");
+  render();
+}
+
+function render() {
+  document.getElementById("hand").innerHTML = hand.map((card, index) => cardHTML(card, index, true)).join("");
+  document.getElementById("count").textContent = "அட்டைகள்: " + hand.length;
+  document.getElementById("deckCount").textContent = deck.length;
+
+  const top = discardPile[discardPile.length - 1];
+  document.getElementById("discardTop").innerHTML = top ? cardHTML(top, -1, false) : "இன்னும் அட்டை இல்லை";
+
+  document.getElementById("drawBtn").disabled = !gameStarted || mustDiscard || deck.length === 0;
+  document.getElementById("pileBtn").disabled = !gameStarted || mustDiscard || discardPile.length === 0;
+  document.getElementById("discardBtn").disabled = !gameStarted || !mustDiscard || selected.length !== 1 || isGrouped(hand[selected[0]]);
+
+  document.getElementById("groups").innerHTML = groups.map((group, index) => {
+    const cardsText = group.map(card => card.joker ? "★" : rankText(card) + card.suit).join(" ");
+    return `
+      <div class="group-box">
+        <b>Group ${index + 1}</b>
+        <p>${cardsText}</p>
+        <button onclick="removeGroup(${index})">Remove Group</button>
+      </div>
+    `;
+  }).join("");
+}
+
+function selectCard(index) {
+  if (!gameStarted) return;
+  if (isGrouped(hand[index])) return;
+
+  if (selected.includes(index)) {
+    selected = selected.filter(i => i !== index);
+  } else {
+    selected.push(index);
+  }
+  render();
+}
+
+function clearSelection() {
+  selected = [];
+  render();
+}
+
+function createGroup() {
+  if (!gameStarted || mustDiscard) return;
+  if (selected.length < 3) {
+    showMessage("குறைந்தது 3 அட்டைகளைத் தேர்ந்தெடுக்கவும்.");
+    return;
+  }
+
+  const cards = selected.map(index => hand[index]);
+  groups.push(cards);
+  selected = [];
+  render();
+  showMessage("Group வெற்றிகரமாக உருவாக்கப்பட்டது!");
+}
+
+function removeGroup(index) {
+  groups.splice(index, 1);
+  selected = [];
+  render();
+}
+
+function drawFromDeck() {
+  if (!gameStarted || mustDiscard || deck.length === 0) return;
+  hand.push(deck.pop());
+  mustDiscard = true;
+  selected = [];
+  render();
+  showMessage("அட்டை எடுத்துவிட்டீர்கள். இப்போது ஒரு தேவையற்ற அட்டையை வெளியேற்றுங்கள்.");
+}
+
+function drawFromDiscard() {
+  if (!gameStarted || mustDiscard || discardPile.length === 0) return;
+  hand.push(discardPile.pop());
+  mustDiscard = true;
+  selected = [];
+  render();
+  showMessage("டிஸ்கார்ட் பைலில் இருந்து எடுத்துவிட்டீர்கள். ஒரு அட்டையை வெளியேற்றுங்கள்.");
+}
+
+function discardSelected() {
+  if (!mustDiscard || selected.length !== 1) return;
+  const index = selected[0];
+  if (isGrouped(hand[index])) {
+    showMessage("Group-ல் உள்ள அட்டையை வெளியேற்ற முடியாது.");
+    return;
+  }
+
+  const card = hand.splice(index, 1)[0];
+  discardPile.push(card);
+  selected = [];
+  mustDiscard = false;
+  render();
+  showMessage("அட்டை வெளியேற்றப்பட்டது. AI பாட் விளையாடுகிறது...");
+
+  // Trigger AI Bot Turn
+  setTimeout(aiBotTurn, 1000);
+}
+
+// Simple AI Bot Logic
+function aiBotTurn() {
+  if (!gameStarted) return;
+  document.getElementById("aiStatusPanelinnerHTML").textContent = "🤖 AI பாட் சிந்திக்கிறது...";
+  
+  setTimeout(() => {
+    if (deck.length > 0) {
+      discardPile.push(deck.pop());
+      document.getElementById("aiStatusPanel").innerHTML = "🤖 AI பாட் ஒரு கார்டை எடுத்து விளையாடிவிட்டது. உங்கள் திருப்பம்!";
+      render();
+    }
+  }, 1500);
+}
+
+function sortHand() {
+  if (!gameStarted) return;
+  const suitOrder = { "♠": 1, "♥": 2, "♦": 3, "♣": 4 };
+  hand.sort((a, b) => {
+    if (a.joker) return 1;
+    if (b.joker) return -1;
+    return (suitOrder[a.suit] - suitOrder[b.suit]) || (a.rank - b.rank);
+  });
+  selected = [];
+  render();
+  showMessage("அட்டைகள் வரிசைப்படுத்தப்பட்டன.");
+}
+
+function declareRummy() {
+  if (!gameStarted || hand.length !== 13) {
+    showMessage("Declare செய்ய சரியாக 13 அட்டைகள் இருக்க வேண்டும்.");
+    return;
+  }
+  document.getElementById("result").innerHTML = "<h3>🏆 வாழ்த்துகள்! நீங்கள் வெற்றிகரமாக டிக்ளேர் செய்துவிட்டீர்கள்!</h3>";
+  showMessage("வெற்றி!");
+}
+
+function showMessage(msg) {
+  document.getElementById("message").textContent = msg;
+}
+
+render();
+</script>
+
 </body>
 </html>
