@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>♠ GOODVEXA RUMMY ♥ - Casino Table</title>
+<title id="pageTitle">♠ GOODVEXA RUMMY ♥ - Casino Table</title>
 
 <style>
 * {
@@ -287,7 +287,7 @@ header {
 <body>
 
 <header>
-  <div class="logo-title">♠ GOODVEXA RUMMY ♥</div>
+  <div class="logo-title" id="modeHeaderTitle">♠ GOODVEXA RUMMY ♥</div>
   <div class="user-badge">
     👤 <span id="playerName">Guest</span> | 💰 <span id="playerWallet">1,00,000</span>
   </div>
@@ -296,13 +296,13 @@ header {
 <div class="game-container">
 
   <!-- TOP AI OPPONENT AREA -->
-  <div class="opponent-area">
+  <div class="opponent-area" id="opponentArea">
     <div class="avatar-box">🤖</div>
     <div class="bot-status" id="botStatus">AI Bot (Waiting...)</div>
   </div>
 
   <!-- CENTER OVAL CASINO TABLE -->
-  <div class="rummy-table">
+  <div class="rummy-table" id="tableArea">
     <div class="table-center">
       
       <!-- CLOSED DECK -->
@@ -325,10 +325,10 @@ header {
   </div>
 
   <!-- FLOATING NOTIFICATION -->
-  <div class="status-msg" id="message">புதிய விளையாட்டைத் தொடங்க 'START GAME' அழுத்தவும்.</div>
+  <div class="status-msg" id="message">விளையாட்டு முறை ஏற்றப்படுகிறது...</div>
 
   <!-- BOTTOM PLAYER INTERFACE -->
-  <div class="player-area">
+  <div class="player-area" id="playerArea">
     
     <!-- CREATED GROUPS DISPLAY -->
     <div class="groups-container" id="groupsDisplay"></div>
@@ -360,6 +360,7 @@ let selected = [];
 let groups = [];
 let mustDiscard = false;
 let gameStarted = false;
+let currentMode = "classic";
 
 window.onload = function() {
     const savedUser = localStorage.getItem('rummy_user');
@@ -367,7 +368,38 @@ window.onload = function() {
 
     if (savedUser) document.getElementById('playerName').textContent = savedUser;
     if (savedWallet) document.getElementById('playerWallet').textContent = Number(savedWallet).toLocaleString('en-IN');
+
+    // URL Parameter-ஐ சரிபார்த்து Game Mode-ஐ தீர்மானித்தல்
+    const urlParams = new URLSearchParams(window.location.search);
+    currentMode = urlParams.get('mode') || 'classic';
+
+    applyGameModeLayout(currentMode);
 };
+
+function applyGameModeLayout(mode) {
+    const titleEl = document.getElementById("modeHeaderTitle");
+    const msgEl = document.getElementById("message");
+
+    switch(mode) {
+        case 'practice':
+            titleEl.textContent = "GOODVEXA RUMMY - Practice Mode (AI)";
+            msgEl.textContent = "Practice Mode: AI எதிராளியுடன் பயிற்சி செய்யுங்கள். START GAME அழுத்தவும்.";
+            break;
+        case 'multiplayer':
+            titleEl.textContent = "GOODVEXA RUMMY - Friends & Multiplayer";
+            msgEl.textContent = "Multiplayer: நண்பர்களுடன் ஆன்லைனில் இணைவதற்கான அறை தயாராகிறது.";
+            break;
+        case 'tournament':
+            titleEl.textContent = "GOODVEXA RUMMY - Tournaments";
+            msgEl.textContent = "Tournaments: சிறப்புப் போட்டிகள் விரைவில் தொடங்குகின்றன.";
+            break;
+        case 'classic':
+        default:
+            titleEl.textContent = "GOODVEXA RUMMY - 13 Card Table";
+            msgEl.textContent = "13 Card Rummy: விளையாட்டுத் தொடங்க START GAME அழுத்தவும்.";
+            break;
+    }
+}
 
 const suits = [
   {symbol:"♠", red:false},
@@ -428,7 +460,7 @@ function startGame() {
   for (let i = 0; i < 13; i++) hand.push(deck.pop());
   discardPile.push(deck.pop());
 
-  document.getElementById("botStatus").textContent = "AI Bot (Thinking...)";
+  document.getElementById("botStatus").textContent = currentMode === 'practice' ? "AI Bot (Ready)" : "Opponent (Ready)";
   showMessage("விளையாட்டு தொடங்கியது! ஒரு கார்டை எடுக்கவும்.");
   render();
 }
@@ -489,7 +521,7 @@ function discardSelected() {
   selected = [];
   mustDiscard = false;
   render();
-  showMessage("அட்டை வெளியேற்றப்பட்டது. AI எதிராளியின் திருப்பம்...");
+  showMessage("அட்டை வெளியேற்றப்பட்டது. எதிராளியின் திருப்பம்...");
 
   setTimeout(aiTurn, 1200);
 }
@@ -500,7 +532,7 @@ function aiTurn() {
   setTimeout(() => {
     if (deck.length > 0) discardPile.push(deck.pop());
     document.getElementById("botStatus").textContent = "Your Turn!";
-    showMessage("AI கார்டு விளையாடிவிட்டது. உங்கள் திருப்பம்!");
+    showMessage("எதிராளி கார்டு விளையாடிவிட்டார். உங்கள் திருப்பம்!");
     render();
   }, 1000);
 }
