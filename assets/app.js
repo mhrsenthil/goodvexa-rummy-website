@@ -16,7 +16,7 @@ function showMessage(message) {
   }, 3000);
 }
 
-// பயனர்கள் லாகின் செய்ய அல்லது புதிய கணக்கு உருவாக்க (₹1,00,000 விர்ச்சுவல் மணியுடன்)
+// Existing legacy login helper; persist only the public player name.
 async function handleUserLogin(username) {
   try {
     if (!username) {
@@ -37,13 +37,16 @@ async function handleUserLogin(username) {
     const data = await response.json();
 
     if (data.success) {
-      showMessage(`நல்வரவு ${data.user.username}! வாலட் இருப்பு: ₹${data.user.wallet}`);
+      const requestedName = data.user.username || username;
+      const playerName = typeof requestedName === "string" && !requestedName.includes("@") ? requestedName : "Player";
+      showMessage(`நல்வரவு ${playerName}!`);
       
-      // பயனரின் விவரங்களை பிரவுசரில் சேமித்துக்கொள்ளலாம்
-      localStorage.setItem("rummy_user", JSON.stringify(data.user));
+      localStorage.setItem("rummy_user", playerName);
+      localStorage.removeItem("rummy_email");
+      localStorage.removeItem("rummy_wallet");
       
       // சிறிது நேரத்திற்குப் பிறகு விளையாட்டுப் பக்கத்திற்குச் செல்லலாம் (தேவைப்பட்டால் மாற்றிக் கொள்ளலாம்)
-      // window.location.href = "practice.html";
+      // Practice runs from the shared game page.
     } else {
       showMessage(data.error || "உள்நுழைவதில் பிழை ஏற்பட்டுள்ளது.");
     }
