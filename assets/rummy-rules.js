@@ -1,316 +1,177 @@
-
-/*
- GOODVEXA RUMMY
- Rummy Rules Engine
- 13-card Indian Rummy validation
-*/
-
-(function () {
+/* GOODVEXA RUMMY: shared 13-card Indian Rummy rules and deck helpers. */
+(function (root) {
   "use strict";
 
-  // அட்டை Sequence ஆக உள்ளதா என்று சரிபார்க்கும்
-  function checkSequence(cards) {
-    if (cards.length < 3) return null;
+  const SUITS = [
+    { symbol: "♠", red: false },
+    { symbol: "♥", red: true },
+    { symbol: "♦", red: true },
+    { symbol: "♣", red: false }
+  ];
 
-    const jokers = cards.filter(card => card.joker);
-    const normal = cards.filter(card => !card.joker);
+  function cardKey(card) {
+    return card && card.id ? card.id : card;
+  }
 
-    if (normal.length === 0) return null;
+  function isValidCard(card) {
+    return Boolean(card && (card.joker
+      ? card.suit === "★" && card.rank === 0
+      : ["♠", "♥", "♦", "♣"].includes(card.suit) && Number.isInteger(card.rank) && card.rank >= 1 && card.rank <= 13));
+  }
 
-    const suit = normal[0].suit;
-
-    // எல்லா சாதாரண அட்டைகளும் ஒரே Suit ஆக இருக்க வேண்டும்
-    if (!normal.every(card => card.suit === suit)) {
-      return null;
+  function hasDuplicateCards(cards) {
+    const ids = new Set();
+    const faces = new Set();
+    for (const card of cards) {
+      if (!isValidCard(card)) return true;
+      const identity = cardKey(card);
+      if (ids.has(identity)) return true;
+      ids.add(identity);
+      if (!card.joker) {
+        const face = `${card.suit}:${card.rank}`;
+        if (faces.has(face)) return true;
+        faces.add(face);
+      }
     }
+    return cards.filter(card => card.joker).length > 2;
+  }
 
-    // ஒரே Rank இரண்டு முறை வரக்கூடாது
-    for (let i = 0; i < normal.length; i++) {
-      for (let j = i + 1; j < normal.length; j++) {
-        if (normal[i].rank === normal[j].rank) {
-          return null;
+  function createDeck(random = Math.random) {
+    const cards = [];
+    SUITS.forEach(suit => {
+      for (let rank = 1; rank <= 13; rank++) {
+        cards.push({ id: `${suit.symbol}-${rank}`, suit: suit.symbol, rank, red: suit.red, joker: false });
+      }
+    });
+    cards.push({ id: "joker-1", suit: "★", rank: 0, red: false, joker: true });
+    cards.push({ id: "joker-2", suit: "★", rank: 0, red: true, joker: true });
+
+    for (let i = cards.length - 1; i > 0; i--) {
+      const j = Math.floor(random() * (i + 1));
+      [cards[i], cards[j]] = [cards[j], cards[i]];
+    }
+    return cards;
+  }
+
+  function classifyGroup(cards) {
+    if (!Array.isArray(cards) || cards.length < 3 || cards.length > 13 || hasDuplicateCards(cards)) return null;
+    const jokers = cards.filter(card => card && card.joker);
+    const natural = cards.filter(card => card && !card.joker);
+    if (natural.length + jokers.length !== cards.length || natural.length === 0) return null;
+
+    // A sequence is one suit with distinct ranks; aces can be low or high.
+    if (natural.every(card => card.suit === natural[0].suit) &&
+        new Set(natural.map(card => card.rank)).size === natural.length) {
+      for (let start = 1; start + cards.length - 1 <= 14; start++) {
+        const ranks = natural.map(card => card.rank === 1 && start > 1 ? 14 : card.rank);
+        if (ranks.every(rank => rank >= start && rank < start + cards.length)) {
+          return { type: jokers.length ? "Impure Sequence" : "Pure Sequence", pure: jokers.length === 0 };
         }
       }
     }
 
-    // Ace-ஐ 1 அல்லது 14 ஆகப் பயன்படுத்தலாம்
-    const length = cards.length;
-
-    for (let start = 1; start <= 14 - length + 1; start++) {
-      const ranks = normal.map(card => {
-        if (card.rank === 1 && start > 1) return 14;
-        return card.rank;
-      });
-
-      const valid = ranks.every(rank =>
-        rank >= start && rank < start + length
-      );
-
-      if (valid) {
-        return {
-          type: jokers.length === 0
-            ? "Pure Sequence"
-            : "Impure Sequence",
-          pure: jokers.length === 0,
-          cards: cards
-        };
-      }
+    // A set has one rank, distinct natural suits, and at most four cards.
+    if (cards.length <= 4 && new Set(natural.map(card => card.rank)).size === 1 &&
+        new Set(natural.map(card => card.suit)).size === natural.length) {
+      return { type: "Set", pure: false };
     }
-
     return null;
   }
 
-  // அட்டைகள் Set ஆக உள்ளதா என்று சரிபார்க்கும்
-  function checkSet(cards) {
-    if (cards.length < 3 || cards.length > 4) {
-      return null;
-    }
-
-    const normal = cards.filter(card => !card.joker);
-    const jokers = cards.filter(card => card.joker);
-
-    if (normal.length === 0) return null;
-
-    const rank = normal[0].rank;
-
-    // எல்லா சாதாரண அட்டைகளும் ஒரே Rank ஆக இருக்க வேண்டும்
-    if (!normal.every(card => card.rank === rank)) {
-      return null;
-    }
-
-    // ஒரே Suit இரண்டு முறை வரக்கூடாது
-    const suits = normal.map(card => card.suit);
-
-    if (new Set(suits).size !== suits.length) {
-      return null;
-    }
-
-    return {
-      type: "Set",
-      pure: false,
-      cards: cards
-    };
+  function validateGroup(cards) {
+    const group = classifyGroup(cards);
+    return group
+      ? { valid: true, type: group.type, pure: group.pure, message: `${group.type} is valid.` }
+      : { valid: false, type: "Invalid", pure: false, message: "Cards must form a valid sequence or set." };
   }
 
-  // 13 அட்டைகளையும் சரிபார்க்கும் முக்கிய Function
-  function checkRummyHand(hand) {
-    if (!Array.isArray(hand) || hand.length !== 13) {
-      return {
-        valid: false,
-        message: "சரியாக 13 அட்டைகள் தேவை.",
-        groups: []
-      };
+  function enumerateGroups(hand) {
+    const groups = [];
+    const fullMask = (1 << hand.length) - 1;
+    for (let mask = 1; mask <= fullMask; mask++) {
+      const cards = [];
+      for (let i = 0; i < hand.length; i++) if (mask & (1 << i)) cards.push(hand[i]);
+      const result = classifyGroup(cards);
+      if (result) groups.push({ mask, type: result.type, pure: result.pure, cards });
     }
+    return groups;
+  }
 
-    const candidates = [];
-    const total = hand.length;
-
-    // எல்லா சாத்தியமான அட்டைக் குழுக்களையும் உருவாக்குதல்
-    for (let mask = 1; mask < (1 << total); mask++) {
-      const group = [];
-
-      for (let i = 0; i < total; i++) {
-        if (mask & (1 << i)) {
-          group.push(hand[i]);
-        }
-      }
-
-      if (group.length < 3) continue;
-
-      const sequence = checkSequence(group);
-      const set = checkSet(group);
-
-      if (sequence) {
-        candidates.push({
-          mask,
-          type: sequence.type,
-          pure: sequence.pure,
-          cards: group
-        });
-      }
-
-      if (set) {
-        candidates.push({
-          mask,
-          type: set.type,
-          pure: false,
-          cards: group
-        });
-      }
-    }
-
-    // ஒவ்வொரு அட்டையும் ஒரே ஒரு குழுவில் மட்டுமே இருக்க வேண்டும்
-    const memo = new Map();
-
-    function findGroups(remaining, sequenceCount, pureCount) {
-      if (remaining === 0) {
-        if (sequenceCount >= 2 && pureCount >= 1) {
-          return [];
-        }
-        return null;
-      }
-
-      const key = remaining + "|" +
-        sequenceCount + "|" + pureCount;
-
-      if (memo.has(key)) return null;
-
-      // மீதமுள்ள முதல் அட்டையைத் தேர்வு செய்
-      let firstBit = 0;
-
-      for (let i = 0; i < total; i++) {
-        if (remaining & (1 << i)) {
-          firstBit = 1 << i;
-          break;
-        }
-      }
-
-      for (const candidate of candidates) {
-        if (!(candidate.mask & firstBit)) continue;
-
-        // ஏற்கெனவே பயன்படுத்திய அட்டைகளை மீண்டும் பயன்படுத்தக்கூடாது
-        if ((candidate.mask & remaining) !== candidate.mask) {
-          continue;
-        }
-
-        const isSequence =
-          candidate.type === "Pure Sequence" ||
-          candidate.type === "Impure Sequence";
-
-        const nextSequence = Math.min(
-          2,
-          sequenceCount + (isSequence ? 1 : 0)
-        );
-
-        const nextPure = Math.min(
-          1,
-          pureCount + (candidate.pure ? 1 : 0)
-        );
-
-        const result = findGroups(
-          remaining ^ candidate.mask,
-          nextSequence,
-          nextPure
-        );
-
-        if (result !== null) {
-          return [candidate, ...result];
-        }
-      }
-
-      memo.set(key, false);
-      return null;
-    }
-
-    const groups = findGroups(
-      (1 << total) - 1,
-      0,
-      0
+  function findArrangement(hand) {
+    const candidates = enumerateGroups(hand);
+    const byCard = Array.from({ length: hand.length }, (_, index) =>
+      candidates.filter(group => group.mask & (1 << index))
     );
+    const failed = new Set();
 
-    if (groups === null) {
-      return {
-        valid: false,
-        message: "சரியான Rummy அமைப்பு இல்லை. குறைந்தது 2 Sequence மற்றும் 1 Pure Sequence தேவை.",
-        groups: []
-      };
+    function search(remaining, sequences, hasPure) {
+      if (remaining === 0) return sequences >= 2 && hasPure ? [] : null;
+      const key = `${remaining}:${Math.min(sequences, 2)}:${hasPure ? 1 : 0}`;
+      if (failed.has(key)) return null;
+      let first = 0;
+      while (!(remaining & (1 << first))) first++;
+
+      for (const group of byCard[first]) {
+        if ((group.mask & remaining) !== group.mask) continue;
+        const isSequence = group.type.endsWith("Sequence");
+        const result = search(remaining ^ group.mask, Math.min(2, sequences + Number(isSequence)), hasPure || group.pure);
+        if (result) return [group, ...result];
+      }
+      failed.add(key);
+      return null;
     }
 
+    return search((1 << hand.length) - 1, 0, false);
+  }
+
+  function validateHand(hand) {
+    if (!Array.isArray(hand) || hand.length !== 13) {
+      return { valid: false, message: "A valid declaration requires exactly 13 cards.", groups: [] };
+    }
+    if (hasDuplicateCards(hand)) {
+      return { valid: false, message: "The hand must contain 13 distinct cards.", groups: [] };
+    }
+    const arrangement = findArrangement(hand);
+    if (!arrangement) {
+      return { valid: false, message: "Arrange all 13 cards into valid groups, including at least two sequences and one pure sequence.", groups: [] };
+    }
     return {
       valid: true,
-      message: "வாழ்த்துகள்! நீங்கள் Rummy வெற்றி பெற்றுள்ளீர்கள்!",
-      groups: groups.map(group => ({
-        type: group.type,
-        cards: group.cards
-      }))
+      message: "Valid Rummy declaration.",
+      groups: arrangement.map(group => ({ type: group.type, cards: group.cards }))
     };
   }
 
-  
-// ஒரு Group-ன் வகையை கண்டறிதல்
-function checkRummyGroup(cards) {
-  const sequence = checkSequence(cards);
-
-  if (sequence) {
+  function validateDeclaredGroups(groups, hand) {
+    if (!Array.isArray(groups) || groups.some(group => !Array.isArray(group)) ||
+        !Array.isArray(hand) || hand.length !== 13 || hasDuplicateCards(hand)) {
+      return { valid: false, message: "A valid declaration requires exactly 13 cards in groups." };
+    }
+    const groupedCards = groups.flat();
+    const groupedKeys = groupedCards.map(card => card && cardKey(card));
+    const handKeys = hand.map(cardKey);
+    if (groupedCards.length !== 13 || hasDuplicateCards(groupedCards) || new Set(groupedKeys).size !== 13 ||
+        handKeys.some(key => !groupedKeys.includes(key)) ||
+        groupedKeys.some(key => !handKeys.includes(key))) {
+      return { valid: false, message: "Place all 13 cards into groups exactly once." };
+    }
+    const results = groups.map(validateGroup);
+    if (results.some(result => !result.valid)) return { valid: false, message: "Every group must be a valid sequence or set." };
+    const sequences = results.filter(result => result.type.endsWith("Sequence"));
+    if (sequences.length < 2 || !sequences.some(result => result.pure)) {
+      return { valid: false, message: "At least two sequences are required, including one pure sequence." };
+    }
     return {
       valid: true,
-      type: sequence.type,
-      pure: sequence.pure,
-      message: sequence.type + " சரியானது"
+      message: "Valid Rummy declaration.",
+      groups: results.map((result, index) => ({ ...result, cards: groups[index] }))
     };
   }
 
-  const set = checkSet(cards);
-
-  if (set) {
-    return {
-      valid: true,
-      type: "Set",
-      pure: false,
-      message: "சரியான Set"
-    };
-  }
-
-  return {
-    valid: false,
-    type: "Invalid",
-    pure: false,
-    message: "இந்த அட்டைகள் சரியான Sequence அல்லது Set அல்ல."
-  };
-}
-
-// பயனர் உருவாக்கிய அனைத்து Groups-ஐச் சரிபார்த்தல்
-function checkDeclaredGroups(groups, hand) {
-  if (!Array.isArray(groups) || !Array.isArray(hand)) {
-    return { valid: false, message: "தவறான அட்டைகள்." };
-  }
-
-  const allCards = groups.flat();
-
-  if (allCards.length !== 13 ||
-      allCards.length !== hand.length ||
-      new Set(allCards).size !== 13 ||
-      !hand.every(card => allCards.includes(card))) {
-    return {
-      valid: false,
-      message: "13 அட்டைகளையும் தனித்தனி Groups-ல் அமைக்க வேண்டும்."
-    };
-  }
-
-  const results = groups.map(group => checkRummyGroup(group));
-
-  if (results.some(result => !result.valid)) {
-    return {
-      valid: false,
-      message: "ஒரு Group-ல் தவறான அட்டைகள் உள்ளன."
-    };
-  }
-
-  const sequences = results.filter(result =>
-    result.type === "Pure Sequence" ||
-    result.type === "Impure Sequence"
-  );
-
-  const pureSequences = results.filter(result => result.pure);
-
-  if (sequences.length < 2 || pureSequences.length < 1) {
-    return {
-      valid: false,
-      message: "குறைந்தது 2 Sequence மற்றும் 1 Pure Sequence தேவை."
-    };
-  }
-
-  return {
-    valid: true,
-    message: "வாழ்த்துகள்! GOODVEXA RUMMY வெற்றி!",
-    groups: results
-  };
-}
-
-// மற்ற JavaScript கோப்புகளிலிருந்து பயன்படுத்த
-window.checkRummyHand = checkRummyHand;
-window.checkRummyGroup = checkRummyGroup;
-window.checkDeclaredGroups = checkDeclaredGroups;
-
-
-})();
+  const engine = { createDeck, classifyGroup, validateGroup, validateHand, validateDeclaredGroups };
+  root.RummyEngine = engine;
+  // Keep the original entry points available to existing pages and integrations.
+  root.checkRummyHand = validateHand;
+  root.checkRummyGroup = validateGroup;
+  root.checkDeclaredGroups = validateDeclaredGroups;
+})(window);
