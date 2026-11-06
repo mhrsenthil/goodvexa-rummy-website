@@ -39,6 +39,20 @@ body {
   color: #e8c45b;
 }
 
+.language-select {
+  min-height: 38px;
+  max-width: 140px;
+  padding: 6px 28px 6px 9px;
+  border: 1px solid #d6ad45;
+  border-radius: 9px;
+  background: #102b1d;
+  color: #f5f5f5;
+  font: inherit;
+  cursor: pointer;
+}
+.language-select:not([data-ready="true"]) { visibility: hidden; }
+.language-select:focus-visible { outline: 3px solid #ffe38b; outline-offset: 2px; }
+
 nav {
   display: flex;
   gap: 25px;
