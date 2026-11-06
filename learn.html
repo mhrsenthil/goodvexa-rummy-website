@@ -1,1 +1,78 @@
 
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#071b16">
+  <title>Learn 13 Card Rummy | GOODVEXA</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    main{width:min(100% - 32px,980px);margin:36px auto 64px}.intro,.lesson{padding:clamp(18px,4vw,30px);margin:16px 0;background:#102b1d;border:1px solid #254b3d;border-radius:16px}.intro h1{font-size:clamp(28px,6vw,46px);color:#f4d477}.lesson h2{color:#f4d477;margin-bottom:8px}.lesson p,.lesson li{line-height:1.75;color:#e0eae4}.lesson ul{padding-left:22px}.example{margin:12px 0;padding:12px 14px;background:#071b16;border-left:3px solid #e8c45b;border-radius:6px;font-weight:700}.subtle{color:#b8c9bf}.actions{display:flex;flex-wrap:wrap;gap:12px;margin:20px 0}.actions a{color:#10251c}.language-label{display:inline-block;margin:4px 8px 8px 0;padding:4px 9px;border-radius:20px;background:#254b3d;color:#f4d477;font-size:12px}
+    @media(max-width:600px){main{width:min(100% - 20px,980px);margin-top:20px}.header{flex-wrap:wrap;padding:12px 16px}.header nav{gap:12px;flex-wrap:wrap}}
+  </style>
+</head>
+<body>
+  <header class="header">
+    <a class="logo" href="index.html">GOODVEXA <span>RUMMY</span></a>
+    <nav aria-label="Main navigation"><a href="index.html">Home</a><a href="game.html?mode=practice">Practice</a><a href="leaderboard.html">Leaderboard</a>
+      <select class="language-select" data-language-selector aria-label="Language">
+        <option value="ta">தமிழ்</option><option value="en">English</option><option value="hi">हिंदी</option><option value="te">తెలుగు</option><option value="ml">മലയാളം</option><option value="kn">ಕನ್ನಡ</option><option value="mr">मराठी</option><option value="bn">বাংলা</option><option value="gu">ગુજરાતી</option><option value="pa">ਪੰਜਾਬੀ</option>
+      </select>
+    </nav>
+  </header>
+  <main>
+    <section class="intro">
+      <span class="language-label">English</span><span class="language-label">தமிழ்</span>
+      <h1>Learn 13 Card Rummy<br>13 அட்டை ரம்மி கற்போம்</h1>
+      <p class="subtle">A quick guide to the same groups and declaration checks used in the game. / விளையாட்டில் பயன்படுத்தப்படும் அதே குழு மற்றும் அறிவிப்பு விதிகளுக்கான சுருக்கமான வழிகாட்டி.</p>
+      <div class="actions"><a class="primary" href="game.html?mode=practice">Practice / பயிற்சி</a></div>
+    </section>
+
+    <section class="lesson">
+      <h2>1. The goal / நோக்கம்</h2>
+      <p>Arrange all 13 cards into valid groups. A declaration needs at least two sequences, including at least one pure sequence. Every card must belong to exactly one group.</p>
+      <p lang="ta">13 அட்டைகளையும் சரியான குழுக்களாக அமைக்கவும். அறிவிப்பில் குறைந்தது இரண்டு தொடர்கள் இருக்க வேண்டும்; அவற்றில் ஒன்று தூய தொடராக இருக்க வேண்டும். ஒவ்வொரு அட்டையும் ஒரே ஒரு குழுவில் மட்டுமே இருக்க வேண்டும்.</p>
+    </section>
+
+    <section class="lesson">
+      <h2>2. Sequences / தொடர்கள்</h2>
+      <p>A sequence has three or more consecutive ranks of the same suit. Ace may be low (A-2-3) or high (Q-K-A), but it cannot wrap from K-A-2.</p>
+      <div class="example">Pure: 4♠ · 5♠ · 6♠ — no joker is used.</div>
+      <div class="example">Impure: 8♥ · 9♥ · Joker (standing for 10♥).</div>
+      <p lang="ta">ஒரே வகை குறியீட்டில் மூன்று அல்லது அதற்கு மேற்பட்ட தொடர்ச்சியான மதிப்புகள் ஒரு தொடர். A-2-3 அல்லது Q-K-A செல்லும்; K-A-2 செல்லாது. ஜோக்கர் விடுபட்ட மதிப்பை நிரப்பலாம்; ஜோக்கர் உள்ள தொடர் தூய தொடராகாது.</p>
+    </section>
+
+    <section class="lesson">
+      <h2>3. Sets / தொகுப்புகள்</h2>
+      <p>A set contains three or four cards of the same rank and different suits. A joker may fill one missing suit, but the group still needs at least one natural card.</p>
+      <div class="example">Valid set: 8♠ · 8♥ · 8♦</div>
+      <div class="example">Joker set: 8♠ · 8♥ · Joker</div>
+      <p lang="ta">ஒரே மதிப்பும் வெவ்வேறு குறியீடுகளும் கொண்ட மூன்று அல்லது நான்கு அட்டைகள் ஒரு தொகுப்பு. ஒரு ஜோக்கர் விடுபட்ட குறியீட்டை நிரப்பலாம்; குறைந்தது ஒரு இயல்பான அட்டை அவசியம்.</p>
+    </section>
+
+    <section class="lesson">
+      <h2>4. Example 13-card declaration / 13 அட்டை அறிவிப்பு எடுத்துக்காட்டு</h2>
+      <p>This arrangement uses every card exactly once. It has two sequences, including a pure sequence, plus two sets:</p>
+      <div class="example">Pure sequence: 3♠ · 4♠ · 5♠</div>
+      <div class="example">Impure sequence: 8♥ · 9♥ · Joker (10♥)</div>
+      <div class="example">Set: 7♠ · 7♥ · 7♦</div>
+      <div class="example">Set: K♠ · K♥ · K♦ · K♣</div>
+      <p lang="ta">இந்த அமைப்பில் ஒவ்வொரு அட்டையும் ஒருமுறை மட்டுமே பயன்படுகிறது. இதில் ஒரு தூய தொடர், ஒரு ஜோக்கர் கொண்ட தொடர், மற்றும் இரண்டு தொகுப்புகள் உள்ளன. ஆகவே இரண்டு தொடர் மற்றும் ஒரு தூய தொடர் என்ற நிபந்தனை பூர்த்தியாகிறது.</p>
+    </section>
+
+    <section class="lesson">
+      <h2>5. Common invalid groups / தவறான குழுக்கள்</h2>
+      <ul>
+        <li>Mixed suits in a sequence, such as 4♠ · 5♥ · 6♠.</li>
+        <li>Repeated ranks in one sequence, such as 4♠ · 4♠ · 6♠.</li>
+        <li>Repeated suits in a natural set, or a set with more than four cards.</li>
+        <li>Declaring with fewer or more than 13 cards, duplicate cards, missing cards, or a card used in two groups.</li>
+        <li lang="ta">தொடரில் வெவ்வேறு குறியீடுகள், ஒரே மதிப்பை மீண்டும் பயன்படுத்துதல், ஒரே குறியீடு மீண்டும் வரும் இயல்பான தொகுப்பு, நான்குக்கு மேற்பட்ட தொகுப்பு, அல்லது 13 அட்டைகளைச் சரியாக ஒருமுறைப் பயன்படுத்தாத அறிவிப்பு தவறு.</li>
+      </ul>
+    </section>
+  </main>
+  <script src="assets/language.js"></script>
+</body>
+</html>
+
