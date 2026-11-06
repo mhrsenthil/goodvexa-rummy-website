@@ -2,284 +2,341 @@
 <html lang="ta">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title id="pageTitle">♠ GOODVEXA RUMMY ♥ - Casino Table</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="pageTitle">GOODVEXA RUMMY - Practice</title>
 
 <style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  user-select: none;
+*, *::before, *::after { box-sizing: border-box; }
+:root {
+  color-scheme: dark;
+  --table-green: #0c573a;
+  --felt-edge: #7d5726;
+  --gold: #e8c45b;
+  --surface: #0a241a;
 }
-
+html, body { width: 100%; min-height: 100%; }
 body {
-  background: #051a10;
-  color: white;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
   height: 100vh;
-  display: flex;
-  flex-direction: column;
+  height: 100dvh;
+  min-height: 0;
   overflow: hidden;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  background: #04170f;
+  color: #f8f7ef;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
-
-/* HEADER BAR */
 header {
-  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 54px;
+  padding: 7px clamp(12px, 3vw, 28px);
+  gap: 12px;
+  border-bottom: 1px solid rgba(232,196,91,.68);
   background: #03120b;
-  border-bottom: 2px solid #d6ad45;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 10;
 }
-
-.logo-title {
-  color: #f4d477;
-  font-size: 20px;
-  font-weight: bold;
-  letter-spacing: 1px;
-}
-
-.user-badge {
-  background: #0c3826;
-  padding: 6px 14px;
-  border-radius: 20px;
-  border: 1px solid #d6ad45;
-  font-size: 14px;
-  color: #e2f0d9;
-}
-
-.user-badge span {
-  color: #ffcf36;
-  font-weight: bold;
-}
-
-/* MAIN GAME LAYOUT */
+.logo-title { color: #f4d477; font-size: clamp(15px, 2vw, 20px); font-weight: 800; letter-spacing: .04em; }
+.header-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.header-actions .language-select { min-height: 40px; max-width: 110px; padding: 5px 7px; border: 1px solid rgba(232,196,91,.55); border-radius: 9px; background: #0c3826; color: #f8f7ef; font: inherit; font-size: 12px; }
+.header-actions .language-select:not([data-ready="true"]) { visibility: hidden; }
+.header-actions .language-select:focus-visible { outline: 3px solid #ffe38b; outline-offset: 2px; }
+.user-badge { padding: 6px 12px; border: 1px solid rgba(232,196,91,.5); border-radius: 999px; background: #0c3826; color: #e2f0d9; font-size: 13px; }
+.user-badge span { color: #ffcf36; font-weight: 700; }
+.avatar-box { display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border: 2px solid var(--gold); border-radius: 50%; background: #1b4332; box-shadow: 0 4px 8px rgba(0,0,0,.28); }
 .game-container {
-  flex: 1;
+  position: static;
+  min-height: 0;
+  width: min(100%, 1500px);
+  margin: 0 auto;
+  padding: clamp(8px, 1.8vh, 18px) clamp(10px, 2.5vw, 32px);
+  display: grid;
+  grid-template-rows: auto minmax(190px, 1fr) auto;
+  grid-template-areas: "opponent" "table" "player";
+  align-items: stretch;
+  justify-items: stretch;
+  justify-content: stretch;
+  gap: clamp(8px, 1.4vh, 16px);
+  overflow: auto;
+  overflow-x: hidden;
+  background: radial-gradient(ellipse at center, #125c40 0%, #092e20 66%, #04170f 100%);
+}
+.game-container[data-mode="practice"] {
+  grid-template-rows: minmax(0, 1fr) auto;
+  grid-template-areas: "table" "player";
+}
+.game-container[data-mode="practice"] .opponent-area,
+.opponent-area[hidden] { display: none !important; }
+.opponent-area {
+  position: static;
+  grid-area: opponent;
+  justify-self: center;
+  flex-direction: row;
+  gap: 10px;
+  padding: 5px 14px;
+  border: 1px solid rgba(232,196,91,.36);
+  border-radius: 999px;
+  background: rgba(3,18,11,.58);
+}
+.avatar-box { width: 36px; height: 36px; font-size: 18px; }
+.rummy-table {
   position: relative;
+  inset: auto;
+  grid-area: table;
+  transform: none;
+  width: min(100%, 1040px);
+  min-width: 0;
+  height: auto;
+  min-height: 190px;
+  max-height: none;
+  justify-self: center;
+  align-self: stretch;
+  border: clamp(6px, 1.1vw, 12px) solid var(--felt-edge);
+  border-radius: clamp(70px, 15vw, 190px);
+  box-shadow: inset 0 0 44px rgba(0,0,0,.46), 0 12px 26px rgba(0,0,0,.28);
+  background: radial-gradient(ellipse at center, #15734b 0%, var(--table-green) 68%, #073823 100%);
+}
+.table-center { gap: clamp(34px, 9vw, 100px); }
+.table-center { display: flex; align-items: center; justify-content: center; }
+.deck-box, .discard-box { display: flex; min-width: 100px; flex-direction: column; align-items: center; gap: 8px; }
+.deck-title { color: #ffe38b; font-size: 12px; font-weight: 700; letter-spacing: .08em; }
+.card {
   display: flex;
   flex-direction: column;
+  align-items: stretch;
+  justify-content: space-between;
+  flex: 0 0 48px;
+  width: 48px;
+  height: 70px;
+  margin-left: 0;
+  padding: 5px;
+  border: 1px solid #d6d6d6;
+  border-radius: 7px;
+  background: #fff;
+  color: #171717;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+  text-align: left;
+  cursor: pointer;
+  box-shadow: 0 3px 9px rgba(0,0,0,.28);
+  transition: transform .16s ease, box-shadow .16s ease;
+}
+.card.red { color: #c51f32; }
+.card-back { border: 2px solid #fff; background: repeating-linear-gradient(135deg, #9b2424 0 7px, #721818 7px 14px); }
+.card.selected { transform: translateY(-8px); }
+.card.grouped-card {
+  opacity: .68;
+  border-color: #bac7bd;
+  background: #f3f6f3;
+  outline: 2px solid rgba(83,215,138,.48);
+  outline-offset: -2px;
+}
+.card-back { appearance: none; }
+.player-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: auto;
+  grid-area: player;
+  width: min(100%, 1120px);
+  max-width: none;
+  min-width: 0;
+  justify-self: center;
+  gap: 9px;
+  padding: 10px clamp(10px, 1.8vw, 22px) 12px;
+  border: 1px solid rgba(232,196,91,.48);
+  border-radius: 16px;
+  background: linear-gradient(145deg, rgba(5,26,17,.96), rgba(11,48,32,.97));
+  box-shadow: 0 8px 24px rgba(0,0,0,.24);
+}
+.hand-meta {
+  display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px;
-  background: radial-gradient(circle, #0e5c3e 0%, #052618 80%, #02120a 100%);
+  gap: 8px;
+  min-height: 34px;
 }
-
-/* OVAL RUMMY TABLE */
-.rummy-table {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -55%);
-  width: 90%;
-  max-width: 850px;
-  height: 60vh;
-  max-height: 420px;
-  background: radial-gradient(ellipse at center, #116847 0%, #0c4d34 70%, #073523 100%);
-  border: 12px solid #5a3d1b;
-  border-radius: 200px;
-  box-shadow: inset 0 0 40px rgba(0,0,0,0.8), 0 10px 30px rgba(0,0,0,0.7);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-/* TOP AI OPPONENT */
-.opponent-area {
-  position: absolute;
-  top: 15px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 5px;
-}
-
-.avatar-box {
-  width: 50px;
-  height: 50px;
-  background: #1b4332;
-  border: 2px solid #ffcf36;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.5);
-}
-
-.bot-status {
-  background: rgba(0,0,0,0.6);
-  padding: 3px 10px;
-  border-radius: 10px;
-  font-size: 12px;
-  color: #f4d477;
-}
-
-/* CENTER CARDS AREA (DECK & DISCARD) */
-.table-center {
-  display: flex;
-  gap: 30px;
-  align-items: center;
-}
-
-.deck-box, .discard-box {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-}
-
-.deck-title {
-  font-size: 12px;
-  color: #ffe38b;
-  font-weight: bold;
-}
-
-/* BOTTOM PLAYER AREA */
-.player-area {
-  width: 100%;
-  max-width: 900px;
-  z-index: 5;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-}
-
-/* ACTION BUTTONS */
-.action-bar {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.btn {
-  background: linear-gradient(180deg, #fce07e 0%, #d49c24 100%);
-  color: #111;
-  border: none;
-  border-radius: 6px;
-  padding: 8px 16px;
-  font-weight: bold;
-  font-size: 13px;
-  cursor: pointer;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.4);
-}
-
-.btn:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
-
-.btn-declare {
-  background: linear-gradient(180deg, #2bf076 0%, #119443 100%);
-  color: white;
-}
-
-.btn-exit {
-  background: linear-gradient(180deg, #ff5e62 0%, #c0392b 100%);
-  color: white;
-}
-
-/* CARDS HAND CONTAINER */
+.hand-meta-actions { display: flex; align-items: center; gap: 8px; }
+.groups-open-btn, .clear-selection-btn { padding: 7px 11px; }
 .cards-hand {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: -15px;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
   width: 100%;
-  min-height: 85px;
-  padding: 5px;
-}
-
-/* CARD ITEM DESIGN */
-.card {
-  width: 50px;
-  height: 75px;
-  background: white;
-  color: #111;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 4px;
-  font-size: 15px;
-  font-weight: bold;
-  cursor: pointer;
-  box-shadow: -2px 2px 6px rgba(0,0,0,0.5);
-  transition: transform 0.2s;
-  margin-left: -12px;
-}
-
-.card:first-child {
-  margin-left: 0;
-}
-
-.card.red {
-  color: #d21f30;
-}
-
-.card.selected {
-  transform: translateY(-15px);
-  border: 2px solid #ffcf36;
-  box-shadow: 0 0 10px #ffcf36;
-}
-
-.card-back {
-  background: linear-gradient(135deg, #a81c1c 0%, #5c0808 100%);
-  border: 2px solid #fff;
-}
-
-/* NOTIFICATION BAR */
-.status-msg {
-  position: absolute;
-  bottom: 125px;
-  background: rgba(0,0,0,0.75);
-  padding: 6px 18px;
-  border-radius: 20px;
-  border: 1px solid #d6ad45;
-  color: #ffe38b;
-  font-size: 13px;
-}
-
-/* GROUPS DISPLAY */
-.groups-container {
-  display: flex;
-  gap: 10px;
-  max-width: 100%;
+  min-width: 0;
+  min-height: 92px;
+  padding: 12px 8px 8px;
+  gap: clamp(3px, .7vw, 9px);
   overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-inline: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #8e713a rgba(0,0,0,.15);
 }
-
-.group-pill {
-  background: rgba(0,0,0,0.5);
-  border: 1px solid #d6ad45;
-  border-radius: 6px;
-  padding: 4px 8px;
-  font-size: 12px;
-  display: flex;
+.cards-hand .card { flex: 0 0 clamp(43px, 4vw, 54px); width: clamp(43px, 4vw, 54px); height: clamp(64px, 7vh, 78px); }
+.cards-hand .card:first-child { margin-left: 0; }
+.card[role="button"]:focus-visible, button:focus-visible { outline: 3px solid #fff1a8; outline-offset: 2px; }
+.action-bar {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 8px;
+}
+.btn {
+  display: inline-flex;
   align-items: center;
-  gap: 6px;
+  justify-content: center;
+  min-width: 0;
+  min-height: 44px;
+  border: 1px solid rgba(255,255,255,.12);
+  padding: 9px clamp(7px, 1.2vw, 16px);
+  background: linear-gradient(180deg, #fce07e 0%, #d49c24 100%);
+  color: #111;
+  border-radius: 9px;
+  font-size: clamp(11px, 1.1vw, 13px);
+  font-weight: 700;
+  line-height: 1.2;
+  font-family: inherit;
+  white-space: normal;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,.22);
 }
+.btn:disabled { opacity: .48; cursor: not-allowed; }
+.btn-declare { color: #fff; background: linear-gradient(180deg, #2bf076 0%, #119443 100%); }
+.btn-exit { color: #fff; background: linear-gradient(180deg, #ff7070 0%, #bd3434 100%); }
+.status-msg {
+  position: static;
+  align-self: stretch;
+  max-width: 100%;
+  padding: 7px 12px;
+  border-radius: 9px;
+  text-align: center;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+.orientation-note { display: none; text-align: center; font-size: 12px; color: #ffe38b; }
+.declaration-result { align-self: stretch; max-height: 24vh; overflow: auto; line-height: 1.5; }
+.declaration-result:empty { display: none; }
+.declaration-result div { padding-top: 3px; }
+.groups-dialog {
+  position: fixed;
+  inset: 0;
+  width: min(92vw, 620px);
+  max-width: 620px;
+  max-height: min(82dvh, 700px);
+  margin: auto;
+  padding: clamp(16px, 3vw, 26px);
+  overflow: auto;
+  color: #f7f5ec;
+  border: 1px solid #d6ad45;
+  border-radius: 18px;
+  background: linear-gradient(150deg, #102f22, #071a12);
+  box-shadow: 0 24px 80px rgba(0,0,0,.62);
+  z-index: 1000;
+}
+.groups-dialog::backdrop { background: rgba(0,0,0,.72); backdrop-filter: blur(3px); }
+.dialog-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 14px; }
+.dialog-header h2 { color: #f4d477; font-size: clamp(20px, 4vw, 28px); }
+.dialog-close { width: 44px; min-height: 44px; padding: 8px; border-radius: 50%; }
+.groups-container { display: grid; grid-template-columns: 1fr; gap: 10px; max-width: none; max-height: 58dvh; overflow: auto; }
+.group-box { display: flex; flex-direction: column; padding: 12px; gap: 8px; border: 1px solid #d6ad45; border-radius: 11px; background: rgba(0,0,0,.3); }
+.group-box.valid { border-color: #56d98c; }
+.group-box.invalid { border-color: #ff7070; }
+.group-box strong { color: #f4d477; }
+.group-cards { white-space: normal; overflow-wrap: anywhere; }
+.groups-empty { padding: 18px 10px; text-align: center; color: #bfcec4; }
 
-@media(max-width: 600px) {
-  .rummy-table {
-    width: 96%;
-    height: 52vh;
+@media (max-width: 700px) {
+  header { min-height: 48px; padding: 5px 10px; }
+  .user-badge { padding: 5px 9px; font-size: 12px; }
+  .fullscreen-btn { min-height: 40px; padding: 6px 9px; font-size: 11px; }
+  .header-actions { gap: 5px; }
+  .header-actions .language-select { max-width: 88px; min-height: 38px; padding: 4px; font-size: 11px; }
+  .game-container {
+    grid-template-rows: auto minmax(135px, 1fr) auto;
+    gap: 7px;
+    padding: 7px 9px;
   }
-  .card {
-    width: 42px;
-    height: 64px;
-    font-size: 13px;
-    margin-left: -15px;
+  .opponent-area { padding: 3px 10px; }
+  .rummy-table { width: 100%; min-height: 135px; border-radius: 80px; }
+  .table-center { gap: clamp(22px, 8vw, 58px); }
+  .deck-box, .discard-box { min-width: 76px; }
+  .deck-title { font-size: 10px; }
+  .player-area { width: 100%; gap: 6px; padding: 7px; border-radius: 13px; }
+  .cards-hand { min-height: 80px; }
+  .cards-hand .card { flex-basis: 46px; width: 46px; height: 66px; font-size: 13px; }
+  .action-bar { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+  .action-bar .btn { min-height: 43px; padding: 7px 5px; font-size: 11px; }
+  .status-msg { font-size: 12px; }
+}
+@media (max-width: 700px) and (orientation: portrait) {
+  body { height: auto; min-height: 100dvh; overflow: auto; }
+  .game-container { min-height: calc(100dvh - 48px); grid-template-rows: auto minmax(150px, 24dvh) auto; overflow: visible; }
+  .orientation-note { display: block; }
+  .player-area { padding: 9px; }
+  .cards-hand { min-height: 84px; }
+  .groups-dialog { max-height: 88dvh; }
+}
+@media (orientation: landscape) and (max-height: 600px) {
+  header { min-height: 44px; padding: 3px 10px; }
+  .game-container {
+    grid-template-rows: auto minmax(96px, 1fr) auto;
+    gap: 3px;
+    padding: 3px clamp(8px, 1.5vw, 14px);
+    overflow: hidden;
   }
-  .status-msg {
-    bottom: 140px;
-    font-size: 11px;
+  .game-container[data-mode="practice"] { grid-template-rows: minmax(96px, 1fr) auto; }
+  .opponent-area { display: flex; align-items: center; min-height: 24px; gap: 5px; padding: 1px 7px; }
+  .avatar-box { width: 22px; height: 22px; font-size: 13px; }
+  .rummy-table { min-height: 96px; border-radius: 48px; }
+  .table-center { gap: clamp(12px, 5vw, 42px); }
+  .deck-box, .discard-box { width: clamp(76px, 12vw, 104px); min-width: 0; gap: 2px; }
+  .deck-title { font-size: 9px; letter-spacing: .04em; }
+  .deck-box .card, #discardTop .card { width: 43px; height: 44px; min-height: 0; padding: 3px; font-size: 11px; }
+  #discardTop .card span { font-size: 14px !important; }
+  #deckCount { font-size: 10px !important; line-height: 1; }
+  #pileBtn { min-height: 28px; padding: 3px 8px !important; font-size: 10px !important; }
+  .player-area { min-height: 0; gap: 2px; padding: 3px 8px; }
+  .hand-meta { min-height: 24px; gap: 5px; font-size: 10px; }
+  .hand-meta-actions { gap: 4px; }
+  .groups-open-btn, .clear-selection-btn { min-height: 28px; padding: 3px 7px; font-size: 10px; }
+  .cards-hand {
+    display: grid;
+    grid-template-columns: repeat(var(--hand-card-count, 13), minmax(0, 1fr));
+    align-items: stretch;
+    gap: clamp(1px, .3vw, 3px);
+    width: 100%;
+    height: clamp(50px, 14dvh, 62px);
+    min-height: 0;
+    padding: 4px 3px;
+    overflow: hidden;
   }
+  .cards-hand .card {
+    width: 100%;
+    min-width: 0;
+    height: 100%;
+    min-height: 0;
+    padding: 2px;
+    border-radius: 5px;
+    font-size: 10px;
+  }
+  .cards-hand .card small { font-size: clamp(8px, 1.35vw, 10px); }
+  .cards-hand .card span { font-size: clamp(12px, 2.3vw, 16px) !important; }
+  .card.selected { transform: translateY(-4px); }
+  .status-msg { max-height: 18px; min-height: 0; padding: 1px 5px; font-size: 9px; line-height: 1.1; overflow: hidden; }
+  .status-msg:empty { display: none; }
+  .action-bar { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 4px; }
+  .action-bar .btn { min-height: 34px; padding: 3px 2px; font-size: 9px; }
+}
+@media (min-width: 701px) and (min-height: 750px) {
+  .game-container { grid-template-rows: auto minmax(250px, 1fr) auto; }
+  .player-area { padding: 14px 22px 16px; gap: 11px; }
 }
 </style>
 </head>
@@ -288,27 +345,30 @@ header {
 
 <header>
   <div class="logo-title" id="modeHeaderTitle">♠ GOODVEXA RUMMY ♥</div>
-  <div class="user-badge">
-    👤 <span id="playerName">Guest</span> | 💰 <span id="playerWallet">1,00,000</span>
+  <div class="header-actions">
+    <div class="user-badge">👤 <span id="playerName">Guest</span></div>
+    <select class="language-select" data-language-selector aria-label="Language">
+      <option value="ta">தமிழ்</option><option value="en">English</option><option value="hi">हिंदी</option><option value="te">తెలుగు</option><option value="ml">മലയാളം</option><option value="kn">ಕನ್ನಡ</option><option value="mr">मराठी</option><option value="bn">বাংলা</option><option value="gu">ગુજરાતી</option><option value="pa">ਪੰਜਾਬੀ</option>
+    </select>
+    <button class="btn fullscreen-btn" type="button" onclick="toggleFullscreen()" aria-label="Enter fullscreen">⛶ Fullscreen</button>
   </div>
 </header>
 
-<div class="game-container">
+<main class="game-container" id="gameContainer">
 
-  <!-- TOP AI OPPONENT AREA -->
-  <div class="opponent-area" id="opponentArea">
-    <div class="avatar-box">🤖</div>
-    <div class="bot-status" id="botStatus">AI Bot (Waiting...)</div>
-  </div>
+  <!-- Opponent seat marker -->
+  <section class="opponent-area" id="opponentArea" aria-label="Opponent area">
+    <div class="avatar-box" aria-hidden="true">🃏</div>
+  </section>
 
-  <!-- CENTER OVAL CASINO TABLE -->
-  <div class="rummy-table" id="tableArea">
+  <!-- CENTER RUMMY TABLE -->
+  <section class="rummy-table" id="tableArea" aria-label="Rummy table">
     <div class="table-center">
       
       <!-- CLOSED DECK -->
       <div class="deck-box">
         <span class="deck-title">CLOSED DECK</span>
-        <div class="card card-back" onclick="drawFromDeck()" id="deckBtn"></div>
+        <button type="button" class="card card-back" onclick="drawFromDeck()" id="drawBtn" aria-label="Draw from closed deck"></button>
         <small id="deckCount" style="color:#d8eadf; font-size:11px;">0 Left</small>
       </div>
 
@@ -322,19 +382,22 @@ header {
       </div>
 
     </div>
-  </div>
-
-  <!-- FLOATING NOTIFICATION -->
-  <div class="status-msg" id="message">விளையாட்டு முறை ஏற்றப்படுகிறது...</div>
+  </section>
 
   <!-- BOTTOM PLAYER INTERFACE -->
-  <div class="player-area" id="playerArea">
+  <section class="player-area" id="playerArea" aria-label="Your hand and game controls">
     
-    <!-- CREATED GROUPS DISPLAY -->
-    <div class="groups-container" id="groupsDisplay"></div>
+    <div class="hand-meta">
+      <span id="handCount">Cards: 0</span>
+      <div class="hand-meta-actions">
+        <button type="button" class="btn groups-open-btn" onclick="openGroupsDialog()">Groups (<span id="groupCount">0</span>)</button>
+        <button type="button" class="btn clear-selection-btn" onclick="clearSelection()">Clear selection</button>
+      </div>
+    </div>
 
-    <!-- CARDS HAND -->
-    <div class="cards-hand" id="hand"></div>
+    <div class="cards-hand" id="hand" aria-label="Your cards"></div>
+    <div class="status-msg" id="message" role="status" aria-live="polite">விளையாட்டு முறை ஏற்றப்படுகிறது...</div>
+    <p class="orientation-note">Landscape works best. Rotate your device, or continue in portrait.</p>
 
     <!-- GAME CONTROL BUTTONS -->
     <div class="action-bar">
@@ -345,11 +408,21 @@ header {
       <button class="btn btn-declare" onclick="declareRummy()">DECLARE</button>
       <button class="btn btn-exit" onclick="window.location.href='index.html'">EXIT</button>
     </div>
+    <div class="declaration-result" id="declarationResult" aria-live="polite"></div>
 
+  </section>
+</main>
+
+<dialog class="groups-dialog" id="groupsDialog" aria-labelledby="groupsDialogTitle">
+  <div class="dialog-header">
+    <h2 id="groupsDialogTitle">Your groups</h2>
+    <button type="button" class="btn dialog-close" onclick="closeGroupsDialog()" aria-label="Close groups">✕</button>
   </div>
+  <div class="groups-container" id="groupsDisplay" aria-label="Your card groups"></div>
+</dialog>
 
-</div>
-
+<script src="assets/language.js"></script>
+<script src="assets/rummy-rules.js"></script>
 <script>
 "use strict";
 
@@ -360,69 +433,62 @@ let selected = [];
 let groups = [];
 let mustDiscard = false;
 let gameStarted = false;
-let currentMode = "classic";
+let currentMode = "practice";
 
 window.onload = function() {
     const savedUser = localStorage.getItem('rummy_user');
-    const savedWallet = localStorage.getItem('rummy_wallet');
-
-    if (savedUser) document.getElementById('playerName').textContent = savedUser;
-    if (savedWallet) document.getElementById('playerWallet').textContent = Number(savedWallet).toLocaleString('en-IN');
+    if (savedUser) {
+      try {
+        const parsedUser = JSON.parse(savedUser);
+        const nameOnly = (parsedUser && parsedUser.username) || savedUser;
+        const publicName = typeof nameOnly === "string" && !nameOnly.includes("@") ? nameOnly : "Guest";
+        document.getElementById('playerName').textContent = publicName;
+        if ((parsedUser && typeof parsedUser === "object") || publicName !== nameOnly) localStorage.setItem('rummy_user', publicName);
+      } catch (_) {
+        document.getElementById('playerName').textContent = savedUser.includes("@") ? "Guest" : savedUser;
+      }
+    }
+    // Legacy client-only fields are not needed for authentication or public identity.
+    localStorage.removeItem('rummy_email');
+    localStorage.removeItem('rummy_wallet');
 
     // URL Parameter-ஐ சரிபார்த்து Game Mode-ஐ தீர்மானித்தல்
     const urlParams = new URLSearchParams(window.location.search);
-    currentMode = urlParams.get('mode') || 'classic';
+    currentMode = urlParams.get('mode') || 'practice';
 
     applyGameModeLayout(currentMode);
+    render();
 };
 
 function applyGameModeLayout(mode) {
     const titleEl = document.getElementById("modeHeaderTitle");
     const msgEl = document.getElementById("message");
+    const gameContainer = document.getElementById("gameContainer");
+    const opponentArea = document.getElementById("opponentArea");
+    gameContainer.dataset.mode = mode;
+    opponentArea.hidden = mode === "practice";
 
+    document.querySelector('.action-bar button[onclick="startGame()"]').disabled = false;
     switch(mode) {
         case 'practice':
-            titleEl.textContent = "GOODVEXA RUMMY - Practice Mode (AI)";
-            msgEl.textContent = "Practice Mode: AI எதிராளியுடன் பயிற்சி செய்யுங்கள். START GAME அழுத்தவும்.";
+            titleEl.textContent = "GOODVEXA RUMMY - Solo Practice";
+            msgEl.textContent = "";
             break;
         case 'multiplayer':
-            titleEl.textContent = "GOODVEXA RUMMY - Friends & Multiplayer";
-            msgEl.textContent = "Multiplayer: நண்பர்களுடன் ஆன்லைனில் இணைவதற்கான அறை தயாராகிறது.";
+            titleEl.textContent = "GOODVEXA RUMMY - Multiplayer";
+            msgEl.textContent = "Multiplayer is not implemented. Choose Practice for solo play.";
+            document.querySelector('.action-bar button[onclick="startGame()"]').disabled = true;
             break;
         case 'tournament':
             titleEl.textContent = "GOODVEXA RUMMY - Tournaments";
-            msgEl.textContent = "Tournaments: சிறப்புப் போட்டிகள் விரைவில் தொடங்குகின்றன.";
+            msgEl.textContent = "Tournaments are not implemented. Choose Practice for solo play.";
+            document.querySelector('.action-bar button[onclick="startGame()"]').disabled = true;
             break;
-        case 'classic':
         default:
-            titleEl.textContent = "GOODVEXA RUMMY - 13 Card Table";
-            msgEl.textContent = "13 Card Rummy: விளையாட்டுத் தொடங்க START GAME அழுத்தவும்.";
+            titleEl.textContent = "GOODVEXA RUMMY - Solo Practice";
+            msgEl.textContent = "";
             break;
     }
-}
-
-const suits = [
-  {symbol:"♠", red:false},
-  {symbol:"♥", red:true},
-  {symbol:"♦", red:true},
-  {symbol:"♣", red:false}
-];
-
-function createDeck() {
-  let cards = [];
-  for (const suit of suits) {
-    for (let rank = 1; rank <= 13; rank++) {
-      cards.push({ suit: suit.symbol, rank: rank, red: suit.red, joker: false });
-    }
-  }
-  cards.push({ suit: "★", rank: 0, red: false, joker: true });
-  cards.push({ suit: "★", rank: 0, red: true, joker: true });
-
-  for (let i = cards.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [cards[i], cards[j]] = [cards[j], cards[i]];
-  }
-  return cards;
 }
 
 function rankText(card) {
@@ -437,10 +503,11 @@ function rankText(card) {
 function cardHTML(card, index, selectable) {
   const color = card.red ? "red" : "";
   const chosen = selectable && selected.includes(index);
+  const grouped = selectable && groups.some(group => group.includes(card));
   const label = card.joker ? "JOKER" : rankText(card);
 
   return `
-    <div class="card ${color} ${chosen ? "selected" : ""}" onclick="${selectable ? `selectCard(${index})` : ""}">
+    <div class="card ${color} ${chosen ? "selected" : ""} ${grouped ? "grouped-card" : ""}" onclick="${selectable ? `selectCard(${index})` : ""}" role="${selectable ? "button" : "img"}" aria-label="${label} ${card.suit}${grouped ? ', grouped' : ''}">
       <small>${label}</small>
       <span style="font-size:18px; text-align:center;">${card.suit}</span>
       <small style="text-align:right;">${label}</small>
@@ -449,25 +516,31 @@ function cardHTML(card, index, selectable) {
 }
 
 function startGame() {
-  deck = createDeck();
+  if (currentMode === "multiplayer" || currentMode === "tournament") return;
+  deck = RummyEngine.createDeck();
   hand = [];
   discardPile = [];
   selected = [];
   groups = [];
   mustDiscard = false;
   gameStarted = true;
+  document.getElementById("declarationResult").textContent = "";
 
   for (let i = 0; i < 13; i++) hand.push(deck.pop());
   discardPile.push(deck.pop());
 
-  document.getElementById("botStatus").textContent = currentMode === 'practice' ? "AI Bot (Ready)" : "Opponent (Ready)";
-  showMessage("விளையாட்டு தொடங்கியது! ஒரு கார்டை எடுக்கவும்.");
+  showMessage("Game started. Draw a card, then discard one card to finish your turn.");
   render();
 }
 
 function render() {
-  document.getElementById("hand").innerHTML = hand.map((card, index) => cardHTML(card, index, true)).join("");
-  document.getElementById("deckCount").textContent = deck.length + " Left";
+  const handElement = document.getElementById("hand");
+  handElement.style.setProperty("--hand-card-count", String(Math.max(hand.length, 13)));
+  handElement.innerHTML = hand.map((card, index) => cardHTML(card, index, true)).join("");
+  document.getElementById("deckCount").textContent = String(deck.length);
+  document.getElementById("handCount").textContent = `Cards: ${hand.length}${mustDiscard ? " · discard 1" : ""}`;
+  document.getElementById("groupCount").textContent = String(groups.length);
+  document.getElementById("drawBtn").disabled = !gameStarted || mustDiscard || deck.length === 0;
 
   const top = discardPile[discardPile.length - 1];
   document.getElementById("discardTop").innerHTML = top ? cardHTML(top, -1, false) : '<div class="card" style="opacity:0.3;">Empty</div>';
@@ -475,19 +548,40 @@ function render() {
   document.getElementById("pileBtn").disabled = !gameStarted || mustDiscard || discardPile.length === 0;
   document.getElementById("discardBtn").disabled = !gameStarted || !mustDiscard || selected.length !== 1;
 
-  document.getElementById("groupsDisplay").innerHTML = groups.map((group, gIndex) => {
-    const cardsTxt = group.map(c => rankText(c) + c.suit).join(" ");
+  const groupedCards = groups.flat();
+  document.getElementById("discardBtn").disabled = document.getElementById("discardBtn").disabled || groupedCards.includes(hand[selected[0]]);
+
+  document.getElementById("groupsDisplay").innerHTML = groups.length ? groups.map((group, gIndex) => {
+    const validation = RummyEngine.validateGroup(group);
+    const cardsTxt = group.map(c => c.joker ? "Joker" : rankText(c) + c.suit).join(" · ");
     return `
-      <div class="group-pill">
-        <span>G${gIndex + 1}: ${cardsTxt}</span>
-        <span style="color:#ff5e62; cursor:pointer;" onclick="removeGroup(${gIndex})">✕</span>
+      <div class="group-box ${validation.valid ? "valid" : "invalid"}">
+        <strong>Group ${gIndex + 1}: ${validation.type}</strong>
+        <span class="group-cards">${cardsTxt}</span>
+        <button type="button" class="btn" onclick="removeGroup(${gIndex})" aria-label="Remove group ${gIndex + 1}">Remove group</button>
       </div>
     `;
-  }).join("");
+  }).join("") : '<p class="groups-empty">No groups yet. Select valid cards and choose GROUP.</p>';
+}
+
+function openGroupsDialog() {
+  const dialog = document.getElementById("groupsDialog");
+  if (typeof dialog.showModal === "function") dialog.showModal();
+  else dialog.setAttribute("open", "");
+}
+
+function closeGroupsDialog() {
+  const dialog = document.getElementById("groupsDialog");
+  if (typeof dialog.close === "function") dialog.close();
+  else dialog.removeAttribute("open");
 }
 
 function selectCard(index) {
   if (!gameStarted) return;
+  if (groups.flat().includes(hand[index])) {
+    showMessage("Remove this card from its group before selecting it.");
+    return;
+  }
   if (selected.includes(index)) {
     selected = selected.filter(i => i !== index);
   } else {
@@ -496,11 +590,17 @@ function selectCard(index) {
   render();
 }
 
+function clearSelection() {
+  selected = [];
+  render();
+}
+
 function drawFromDeck() {
   if (!gameStarted || mustDiscard || deck.length === 0) return;
   hand.push(deck.pop());
   mustDiscard = true;
   selected = [];
+  document.getElementById("declarationResult").textContent = "";
   render();
   showMessage("கார்டு எடுத்தாச்சு! ஒரு தேவையற்ற கார்டை வெளியேற்றவும் (DISCARD).");
 }
@@ -510,31 +610,24 @@ function drawFromDiscard() {
   hand.push(discardPile.pop());
   mustDiscard = true;
   selected = [];
+  document.getElementById("declarationResult").textContent = "";
   render();
   showMessage("Open Pile-ல் இருந்து கார்டு எடுத்தாச்சு! ஒரு கார்டை வெளியேற்றவும்.");
 }
 
 function discardSelected() {
   if (!mustDiscard || selected.length !== 1) return;
+  if (groups.some(group => group.includes(hand[selected[0]]))) {
+    showMessage("Remove this card from its group before discarding it.");
+    return;
+  }
   const card = hand.splice(selected[0], 1)[0];
   discardPile.push(card);
   selected = [];
   mustDiscard = false;
+  document.getElementById("declarationResult").textContent = "";
   render();
-  showMessage("அட்டை வெளியேற்றப்பட்டது. எதிராளியின் திருப்பம்...");
-
-  setTimeout(aiTurn, 1200);
-}
-
-function aiTurn() {
-  if (!gameStarted) return;
-  document.getElementById("botStatus").textContent = "AI Playing...";
-  setTimeout(() => {
-    if (deck.length > 0) discardPile.push(deck.pop());
-    document.getElementById("botStatus").textContent = "Your Turn!";
-    showMessage("எதிராளி கார்டு விளையாடிவிட்டார். உங்கள் திருப்பம்!");
-    render();
-  }, 1000);
+  showMessage("Card discarded. Draw a card for your next turn.");
 }
 
 function sortHand() {
@@ -551,64 +644,15 @@ function sortHand() {
 }
 
 // ஒரு Group செல்லுபடியாகும் Sequence அல்லது Set ஆக உள்ளதா?
-function getGroupType(cards) {
-  if (!Array.isArray(cards) || cards.length < 3 || cards.length > 13) {
-    return null;
-  }
-
-  const jokers = cards.filter(c => c.joker);
-  const natural = cards.filter(c => !c.joker);
-
-  // SEQUENCE CHECK
-  if (natural.length > 0) {
-    const suits = new Set(natural.map(c => c.suit));
-
-    if (suits.size === 1) {
-      for (let start = 1; start <= 14 - cards.length + 1; start++) {
-        const needed = [];
-
-        for (let r = start; r < start + cards.length; r++) {
-          needed.push(r);
-        }
-
-        const ranks = natural.map(c =>
-          c.rank === 1 && start >= 12 ? 14 : c.rank
-        );
-
-        if (new Set(ranks).size !== ranks.length) continue;
-
-        if (ranks.every(r => needed.includes(r))) {
-          const missing = needed.filter(r => !ranks.includes(r)).length;
-
-          if (missing === jokers.length) {
-            return jokers.length === 0 ? "pure" : "impure";
-          }
-        }
-      }
-    }
-  }
-
-  // SET CHECK
-  if (natural.length > 0 && natural.length <= 4) {
-    const ranks = new Set(natural.map(c => c.rank));
-    const suits = new Set(natural.map(c => c.suit));
-
-    if (
-      ranks.size === 1 &&
-      suits.size === natural.length &&
-      natural.length + jokers.length <= 4
-    ) {
-      return "set";
-    }
-  }
-
-  return null;
-}
-
 // GROUP CREATE
 function createGroup() {
   if (!gameStarted || selected.length < 3) {
     showMessage("Group உருவாக்க குறைந்தது 3 கார்டுகளைத் தேர்ந்தெடுக்கவும்.");
+    return;
+  }
+
+  if (mustDiscard) {
+    showMessage("Discard a card to finish your turn before creating groups.");
     return;
   }
 
@@ -621,108 +665,28 @@ function createGroup() {
   }
 
   const groupCards = selected.map(i => hand[i]);
-  const type = getGroupType(groupCards);
-
-  if (!type) {
-    showMessage("தவறான Group! Sequence அல்லது Set அமைக்கவும்.");
+  const result = RummyEngine.validateGroup(groupCards);
+  if (!result.valid) {
+    showMessage(result.message);
     return;
   }
 
   groups.push(groupCards);
   selected = [];
+  document.getElementById("declarationResult").textContent = "";
 
   render();
 
-  if (type === "pure") {
-    showMessage("✅ Pure Sequence உருவாக்கப்பட்டது!");
-  } else if (type === "impure") {
-    showMessage("✅ Impure Sequence உருவாக்கப்பட்டது!");
-  } else {
-    showMessage("✅ Valid Set உருவாக்கப்பட்டது!");
-  }
+  showMessage(`✅ ${result.type} created.`);
 }
 
 // REMOVE GROUP
 function removeGroup(index) {
+  if (!groups[index]) return;
   groups.splice(index, 1);
+  selected = [];
+  document.getElementById("declarationResult").textContent = "";
   render();
-}
-
-// முழு கையையும் சரிபார்க்கும் Rummy Validation
-function validateRummy(cards) {
-
-  if (cards.length !== 13) {
-    return {
-      valid: false,
-      reason: "சரியாக 13 கார்டுகள் இருக்க வேண்டும்."
-    };
-  }
-
-  const memo = new Map();
-
-  function search(remaining, sequenceCount, hasPure) {
-
-    if (remaining.length === 0) {
-      return sequenceCount >= 2 && hasPure;
-    }
-
-    const key =
-      remaining.join(",") + "|" + sequenceCount + "|" + hasPure;
-
-    if (memo.has(key)) return memo.get(key);
-
-    // மீதமுள்ள முதல் கார்டு இடம்பெறும் Group-களைத் தேடுதல்.
-    for (let mask = 1; mask < (1 << remaining.length); mask++) {
-
-      if (!(mask & 1)) continue;
-
-      const indexes = [];
-
-      for (let bit = 0; bit < remaining.length; bit++) {
-        if (mask & (1 << bit)) {
-          indexes.push(bit);
-        }
-      }
-
-      if (indexes.length < 3) continue;
-
-      const group = indexes.map(i => cards[remaining[i]]);
-      const type = getGroupType(group);
-
-      if (!type) continue;
-
-      const rest = remaining.filter((_, i) => !indexes.includes(i));
-
-      const nextSequenceCount =
-        sequenceCount +
-        (type === "pure" || type === "impure" ? 1 : 0);
-
-      const nextHasPure = hasPure || type === "pure";
-
-      if (search(rest, nextSequenceCount, nextHasPure)) {
-        memo.set(key, true);
-        return true;
-      }
-    }
-
-    memo.set(key, false);
-    return false;
-  }
-
-  const valid = search(cards.map((_, i) => i), 0, false);
-
-  if (!valid) {
-    return {
-      valid: false,
-      reason:
-        "குறைந்தது 2 Sequence தேவை. அதில் 1 Pure Sequence கட்டாயம். மீதமுள்ள கார்டுகளும் செல்லுபடியாகும் Group-களாக இருக்க வேண்டும்."
-    };
-  }
-
-  return {
-    valid: true,
-    reason: "அனைத்து Rummy விதிகளும் பூர்த்தியாகியுள்ளன!"
-  };
 }
 
 // DECLARE
@@ -738,17 +702,17 @@ function declareRummy() {
     return;
   }
 
-  const result = validateRummy(hand);
+  const result = RummyEngine.validateDeclaredGroups(groups, hand);
+  const resultBox = document.getElementById("declarationResult");
 
   if (!result.valid) {
-    showMessage("❌ Declare செல்லாது: " + result.reason);
-    alert("INVALID DECLARE\n" + result.reason);
+    resultBox.textContent = `Invalid declaration: ${result.message}`;
+    showMessage(result.message);
     return;
   }
 
-  alert("🏆 VALID RUMMY DECLARE! வாழ்த்துகள்!");
-
-  showMessage("🏆 " + result.reason);
+  resultBox.innerHTML = `<strong>${result.message}</strong>${result.groups.map((group, index) => `<div>Group ${index + 1} · ${group.type}: ${group.cards.map(card => card.joker ? "Joker" : `${rankText(card)}${card.suit}`).join(" · ")}</div>`).join("")}`;
+  showMessage("Valid declaration. Well played!");
 
   gameStarted = false;
   render();
@@ -756,6 +720,22 @@ function declareRummy() {
 
 function showMessage(msg) {
   document.getElementById("message").textContent = msg;
+}
+
+async function toggleFullscreen() {
+  try {
+    if (!document.fullscreenElement) {
+      await document.documentElement.requestFullscreen();
+      if (screen.orientation && screen.orientation.lock) {
+        try { await screen.orientation.lock("landscape"); } catch (_) { /* Use the responsive portrait layout when locking is unavailable. */ }
+      }
+    } else {
+      await document.exitFullscreen();
+      if (screen.orientation && screen.orientation.unlock) screen.orientation.unlock();
+    }
+  } catch (_) {
+    showMessage("Fullscreen is unavailable in this browser. The responsive layout remains available.");
+  }
 }
 
 render();
