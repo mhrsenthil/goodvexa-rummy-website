@@ -161,6 +161,7 @@ header {
   display: flex;
   flex-flow: row nowrap;
   align-items: start;
+  justify-content: safe center;
   width: 100%;
   min-width: 0;
   gap: clamp(8px, 1.2vw, 16px);
@@ -182,9 +183,12 @@ header {
 .practice-group.unmatched .practice-group-label { background: #a74343; }
 .card[role="button"]:focus-visible, button:focus-visible { outline: 3px solid #fff1a8; outline-offset: 2px; }
 .action-bar {
-  width: 100%;
+  width: max-content;
+  max-width: 100%;
+  margin-inline: auto;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
+  justify-self: center;
   gap: 8px;
 }
 .btn {
@@ -250,7 +254,7 @@ header {
   .practice-group-cards .card-suit { font-size: clamp(17px, 2.9vw, 23px); }
   .practice-group-cards .card.joker-card .card-rank { font-size: clamp(13px, 2.1vw, 16px); }
   .practice-group-label { min-height: 20px; font-size: 9px; }
-  .action-bar { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+  .action-bar { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
   .action-bar .btn { min-height: 43px; padding: 7px 5px; font-size: 11px; }
   .status-msg { font-size: 12px; }
 }
@@ -292,7 +296,7 @@ header {
   .card.selected { transform: translateY(-4px); }
   .status-msg { max-height: 18px; min-height: 0; padding: 1px 5px; font-size: 9px; line-height: 1.1; overflow: hidden; }
   .status-msg:empty { display: none; }
-  .action-bar { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 4px; }
+  .action-bar { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; }
   .action-bar .btn { min-height: 34px; padding: 3px 2px; font-size: 9px; }
 }
 @media (min-width: 701px) and (min-height: 750px) {
