@@ -125,12 +125,16 @@ header {
   transition: transform .16s ease, box-shadow .16s ease;
 }
 .card.red { color: #c51f32; }
+.card-face { display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; gap: 1px; max-width: 100%; }
+.card-rank { font-size: clamp(19px, 2vw, 25px); font-weight: 900; -webkit-text-stroke: .2px currentColor; line-height: .95; letter-spacing: -.045em; }
+.card-suit { font-size: clamp(20px, 2.1vw, 26px); font-weight: 900; -webkit-text-stroke: .2px currentColor; line-height: .9; }
+.card.joker-card .card-rank { font-size: clamp(15px, 1.55vw, 20px); letter-spacing: 0; }
 .card-back { border: 2px solid #fff; background: repeating-linear-gradient(135deg, #9b2424 0 7px, #721818 7px 14px); }
 .card.selected { transform: translateY(-8px); }
 .card.grouped-card {
-  opacity: .68;
+  opacity: 1;
   border-color: #bac7bd;
-  background: #f3f6f3;
+  background: #fff;
   outline: 2px solid rgba(83,215,138,.48);
   outline-offset: -2px;
 }
@@ -153,38 +157,34 @@ header {
   background: linear-gradient(145deg, rgba(5,26,17,.96), rgba(11,48,32,.97));
   box-shadow: 0 8px 24px rgba(0,0,0,.24);
 }
-.hand-meta {
+.practice-groups {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 8px;
-  min-height: 34px;
-}
-.hand-meta-actions { display: flex; align-items: center; gap: 8px; }
-.groups-open-btn, .clear-selection-btn { padding: 7px 11px; }
-.cards-hand {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: flex-start;
+  flex-flow: row nowrap;
+  align-items: start;
   width: 100%;
   min-width: 0;
-  min-height: 92px;
-  padding: 12px 8px 8px;
-  gap: clamp(3px, .7vw, 9px);
+  gap: clamp(8px, 1.2vw, 16px);
   overflow-x: auto;
   overflow-y: hidden;
+  padding: 10px 1px 5px;
   overscroll-behavior-inline: contain;
   scrollbar-width: thin;
   scrollbar-color: #8e713a rgba(0,0,0,.15);
 }
-.cards-hand .card { flex: 0 0 clamp(43px, 4vw, 54px); width: clamp(43px, 4vw, 54px); height: clamp(64px, 7vh, 78px); }
-.cards-hand .card:first-child { margin-left: 0; }
+#hand[hidden] { display: none !important; }
+.practice-group { flex: 0 0 auto; width: max-content; min-width: max-content; border-radius: 7px 7px 5px 5px; background: rgba(0,0,0,.12); }
+.practice-group-cards { display: flex; flex-wrap: nowrap; align-items: flex-start; justify-content: flex-start; gap: clamp(2px, .35vw, 5px); }
+.practice-group-cards .card { flex: 0 0 clamp(48px, 4vw, 56px); width: clamp(48px, 4vw, 56px); height: clamp(68px, 7vh, 78px); cursor: pointer; }
+.practice-group-label { display: block; width: 100%; min-height: 21px; padding: 4px 7px; border: 0; border-radius: 0 0 5px 5px; color: #fff; font-family: inherit; font-size: 10px; font-weight: 800; line-height: 1.2; letter-spacing: .035em; text-align: center; white-space: nowrap; cursor: pointer; }
+.practice-group.pure .practice-group-label { background: #258447; }
+.practice-group.impure .practice-group-label { background: #167a91; }
+.practice-group.set .practice-group-label { background: #7150a4; }
+.practice-group.unmatched .practice-group-label { background: #a74343; }
 .card[role="button"]:focus-visible, button:focus-visible { outline: 3px solid #fff1a8; outline-offset: 2px; }
 .action-bar {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 8px;
 }
 .btn {
@@ -224,33 +224,7 @@ header {
 .declaration-result { align-self: stretch; max-height: 24vh; overflow: auto; line-height: 1.5; }
 .declaration-result:empty { display: none; }
 .declaration-result div { padding-top: 3px; }
-.groups-dialog {
-  position: fixed;
-  inset: 0;
-  width: min(92vw, 620px);
-  max-width: 620px;
-  max-height: min(82dvh, 700px);
-  margin: auto;
-  padding: clamp(16px, 3vw, 26px);
-  overflow: auto;
-  color: #f7f5ec;
-  border: 1px solid #d6ad45;
-  border-radius: 18px;
-  background: linear-gradient(150deg, #102f22, #071a12);
-  box-shadow: 0 24px 80px rgba(0,0,0,.62);
-  z-index: 1000;
-}
-.groups-dialog::backdrop { background: rgba(0,0,0,.72); backdrop-filter: blur(3px); }
-.dialog-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 14px; }
-.dialog-header h2 { color: #f4d477; font-size: clamp(20px, 4vw, 28px); }
-.dialog-close { width: 44px; min-height: 44px; padding: 8px; border-radius: 50%; }
-.groups-container { display: grid; grid-template-columns: 1fr; gap: 10px; max-width: none; max-height: 58dvh; overflow: auto; }
-.group-box { display: flex; flex-direction: column; padding: 12px; gap: 8px; border: 1px solid #d6ad45; border-radius: 11px; background: rgba(0,0,0,.3); }
-.group-box.valid { border-color: #56d98c; }
-.group-box.invalid { border-color: #ff7070; }
-.group-box strong { color: #f4d477; }
-.group-cards { white-space: normal; overflow-wrap: anywhere; }
-.groups-empty { padding: 18px 10px; text-align: center; color: #bfcec4; }
+.groups-empty { grid-column: 1 / -1; padding: 10px; color: #bfcec4; text-align: center; }
 
 @media (max-width: 700px) {
   header { min-height: 48px; padding: 5px 10px; }
@@ -269,8 +243,13 @@ header {
   .deck-box, .discard-box { min-width: 76px; }
   .deck-title { font-size: 10px; }
   .player-area { width: 100%; gap: 6px; padding: 7px; border-radius: 13px; }
-  .cards-hand { min-height: 80px; }
-  .cards-hand .card { flex-basis: 46px; width: 46px; height: 66px; font-size: 13px; }
+  .practice-groups { gap: 8px; }
+  .practice-group-cards { gap: 2px; }
+  .practice-group-cards .card { flex-basis: clamp(29px, 9vw, 40px); width: clamp(29px, 9vw, 40px); height: 54px; padding: 4px 3px; font-size: 12px; }
+  .practice-group-cards .card-rank { font-size: clamp(15px, 2.5vw, 20px); }
+  .practice-group-cards .card-suit { font-size: clamp(17px, 2.9vw, 23px); }
+  .practice-group-cards .card.joker-card .card-rank { font-size: clamp(13px, 2.1vw, 16px); }
+  .practice-group-label { min-height: 20px; font-size: 9px; }
   .action-bar { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
   .action-bar .btn { min-height: 43px; padding: 7px 5px; font-size: 11px; }
   .status-msg { font-size: 12px; }
@@ -280,8 +259,7 @@ header {
   .game-container { min-height: calc(100dvh - 48px); grid-template-rows: auto minmax(150px, 24dvh) auto; overflow: visible; }
   .orientation-note { display: block; }
   .player-area { padding: 9px; }
-  .cards-hand { min-height: 84px; }
-  .groups-dialog { max-height: 88dvh; }
+  .practice-group-cards .card { flex-basis: clamp(36px, 11vw, 48px); width: clamp(36px, 11vw, 48px); height: 62px; }
 }
 @media (orientation: landscape) and (max-height: 600px) {
   header { min-height: 44px; padding: 3px 10px; }
@@ -299,35 +277,18 @@ header {
   .deck-box, .discard-box { width: clamp(76px, 12vw, 104px); min-width: 0; gap: 2px; }
   .deck-title { font-size: 9px; letter-spacing: .04em; }
   .deck-box .card, #discardTop .card { width: 43px; height: 44px; min-height: 0; padding: 3px; font-size: 11px; }
-  #discardTop .card span { font-size: 14px !important; }
+  #discardTop .card-rank { font-size: 15px; }
+  #discardTop .card-suit { font-size: 17px; }
   #deckCount { font-size: 10px !important; line-height: 1; }
   #pileBtn { min-height: 28px; padding: 3px 8px !important; font-size: 10px !important; }
   .player-area { min-height: 0; gap: 2px; padding: 3px 8px; }
-  .hand-meta { min-height: 24px; gap: 5px; font-size: 10px; }
-  .hand-meta-actions { gap: 4px; }
-  .groups-open-btn, .clear-selection-btn { min-height: 28px; padding: 3px 7px; font-size: 10px; }
-  .cards-hand {
-    display: grid;
-    grid-template-columns: repeat(var(--hand-card-count, 13), minmax(0, 1fr));
-    align-items: stretch;
-    gap: clamp(1px, .3vw, 3px);
-    width: 100%;
-    height: clamp(50px, 14dvh, 62px);
-    min-height: 0;
-    padding: 4px 3px;
-    overflow: hidden;
-  }
-  .cards-hand .card {
-    width: 100%;
-    min-width: 0;
-    height: 100%;
-    min-height: 0;
-    padding: 2px;
-    border-radius: 5px;
-    font-size: 10px;
-  }
-  .cards-hand .card small { font-size: clamp(8px, 1.35vw, 10px); }
-  .cards-hand .card span { font-size: clamp(12px, 2.3vw, 16px) !important; }
+  .practice-groups { gap: 7px; padding-bottom: 3px; }
+  .practice-group-cards { gap: 2px; }
+  .practice-group-cards .card { flex-basis: clamp(32px, 5.5vw, 40px); width: clamp(32px, 5.5vw, 40px); height: 48px; padding: 3px; border-radius: 4px; font-size: 10px; }
+  .practice-group-cards .card-rank { font-size: clamp(14px, 2.2vw, 18px); }
+  .practice-group-cards .card-suit { font-size: clamp(16px, 2.5vw, 20px); }
+  .practice-group-cards .card.joker-card .card-rank { font-size: 12px; }
+  .practice-group-label { min-height: 17px; padding: 3px 5px; font-size: 8px; }
   .card.selected { transform: translateY(-4px); }
   .status-msg { max-height: 18px; min-height: 0; padding: 1px 5px; font-size: 9px; line-height: 1.1; overflow: hidden; }
   .status-msg:empty { display: none; }
@@ -387,23 +348,13 @@ header {
   <!-- BOTTOM PLAYER INTERFACE -->
   <section class="player-area" id="playerArea" aria-label="Your hand and game controls">
     
-    <div class="hand-meta">
-      <span id="handCount">Cards: 0</span>
-      <div class="hand-meta-actions">
-        <button type="button" class="btn groups-open-btn" onclick="openGroupsDialog()">Groups (<span id="groupCount">0</span>)</button>
-        <button type="button" class="btn clear-selection-btn" onclick="clearSelection()">Clear selection</button>
-      </div>
-    </div>
-
-    <div class="cards-hand" id="hand" aria-label="Your cards"></div>
+    <div class="practice-groups" id="hand" aria-label="Your card groups" hidden></div>
     <div class="status-msg" id="message" role="status" aria-live="polite">விளையாட்டு முறை ஏற்றப்படுகிறது...</div>
     <p class="orientation-note">Landscape works best. Rotate your device, or continue in portrait.</p>
 
     <!-- GAME CONTROL BUTTONS -->
     <div class="action-bar">
       <button class="btn" onclick="startGame()">START GAME</button>
-      <button class="btn" onclick="sortHand()">SORT</button>
-      <button class="btn" onclick="createGroup()">GROUP</button>
       <button class="btn" onclick="discardSelected()" id="discardBtn" disabled>DISCARD</button>
       <button class="btn btn-declare" onclick="declareRummy()">DECLARE</button>
       <button class="btn btn-exit" onclick="window.location.href='index.html'">EXIT</button>
@@ -412,14 +363,6 @@ header {
 
   </section>
 </main>
-
-<dialog class="groups-dialog" id="groupsDialog" aria-labelledby="groupsDialogTitle">
-  <div class="dialog-header">
-    <h2 id="groupsDialogTitle">Your groups</h2>
-    <button type="button" class="btn dialog-close" onclick="closeGroupsDialog()" aria-label="Close groups">✕</button>
-  </div>
-  <div class="groups-container" id="groupsDisplay" aria-label="Your card groups"></div>
-</dialog>
 
 <script src="assets/language.js"></script>
 <script src="assets/rummy-rules.js"></script>
@@ -431,6 +374,7 @@ let hand = [];
 let discardPile = [];
 let selected = [];
 let groups = [];
+let groupTypes = [];
 let mustDiscard = false;
 let gameStarted = false;
 let currentMode = "practice";
@@ -504,13 +448,12 @@ function cardHTML(card, index, selectable) {
   const color = card.red ? "red" : "";
   const chosen = selectable && selected.includes(index);
   const grouped = selectable && groups.some(group => group.includes(card));
-  const label = card.joker ? "JOKER" : rankText(card);
+  const label = card.joker ? "JK" : rankText(card);
+  const accessibleLabel = card.joker ? "JOKER" : label;
 
   return `
-    <div class="card ${color} ${chosen ? "selected" : ""} ${grouped ? "grouped-card" : ""}" onclick="${selectable ? `selectCard(${index})` : ""}" role="${selectable ? "button" : "img"}" aria-label="${label} ${card.suit}${grouped ? ', grouped' : ''}">
-      <small>${label}</small>
-      <span style="font-size:18px; text-align:center;">${card.suit}</span>
-      <small style="text-align:right;">${label}</small>
+    <div class="card ${color} ${card.joker ? "joker-card" : ""} ${chosen ? "selected" : ""} ${grouped ? "grouped-card" : ""}" ${selectable ? `onclick="selectCard(${index}, event)" draggable="true" ondragstart="startCardDrag(${index}, event)" ondragend="endCardDrag(event)" ontouchstart="startTouchDrag(${index}, event)"` : ""} role="${selectable ? "button" : "img"}" aria-label="${accessibleLabel} ${card.suit}${grouped ? ', grouped' : ''}">
+      <span class="card-face"><strong class="card-rank">${label}</strong><span class="card-suit">${card.suit}</span></span>
     </div>
   `;
 }
@@ -522,11 +465,14 @@ function startGame() {
   discardPile = [];
   selected = [];
   groups = [];
+  groupTypes = [];
   mustDiscard = false;
   gameStarted = true;
   document.getElementById("declarationResult").textContent = "";
 
   for (let i = 0; i < 13; i++) hand.push(deck.pop());
+  sortHand();
+  initializeGroups();
   discardPile.push(deck.pop());
 
   showMessage("Game started. Draw a card, then discard one card to finish your turn.");
@@ -535,11 +481,20 @@ function startGame() {
 
 function render() {
   const handElement = document.getElementById("hand");
-  handElement.style.setProperty("--hand-card-count", String(Math.max(hand.length, 13)));
-  handElement.innerHTML = hand.map((card, index) => cardHTML(card, index, true)).join("");
+  if (currentMode === "practice") handElement.hidden = !gameStarted || hand.length === 0;
+  ensureFourGroups();
+  handElement.innerHTML = groups.map((group, index) => {
+    const validation = RummyEngine.validateGroup(group);
+    const type = validation.valid ? validation.type : "Unmatched cards";
+    const key = type === "Pure Sequence" ? "pure" : type === "Impure Sequence" ? "impure" : type === "Set" ? "set" : "unmatched";
+    const label = type === "Unmatched cards" ? "UNMATCHED" : type.toUpperCase();
+    const cards = group.map(card => cardHTML(card, hand.indexOf(card), true)).join("");
+    return `<section class="practice-group ${key}" data-group-index="${index}" aria-label="${label}" role="group" ondragover="allowGroupDrop(event)" ondrop="dropCardsIntoGroup(${index}, event)">
+      <div class="practice-group-cards">${cards}</div>
+      <button type="button" class="practice-group-label" data-group-index="${index}" onclick="moveSelectedToGroup(${index}, event)" aria-label="Move selected cards to ${label.toLowerCase()}">${label}</button>
+    </section>`;
+  }).join("");
   document.getElementById("deckCount").textContent = String(deck.length);
-  document.getElementById("handCount").textContent = `Cards: ${hand.length}${mustDiscard ? " · discard 1" : ""}`;
-  document.getElementById("groupCount").textContent = String(groups.length);
   document.getElementById("drawBtn").disabled = !gameStarted || mustDiscard || deck.length === 0;
 
   const top = discardPile[discardPile.length - 1];
@@ -548,40 +503,147 @@ function render() {
   document.getElementById("pileBtn").disabled = !gameStarted || mustDiscard || discardPile.length === 0;
   document.getElementById("discardBtn").disabled = !gameStarted || !mustDiscard || selected.length !== 1;
 
-  const groupedCards = groups.flat();
-  document.getElementById("discardBtn").disabled = document.getElementById("discardBtn").disabled || groupedCards.includes(hand[selected[0]]);
-
-  document.getElementById("groupsDisplay").innerHTML = groups.length ? groups.map((group, gIndex) => {
-    const validation = RummyEngine.validateGroup(group);
-    const cardsTxt = group.map(c => c.joker ? "Joker" : rankText(c) + c.suit).join(" · ");
-    return `
-      <div class="group-box ${validation.valid ? "valid" : "invalid"}">
-        <strong>Group ${gIndex + 1}: ${validation.type}</strong>
-        <span class="group-cards">${cardsTxt}</span>
-        <button type="button" class="btn" onclick="removeGroup(${gIndex})" aria-label="Remove group ${gIndex + 1}">Remove group</button>
-      </div>
-    `;
-  }).join("") : '<p class="groups-empty">No groups yet. Select valid cards and choose GROUP.</p>';
 }
 
-function openGroupsDialog() {
-  const dialog = document.getElementById("groupsDialog");
-  if (typeof dialog.showModal === "function") dialog.showModal();
-  else dialog.setAttribute("open", "");
-}
-
-function closeGroupsDialog() {
-  const dialog = document.getElementById("groupsDialog");
-  if (typeof dialog.close === "function") dialog.close();
-  else dialog.removeAttribute("open");
-}
-
-function selectCard(index) {
-  if (!gameStarted) return;
-  if (groups.flat().includes(hand[index])) {
-    showMessage("Remove this card from its group before selecting it.");
-    return;
+function ensureFourGroups() {
+  while (groups.length < 4) groups.push([]);
+  if (groups.length > 4) {
+    groups[3].push(...groups.splice(4).flat());
   }
+  for (let index = 0; index < 4; index++) {
+    if (!Array.isArray(groups[index])) groups[index] = [];
+  }
+  groupTypes = groups.map(group => {
+    const result = RummyEngine.validateGroup(group);
+    return result.valid ? result.type : "Unmatched cards";
+  });
+}
+
+function sortGroupCards(group) {
+  const suitOrder = { "♠": 1, "♥": 2, "♦": 3, "♣": 4 };
+  group.sort((first, second) => {
+    if (first.joker && second.joker) return String(first.id).localeCompare(String(second.id));
+    if (first.joker) return 1;
+    if (second.joker) return -1;
+    return (first.rank - second.rank) || (suitOrder[first.suit] - suitOrder[second.suit]);
+  });
+}
+
+function initializeGroups() {
+  groups = [hand.slice(0, 3), hand.slice(3, 6), hand.slice(6, 9), hand.slice(9, 13)];
+  groups.forEach(sortGroupCards);
+  ensureFourGroups();
+}
+
+function analyzeHand() {
+  ensureFourGroups();
+}
+
+function moveSelectedToGroup(destination, event) {
+  if (event && typeof event.stopPropagation === "function") event.stopPropagation();
+  destination = Number(event && event.currentTarget && event.currentTarget.dataset
+    ? event.currentTarget.dataset.groupIndex
+    : destination);
+  if (!gameStarted || !Number.isInteger(destination) || destination < 0 || destination >= 4 || selected.length === 0) return;
+  moveCardsToGroup(selected, destination);
+}
+
+function moveCardsToGroup(cardIndexes, destination) {
+  if (!gameStarted || !Number.isInteger(destination) || destination < 0 || destination >= 4) return;
+  ensureFourGroups();
+  const moving = [...new Set(cardIndexes.map(index => hand[index]).filter(Boolean))]
+    .sort((first, second) => hand.indexOf(first) - hand.indexOf(second));
+  if (!moving.length) return;
+  const affectedGroups = new Set([destination]);
+  moving.forEach(card => {
+    groups.forEach((group, source) => {
+      if (source !== destination) {
+        const cardIndex = group.indexOf(card);
+        if (cardIndex !== -1) {
+          group.splice(cardIndex, 1);
+          affectedGroups.add(source);
+        }
+      }
+    });
+    if (!groups[destination].includes(card)) groups[destination].push(card);
+  });
+  affectedGroups.forEach(index => sortGroupCards(groups[index]));
+  selected = [];
+  analyzeHand();
+  render();
+}
+
+function startCardDrag(index, event) {
+  if (!event.dataTransfer) return;
+  event.dataTransfer.setData("text/plain", String(index));
+  event.dataTransfer.effectAllowed = "move";
+  if (event.currentTarget.classList) event.currentTarget.classList.add("dragging-card");
+}
+
+function endCardDrag(event) {
+  if (event.currentTarget && event.currentTarget.classList) event.currentTarget.classList.remove("dragging-card");
+}
+
+function allowGroupDrop(event) {
+  event.preventDefault();
+  if (event.dataTransfer) event.dataTransfer.dropEffect = "move";
+}
+
+function dropCardsIntoGroup(destination, event) {
+  event.preventDefault();
+  event.stopPropagation();
+  if (!event.dataTransfer) return;
+  const draggedIndex = Number(event.dataTransfer.getData("text/plain"));
+  if (!Number.isInteger(draggedIndex) || !hand[draggedIndex]) return;
+  const cardIndexes = selected.includes(draggedIndex) ? selected : [draggedIndex];
+  moveCardsToGroup(cardIndexes, destination);
+}
+
+let activeTouchDrag = null;
+function startTouchDrag(index, event) {
+  if (!event.touches || event.touches.length !== 1) return;
+  const touch = event.touches[0];
+  activeTouchDrag = { index, startX: touch.clientX, startY: touch.clientY, dragging: false, target: -1 };
+  document.addEventListener("touchmove", updateTouchDrag, { passive: false });
+  document.addEventListener("touchend", finishTouchDrag, { once: true });
+  document.addEventListener("touchcancel", cancelTouchDrag, { once: true });
+}
+
+function updateTouchDrag(event) {
+  if (!activeTouchDrag || !event.touches || !event.touches.length) return;
+  const touch = event.touches[0];
+  const dx = touch.clientX - activeTouchDrag.startX;
+  const dy = touch.clientY - activeTouchDrag.startY;
+  if (!activeTouchDrag.dragging && Math.hypot(dx, dy) > 8) activeTouchDrag.dragging = true;
+  if (!activeTouchDrag.dragging) return;
+  event.preventDefault();
+  const target = document.elementFromPoint(touch.clientX, touch.clientY);
+  const group = target && target.closest("[data-group-index]");
+  activeTouchDrag.target = group ? Number(group.dataset.groupIndex) : -1;
+}
+
+function finishTouchDrag(event) {
+  const drag = activeTouchDrag;
+  activeTouchDrag = null;
+  document.removeEventListener("touchmove", updateTouchDrag);
+  document.removeEventListener("touchcancel", cancelTouchDrag);
+  if (!drag || !drag.dragging) return;
+  const touch = event.changedTouches && event.changedTouches[0];
+  const target = touch && document.elementFromPoint(touch.clientX, touch.clientY);
+  const group = target && target.closest("[data-group-index]");
+  const destination = group ? Number(group.dataset.groupIndex) : drag.target;
+  const cardIndexes = selected.includes(drag.index) ? selected : [drag.index];
+  moveCardsToGroup(cardIndexes, destination);
+}
+
+function cancelTouchDrag() {
+  activeTouchDrag = null;
+  document.removeEventListener("touchmove", updateTouchDrag);
+}
+
+function selectCard(index, event) {
+  if (event && typeof event.stopPropagation === "function") event.stopPropagation();
+  if (!gameStarted) return;
   if (selected.includes(index)) {
     selected = selected.filter(i => i !== index);
   } else {
@@ -597,7 +659,11 @@ function clearSelection() {
 
 function drawFromDeck() {
   if (!gameStarted || mustDiscard || deck.length === 0) return;
-  hand.push(deck.pop());
+  const card = deck.pop();
+  hand.push(card);
+  ensureFourGroups();
+  groups[3].push(card);
+  sortGroupCards(groups[3]);
   mustDiscard = true;
   selected = [];
   document.getElementById("declarationResult").textContent = "";
@@ -607,7 +673,11 @@ function drawFromDeck() {
 
 function drawFromDiscard() {
   if (!gameStarted || mustDiscard || discardPile.length === 0) return;
-  hand.push(discardPile.pop());
+  const card = discardPile.pop();
+  hand.push(card);
+  ensureFourGroups();
+  groups[3].push(card);
+  sortGroupCards(groups[3]);
   mustDiscard = true;
   selected = [];
   document.getElementById("declarationResult").textContent = "";
@@ -617,14 +687,17 @@ function drawFromDiscard() {
 
 function discardSelected() {
   if (!mustDiscard || selected.length !== 1) return;
-  if (groups.some(group => group.includes(hand[selected[0]]))) {
-    showMessage("Remove this card from its group before discarding it.");
-    return;
-  }
-  const card = hand.splice(selected[0], 1)[0];
+  const card = hand[selected[0]];
+  groups.forEach(group => {
+    const groupIndex = group.indexOf(card);
+    if (groupIndex !== -1) group.splice(groupIndex, 1);
+  });
+  groups.forEach(sortGroupCards);
+  hand.splice(selected[0], 1);
   discardPile.push(card);
   selected = [];
   mustDiscard = false;
+  analyzeHand();
   document.getElementById("declarationResult").textContent = "";
   render();
   showMessage("Card discarded. Draw a card for your next turn.");
@@ -646,46 +719,27 @@ function sortHand() {
 // ஒரு Group செல்லுபடியாகும் Sequence அல்லது Set ஆக உள்ளதா?
 // GROUP CREATE
 function createGroup() {
-  if (!gameStarted || selected.length < 3) {
-    showMessage("Group உருவாக்க குறைந்தது 3 கார்டுகளைத் தேர்ந்தெடுக்கவும்.");
+  if (!gameStarted || selected.length === 0) {
+    showMessage("Move one or more selected cards into a group.");
     return;
   }
-
   if (mustDiscard) {
-    showMessage("Discard a card to finish your turn before creating groups.");
+    showMessage("Discard a card to finish your turn before moving groups.");
     return;
   }
-
-  // ஏற்கனவே Group-ல் உள்ள கார்டுகளை மீண்டும் சேர்க்கக்கூடாது.
-  const alreadyGrouped = groups.flat();
-
-  if (selected.some(i => alreadyGrouped.includes(hand[i]))) {
-    showMessage("இந்த கார்டு ஏற்கனவே Group-ல் உள்ளது!");
-    return;
-  }
-
-  const groupCards = selected.map(i => hand[i]);
-  const result = RummyEngine.validateGroup(groupCards);
-  if (!result.valid) {
-    showMessage(result.message);
-    return;
-  }
-
-  groups.push(groupCards);
-  selected = [];
+  moveSelectedToGroup(3);
   document.getElementById("declarationResult").textContent = "";
-
-  render();
-
-  showMessage(`✅ ${result.type} created.`);
 }
 
 // REMOVE GROUP
 function removeGroup(index) {
-  if (!groups[index]) return;
-  groups.splice(index, 1);
+  if (!groups[index] || index === 3) return;
+  groups[3].push(...groups[index]);
+  sortGroupCards(groups[3]);
+  groups[index] = [];
   selected = [];
   document.getElementById("declarationResult").textContent = "";
+  analyzeHand();
   render();
 }
 
